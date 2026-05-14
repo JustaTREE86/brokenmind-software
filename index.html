@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Broken Mind Software — Websites & Automation for Brisbane Businesses</title>
+  <meta name="description" content="Broken Mind Software helps Brisbane small businesses with affordable websites, lead automation, and AI admin systems. Fast turnaround, transparent pricing, no lock-in contracts." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://brokenmind.com.au/" />
+
+  <!-- Geo -->
+  <meta name="geo.region" content="AU-QLD" />
+  <meta name="geo.placename" content="Brisbane, Queensland, Australia" />
+  <meta name="geo.position" content="-27.4698;153.0251" />
+  <meta name="ICBM" content="-27.4698, 153.0251" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Broken Mind Software" />
+  <meta property="og:title" content="Broken Mind Software — Websites & Automation for Brisbane Businesses" />
+  <meta property="og:description" content="Affordable websites, lead automation, and AI admin systems for Brisbane small businesses. Fast turnaround. You own it outright." />
+  <meta property="og:url" content="https://brokenmind.com.au/" />
+  <meta property="og:image" content="https://brokenmind.com.au/logo-banner.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:locale" content="en_AU" />
+
+  <!-- Twitter/X -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Broken Mind Software — Websites & Automation for Brisbane" />
+  <meta name="twitter:description" content="Affordable websites, lead automation, and AI admin systems for Brisbane small businesses." />
+  <meta name="twitter:image" content="https://brokenmind.com.au/logo-banner.png" />
+
+  <!-- LocalBusiness Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "Broken Mind Software",
+    "url": "https://brokenmind.com.au",
+    "logo": "https://brokenmind.com.au/hero-icon.png",
+    "image": "https://brokenmind.com.au/logo-banner.png",
+    "description": "Broken Mind Software helps Brisbane small businesses with affordable websites, lead automation, and AI admin systems.",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Brisbane",
+      "addressRegion": "QLD",
+      "addressCountry": "AU"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": -27.4698,
+      "longitude": 153.0251
+    },
+    "areaServed": {
+      "@type": "City",
+      "name": "Brisbane"
+    },
+    "priceRange": "$$",
+    "sameAs": [
+      "https://www.facebook.com/profile.php?id=61589390994384"
+    ],
+    "knowsAbout": ["Web Design", "Lead Automation", "AI Systems", "Small Business Technology"]
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Orbitron:wght@600;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #040408;
+      --surface: #080810;
+      --card: #0b0b16;
+      --border: #111828;
+      --border-bright: #1a2d4a;
+      --blue: #1a7fff;
+      --blue-bright: #4db0ff;
+      --white: #f0f4ff;
+      --muted: #4a5a70;
+      --muted-bright: #6a7d94;
+      --font-head: 'Orbitron', sans-serif;
+      --font-body: 'Rajdhani', sans-serif;
+      --font-sub: 'Inter', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: var(--font-sub);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image:
+        linear-gradient(rgba(26,127,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(26,127,255,0.025) 1px, transparent 1px);
+      background-size: 48px 48px;
+      pointer-events: none; z-index: 0;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 56px;
+      height: 64px;
+      border-bottom: 1px solid var(--border);
+      position: sticky; top: 0;
+      background: rgba(4,4,8,0.97);
+      backdrop-filter: blur(16px);
+      z-index: 100;
+    }
+
+    .nav-brand {
+      display: flex; align-items: center; gap: 10px;
+      text-decoration: none;
+    }
+    .nav-icon {
+      width: 36px; height: 36px; object-fit: contain;
+      mix-blend-mode: screen;
+      filter: brightness(1.1);
+    }
+    .nav-wordmark {
+      font-family: var(--font-head); font-size: 0.7rem;
+      font-weight: 700; letter-spacing: 0.12em;
+      color: var(--white); text-transform: uppercase;
+      line-height: 1.25;
+    }
+    .nav-wordmark span { color: var(--blue); }
+
+    .nav-links { display: flex; gap: 40px; list-style: none; }
+    .nav-links a {
+      font-family: var(--font-body); font-size: 0.8rem;
+      font-weight: 600; letter-spacing: 0.12em;
+      color: var(--muted-bright); text-decoration: none;
+      text-transform: uppercase; transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--blue-bright); }
+
+    .nav-cta {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--blue); color: #fff;
+      font-family: var(--font-body); font-size: 0.78rem;
+      font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 10px 22px; text-decoration: none;
+      clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+      transition: all 0.2s;
+    }
+    .nav-cta:hover { background: var(--blue-bright); transform: translateY(-1px); }
+
+    @media (max-width: 800px) {
+      nav { padding: 0 20px; }
+      .nav-links { display: none; }
+      .nav-wordmark { font-size: 0.6rem; }
+    }
+
+    /* ─── HERO ─── */
+    .hero {
+      position: relative;
+      padding: 72px 56px 80px;
+      overflow: hidden; z-index: 1;
+      display: flex; flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .hero-glow {
+      position: absolute; top: -80px; left: 50%;
+      transform: translateX(-50%);
+      width: 800px; height: 600px;
+      background: radial-gradient(ellipse, rgba(26,127,255,0.1) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    /* Banner as hero centrepiece */
+    .hero-banner-wrap {
+      position: relative; z-index: 2;
+      width: 100%; max-width: 780px;
+      margin-bottom: 40px;
+      animation: fadeIn 0.8s ease both;
+    }
+    .hero-banner {
+      width: 100%;
+      mix-blend-mode: screen;
+      filter: brightness(1.2) contrast(1.5) saturate(1.15);
+      display: block;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 10px;
+      margin-bottom: 22px; z-index: 2; position: relative;
+      animation: fadeUp 0.5s ease 0.1s both;
+    }
+    .eyebrow-dot { width: 6px; height: 6px; background: var(--blue); border-radius: 50%; }
+    .eyebrow-text {
+      font-family: var(--font-head); font-size: 0.54rem;
+      letter-spacing: 0.32em; color: var(--blue-bright); text-transform: uppercase;
+    }
+
+    .hero-slogan {
+      display: flex; align-items: center; gap: 0;
+      margin-bottom: 32px;
+      position: relative; z-index: 2;
+      animation: fadeUp 0.6s ease 0.12s both;
+    }
+    .slogan-word {
+      font-family: var(--font-head); font-size: clamp(0.7rem, 1.8vw, 1.1rem);
+      font-weight: 700; letter-spacing: 0.25em; text-transform: uppercase;
+      padding: 10px 20px; position: relative;
+    }
+    .slogan-word.w1 { color: var(--white); border: 1px solid var(--border-bright); }
+    .slogan-word.w2 { color: var(--white); background: var(--blue); border: 1px solid var(--blue); margin: 0 2px; }
+    .slogan-word.w3 { color: var(--white); border: 1px solid var(--border-bright); }
+
+    .hero h1 {
+      font-family: var(--font-head);
+      font-size: clamp(28px, 4vw, 58px);
+      font-weight: 900; line-height: 1.1;
+      text-transform: uppercase; letter-spacing: 0.03em;
+      margin-bottom: 20px;
+      position: relative; z-index: 2;
+      animation: fadeUp 0.6s ease 0.18s both;
+    }
+    .hero h1 .blue { color: var(--blue); }
+
+    .hero-sub {
+      font-size: 1rem; color: #7a90aa; line-height: 1.8;
+      max-width: 520px; margin: 0 auto 28px;
+      position: relative; z-index: 2;
+      animation: fadeUp 0.6s ease 0.2s both;
+    }
+    .hero-sub strong { color: var(--white); font-weight: 600; }
+
+    .hero-targets {
+      display: flex; flex-wrap: wrap; gap: 8px;
+      justify-content: center;
+      margin-bottom: 40px;
+      position: relative; z-index: 2;
+      animation: fadeUp 0.6s ease 0.25s both;
+    }
+    .target-tag {
+      font-family: var(--font-body); font-size: 0.7rem;
+      font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--muted-bright); border: 1px solid var(--border-bright);
+      padding: 5px 12px; background: var(--card);
+    }
+
+    .hero-actions {
+      display: flex; gap: 14px; flex-wrap: wrap;
+      justify-content: center;
+      position: relative; z-index: 2;
+      animation: fadeUp 0.6s ease 0.3s both;
+    }
+
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--blue); color: #fff;
+      font-family: var(--font-body); font-size: 0.9rem;
+      font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 15px 34px; text-decoration: none;
+      clip-path: polygon(10px 0%, 100% 0%, calc(100% - 10px) 100%, 0% 100%);
+      transition: all 0.2s;
+      box-shadow: 0 0 40px rgba(26,127,255,0.25);
+    }
+    .btn-primary:hover {
+      background: var(--blue-bright);
+      box-shadow: 0 0 60px rgba(26,127,255,0.45);
+      transform: translateY(-2px);
+    }
+    .btn-ghost {
+      display: inline-flex; align-items: center; gap: 8px;
+      border: 1px solid var(--border-bright); color: var(--muted-bright);
+      font-family: var(--font-body); font-size: 0.9rem;
+      font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 15px 32px; text-decoration: none; transition: all 0.2s;
+    }
+    .btn-ghost:hover { border-color: var(--blue); color: var(--blue-bright); }
+
+    @media (max-width: 600px) {
+      .hero { padding: 48px 20px 60px; }
+      .hero-banner-wrap { max-width: 100%; }
+    }
+
+    /* ─── TICKER ─── */
+    .ticker {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: var(--surface);
+      padding: 12px 0; overflow: hidden;
+      white-space: nowrap; position: relative; z-index: 1;
+    }
+    .ticker-inner { display: inline-flex; animation: ticker 28s linear infinite; }
+    .ticker-item {
+      font-family: var(--font-head); font-size: 0.52rem;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--muted); padding: 0 48px;
+    }
+    .ticker-item .dot { color: var(--blue); margin-right: 12px; }
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* ─── SECTION COMMONS ─── */
+    .section {
+      padding: 96px 56px;
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative; z-index: 1;
+    }
+    .section-label {
+      display: inline-flex; align-items: center; gap: 10px; margin-bottom: 14px;
+    }
+    .section-label .bar { width: 20px; height: 2px; background: var(--blue); }
+    .section-label span {
+      font-family: var(--font-head); font-size: 0.52rem;
+      letter-spacing: 0.3em; color: var(--blue-bright); text-transform: uppercase;
+    }
+    .section-title {
+      font-family: var(--font-head);
+      font-size: clamp(22px, 3vw, 40px);
+      font-weight: 900; text-transform: uppercase;
+      letter-spacing: 0.04em; line-height: 1.1; margin-bottom: 12px;
+    }
+    .section-desc {
+      font-size: 0.91rem; color: var(--muted-bright);
+      max-width: 480px; line-height: 1.8; margin-bottom: 48px;
+    }
+    @media (max-width: 600px) { .section { padding: 64px 20px; } }
+
+    /* ─── SERVICES ─── */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px; background: var(--border);
+    }
+    @media (max-width: 860px) { .services-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 520px) { .services-grid { grid-template-columns: 1fr; } }
+
+    .svc-card {
+      background: var(--card); padding: 34px 28px;
+      position: relative; overflow: hidden;
+      transition: background 0.25s; cursor: default;
+    }
+    .svc-card::after {
+      content: ''; position: absolute;
+      top: 0; left: 0; right: 0; height: 0;
+      background: var(--blue); transition: height 0.2s;
+    }
+    .svc-card:hover { background: #0d0d1c; }
+    .svc-card:hover::after { height: 2px; }
+    .svc-icon { font-size: 1.5rem; margin-bottom: 14px; display: block; }
+    .svc-cat {
+      font-family: var(--font-head); font-size: 0.48rem;
+      letter-spacing: 0.25em; color: var(--blue); text-transform: uppercase; margin-bottom: 6px;
+    }
+    .svc-name {
+      font-family: var(--font-head); font-size: 0.74rem;
+      font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; margin-bottom: 10px; color: var(--white);
+    }
+    .svc-desc { font-size: 0.82rem; color: var(--muted-bright); line-height: 1.7; }
+    .svc-num {
+      position: absolute; bottom: 12px; right: 16px;
+      font-family: var(--font-head); font-size: 2rem;
+      font-weight: 900; color: rgba(26,127,255,0.04);
+    }
+
+    /* ─── PACKAGES ─── */
+    .packages-wrap {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 96px 56px;
+      position: relative; z-index: 1;
+    }
+    .packages-inner { max-width: 1200px; margin: 0 auto; }
+    .packages-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 2px; background: var(--border);
+    }
+    @media (max-width: 860px) {
+      .packages-grid { grid-template-columns: 1fr; }
+      .packages-wrap { padding: 64px 20px; }
+    }
+
+    .pkg {
+      background: var(--card); padding: 42px 32px;
+      position: relative; overflow: hidden;
+      display: flex; flex-direction: column;
+    }
+    .pkg.featured { background: #090d1a; }
+    .pkg-stripe {
+      position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: transparent;
+    }
+    .pkg.featured .pkg-stripe {
+      background: linear-gradient(90deg, transparent 0%, var(--blue) 40%, var(--blue-bright) 60%, transparent 100%);
+    }
+    .pkg-tier {
+      font-family: var(--font-head); font-size: 0.48rem;
+      letter-spacing: 0.25em; text-transform: uppercase;
+      color: var(--blue-bright); border: 1px solid var(--border-bright);
+      padding: 4px 12px; display: inline-block; margin-bottom: 18px; width: fit-content;
+    }
+    .pkg.featured .pkg-tier { border-color: var(--blue); background: rgba(26,127,255,0.08); }
+    .pkg-name {
+      font-family: var(--font-head); font-size: 1rem;
+      font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.08em; margin-bottom: 4px;
+    }
+    .pkg-price { display: flex; align-items: flex-start; gap: 2px; margin: 14px 0 4px; }
+    .pkg-dollar { font-family: var(--font-head); font-size: 1rem; color: var(--blue); padding-top: 5px; }
+    .pkg-amount { font-family: var(--font-head); font-size: 2.8rem; font-weight: 900; line-height: 1; }
+    .pkg-note { font-size: 0.74rem; color: var(--muted); margin-bottom: 26px; }
+    .pkg-rule { height: 1px; background: var(--border); margin-bottom: 22px; }
+    .pkg-features { list-style: none; flex: 1; margin-bottom: 30px; }
+    .pkg-features li {
+      font-size: 0.83rem; color: #5a7080;
+      padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.03);
+      display: flex; align-items: flex-start; gap: 10px;
+    }
+    .pkg-features li::before { content: '▸'; color: var(--blue); flex-shrink: 0; font-size: 0.7rem; margin-top: 2px; }
+    .pkg-btn {
+      display: block; text-align: center;
+      font-family: var(--font-body); font-size: 0.8rem;
+      font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 13px; text-decoration: none; transition: all 0.2s;
+      border: 1px solid var(--border-bright); color: var(--muted-bright); margin-top: auto;
+    }
+    .pkg-btn:hover { border-color: var(--blue); color: var(--blue-bright); }
+    .pkg.featured .pkg-btn {
+      background: var(--blue); border-color: var(--blue); color: #fff;
+      box-shadow: 0 0 30px rgba(26,127,255,0.2);
+    }
+    .pkg.featured .pkg-btn:hover { background: var(--blue-bright); box-shadow: 0 0 50px rgba(26,127,255,0.4); }
+
+    /* ─── AUTOMATION ─── */
+    .auto-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 2px; background: var(--border);
+    }
+    @media (max-width: 860px) { .auto-grid { grid-template-columns: 1fr; } }
+    .auto-card {
+      background: var(--card); padding: 34px 28px;
+      position: relative; overflow: hidden;
+      display: flex; flex-direction: column;
+      border-top: 2px solid var(--border-bright); transition: border-color 0.2s;
+    }
+    .auto-card:hover { border-top-color: var(--blue); }
+    .auto-icon { font-size: 1.4rem; margin-bottom: 14px; }
+    .auto-name {
+      font-family: var(--font-head); font-size: 0.72rem;
+      font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 6px;
+    }
+    .auto-price { font-family: var(--font-head); font-size: 0.6rem; color: var(--blue-bright); letter-spacing: 0.1em; margin-bottom: 12px; }
+    .auto-desc { font-size: 0.82rem; color: var(--muted-bright); line-height: 1.7; flex: 1; }
+    .auto-includes { list-style: none; margin-top: 14px; }
+    .auto-includes li {
+      font-size: 0.77rem; color: var(--muted); padding: 5px 0;
+      display: flex; align-items: flex-start; gap: 8px;
+    }
+    .auto-includes li::before { content: '✓'; color: var(--blue); flex-shrink: 0; font-size: 0.7rem; }
+
+    /* ─── PROCESS ─── */
+    .process-wrap {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      padding: 96px 56px;
+      position: relative; z-index: 1;
+    }
+    .process-inner { max-width: 1200px; margin: 0 auto; }
+    .steps-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 0; margin-top: 52px; position: relative;
+    }
+    .steps-grid::before {
+      content: ''; position: absolute;
+      top: 13px; left: 5%; right: 5%;
+      height: 1px; background: var(--border-bright); z-index: 0;
+    }
+    .step { padding: 0 24px 0 0; position: relative; z-index: 1; }
+    .step-dot {
+      width: 26px; height: 26px;
+      border: 2px solid var(--blue); border-radius: 50%;
+      background: var(--bg); margin-bottom: 20px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .step-dot::after { content: ''; width: 8px; height: 8px; background: var(--blue); border-radius: 50%; }
+    .step-num { font-family: var(--font-head); font-size: 0.5rem; letter-spacing: 0.2em; color: var(--blue); text-transform: uppercase; margin-bottom: 8px; }
+    .step-title { font-family: var(--font-head); font-size: 0.76rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 10px; }
+    .step-desc { font-size: 0.82rem; color: var(--muted-bright); line-height: 1.7; }
+    @media (max-width: 860px) {
+      .steps-grid { grid-template-columns: 1fr 1fr; gap: 36px; }
+      .steps-grid::before { display: none; }
+      .process-wrap { padding: 64px 20px; }
+    }
+    @media (max-width: 480px) { .steps-grid { grid-template-columns: 1fr; } }
+
+    /* ─── WHY ─── */
+    .why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start; }
+    @media (max-width: 800px) { .why-grid { grid-template-columns: 1fr; gap: 40px; } }
+    .why-list { display: flex; flex-direction: column; gap: 2px; margin-top: 36px; }
+    .why-row {
+      display: flex; align-items: flex-start; gap: 16px;
+      background: var(--card); border: 1px solid var(--border);
+      border-left: 3px solid transparent;
+      padding: 18px 20px; transition: border-left-color 0.2s;
+    }
+    .why-row:hover { border-left-color: var(--blue); }
+    .why-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 1px; }
+    .why-title { font-family: var(--font-body); font-size: 0.95rem; font-weight: 700; letter-spacing: 0.05em; margin-bottom: 3px; }
+    .why-text { font-size: 0.8rem; color: var(--muted-bright); line-height: 1.6; }
+    .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: var(--border); margin-top: 36px; }
+    .stat { background: var(--card); padding: 30px 22px; text-align: center; }
+    .stat-num { font-family: var(--font-head); font-size: 2.2rem; font-weight: 900; color: var(--blue); line-height: 1; margin-bottom: 8px; }
+    .stat-label { font-size: 0.7rem; color: var(--muted); letter-spacing: 0.05em; }
+
+    /* ─── CTA ─── */
+    .cta-wrap {
+      padding: 120px 56px; text-align: center;
+      position: relative; overflow: hidden; z-index: 1;
+    }
+    .cta-wrap::before {
+      content: ''; position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 900px; height: 500px;
+      background: radial-gradient(ellipse, rgba(26,127,255,0.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    /* Banner reuse in CTA */
+    .cta-banner-wrap {
+      max-width: 560px; margin: 0 auto 36px;
+      position: relative; z-index: 1;
+    }
+    .cta-banner {
+      width: 100%;
+      mix-blend-mode: screen;
+      filter: brightness(1.1) saturate(1.1);
+    }
+
+    .cta-wrap p {
+      font-size: 0.95rem; color: var(--muted-bright);
+      max-width: 400px; margin: 0 auto 40px; line-height: 1.8;
+      position: relative; z-index: 1;
+    }
+    @media (max-width: 600px) { .cta-wrap { padding: 80px 20px; } }
+
+    /* ─── FOOTER ─── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 28px 56px;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 12px;
+      position: relative; z-index: 1;
+    }
+    .footer-brand { font-family: var(--font-head); font-size: 0.6rem; letter-spacing: 0.15em; color: var(--muted); text-transform: uppercase; }
+    .footer-brand span { color: var(--blue); }
+    .footer-tagline { font-family: var(--font-head); font-size: 0.52rem; letter-spacing: 0.28em; color: rgba(26,127,255,0.3); text-transform: uppercase; }
+    .footer-tagline em { color: var(--blue-bright); opacity: 0.55; font-style: normal; }
+    @media (max-width: 600px) { footer { padding: 22px 20px; flex-direction: column; text-align: center; } }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-brand">
+      <img src="/hero-icon.png" class="nav-icon" alt="" />
+      <div class="nav-wordmark">BROKEN<span>MIND</span><br>SOFTWARE</div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#packages">Packages</a></li>
+      <li><a href="#process">Process</a></li>
+    </ul>
+    <a href="https://www.facebook.com/profile.php?id=61589390994384" target="_blank" class="nav-cta">💬 Message Us</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-glow"></div>
+
+    <!-- Banner as hero centrepiece -->
+    <div class="hero-banner-wrap">
+      <img src="/logo-banner.png" class="hero-banner" alt="Broken Mind Software" />
+    </div>
+
+    <div class="hero-eyebrow">
+      <div class="eyebrow-dot"></div>
+      <span class="eyebrow-text">Brisbane · Websites & Automation</span>
+    </div>
+
+    <h1>
+      AUTOMATE YOUR ADMIN.<br>
+      <span class="blue">CAPTURE MORE LEADS.</span>
+    </h1>
+
+    <p class="hero-sub">
+      We help small businesses <strong>reduce repetitive admin</strong> and <strong>stop missing enquiries</strong> — with affordable websites, lead automation, and simple AI systems.
+    </p>
+
+    <div class="hero-targets">
+      <span class="target-tag">Tradies</span>
+      <span class="target-tag">Brokers</span>
+      <span class="target-tag">Mechanics</span>
+      <span class="target-tag">Electricians</span>
+      <span class="target-tag">Local Services</span>
+    </div>
+
+    <div class="hero-actions">
+      <a href="https://www.facebook.com/profile.php?id=61589390994384" target="_blank" class="btn-primary">
+        💬 Get a Free Quote
+      </a>
+      <a href="#services" class="btn-ghost">See What We Do ↓</a>
+    </div>
+  </section>
+
+  <!-- TICKER -->
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-inner">
+      <span class="ticker-item"><span class="dot">◆</span>Website Builds</span>
+      <span class="ticker-item"><span class="dot">◆</span>Lead Automation</span>
+      <span class="ticker-item"><span class="dot">◆</span>AI Admin Systems</span>
+      <span class="ticker-item"><span class="dot">◆</span>Brisbane Based</span>
+      <span class="ticker-item"><span class="dot">◆</span>Fast Turnaround</span>
+      <span class="ticker-item"><span class="dot">◆</span>Mobile First</span>
+      <span class="ticker-item"><span class="dot">◆</span>No Lock-In Contracts</span>
+      <span class="ticker-item"><span class="dot">◆</span>Free Hosting</span>
+      <span class="ticker-item"><span class="dot">◆</span>Website Builds</span>
+      <span class="ticker-item"><span class="dot">◆</span>Lead Automation</span>
+      <span class="ticker-item"><span class="dot">◆</span>AI Admin Systems</span>
+      <span class="ticker-item"><span class="dot">◆</span>Brisbane Based</span>
+      <span class="ticker-item"><span class="dot">◆</span>Fast Turnaround</span>
+      <span class="ticker-item"><span class="dot">◆</span>Mobile First</span>
+      <span class="ticker-item"><span class="dot">◆</span>No Lock-In Contracts</span>
+      <span class="ticker-item"><span class="dot">◆</span>Free Hosting</span>
+    </div>
+  </div>
+
+  <!-- SERVICES -->
+  <div class="section" id="services">
+    <div class="section-label"><div class="bar"></div><span>What We Do</span></div>
+    <h2 class="section-title">Three Ways We<br>Help Your Business</h2>
+    <p class="section-desc">Websites are the entry point. Automation is where the real value is. We combine both to get you more leads and less admin.</p>
+
+    <div class="services-grid">
+      <div class="svc-card">
+        <span class="svc-icon">🌐</span>
+        <div class="svc-cat">Stream 01</div>
+        <div class="svc-name">Website Builds</div>
+        <p class="svc-desc">Clean, fast, mobile-first websites that make your business look legit and turn visitors into enquiries. Built and live fast.</p>
+        <div class="svc-num">01</div>
+      </div>
+      <div class="svc-card">
+        <span class="svc-icon">⚙️</span>
+        <div class="svc-cat">Stream 02</div>
+        <div class="svc-name">Lead Automation</div>
+        <p class="svc-desc">Auto-replies, follow-up sequences, missed-call SMS, CRM integration. Stop leads falling through the cracks while you're on the tools.</p>
+        <div class="svc-num">02</div>
+      </div>
+      <div class="svc-card">
+        <span class="svc-icon">🤖</span>
+        <div class="svc-cat">Stream 03</div>
+        <div class="svc-name">AI Admin Systems</div>
+        <p class="svc-desc">AI chatbots, email drafting, automated intake forms. Remove the repetitive admin that eats your day.</p>
+        <div class="svc-num">03</div>
+      </div>
+      <div class="svc-card">
+        <span class="svc-icon">📱</span>
+        <div class="svc-cat">Included</div>
+        <div class="svc-name">Mobile First</div>
+        <p class="svc-desc">Every site looks sharp on phone, tablet, and desktop. Most of your customers find you on mobile — we design for that first.</p>
+        <div class="svc-num">04</div>
+      </div>
+      <div class="svc-card">
+        <span class="svc-icon">🔍</span>
+        <div class="svc-cat">Included</div>
+        <div class="svc-name">Google Ready</div>
+        <p class="svc-desc">Basic SEO setup + Google Business Profile guidance so locals can find you when they search what you do.</p>
+        <div class="svc-num">05</div>
+      </div>
+      <div class="svc-card">
+        <span class="svc-icon">🔧</span>
+        <div class="svc-cat">Ongoing</div>
+        <div class="svc-name">Support & Care</div>
+        <p class="svc-desc">Need changes down the track? Message us on Facebook. Optional monthly care plans — no pressure, no lock-in.</p>
+        <div class="svc-num">06</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEBSITE PACKAGES -->
+  <div class="packages-wrap" id="packages">
+    <div class="packages-inner">
+      <div class="section-label"><div class="bar"></div><span>Website Pricing</span></div>
+      <h2 class="section-title">Straight-Up Pricing.<br>No Surprises.</h2>
+      <p class="section-desc">One-off cost. You own it outright. No lock-in, no hidden fees, no "contact us for quote" bullshit.</p>
+
+      <div class="packages-grid">
+        <div class="pkg">
+          <div class="pkg-stripe"></div>
+          <div class="pkg-tier">Starter</div>
+          <div class="pkg-name">One Pager</div>
+          <div class="pkg-price"><span class="pkg-dollar">$</span><span class="pkg-amount">299</span></div>
+          <p class="pkg-note">One-off. You own it forever.</p>
+          <div class="pkg-rule"></div>
+          <ul class="pkg-features">
+            <li>Single page website</li>
+            <li>Mobile-friendly design</li>
+            <li>Your logo and brand colours</li>
+            <li>Contact form</li>
+            <li>Free hosting on Vercel</li>
+            <li>Domain setup (~$15/yr you buy)</li>
+          </ul>
+          <a href="https://www.facebook.com/profile.php?id=61589390994384" target="_blank" class="pkg-btn">Message to Get Started</a>
+        </div>
+
+        <div class="pkg featured">
+          <div class="pkg-stripe"></div>
+          <div class="pkg-tier">Most Popular</div>
+          <div class="pkg-name">Business Site</div>
+          <div class="pkg-price"><span class="pkg-dollar">$</span><span class="pkg-amount">599</span></div>
+          <p class="pkg-note">One-off. You own it forever.</p>
+          <div class="pkg-rule"></div>
+          <ul class="pkg-features">
+            <li>Up to 4 pages (Home, About, Services, Contact)</li>
+            <li>Mobile and tablet optimised</li>
+            <li>Booking or enquiry form</li>
+            <li>Google Maps embed</li>
+            <li>Basic SEO setup</li>
+            <li>Social media links</li>
+            <li>Free hosting on Vercel</li>
+            <li>Domain setup included</li>
+          </ul>
+          <a href="https://www.facebook.com/profile.php?id=61589390994384" target="_blank" class="pkg-btn">Message to Get Started</a>
+        </div>
+
+        <div class="pkg">
+          <div class="pkg-stripe"></div>
+          <div class="pkg-tier">Pro</div>
+          <div class="pkg-name">Pro Site</div>
+          <div class="pkg-price"><span class="pkg-dollar">$</span><span class="pkg-amount">999</span></div>
+          <p class="pkg-note">One-off + optional $49/mo care plan.</p>
+          <div class="pkg-rule"></div>
+          <ul class="pkg-features">
+            <li>Up to 8 pages</li>
+            <li>Online booking system</li>
+            <li>Custom contact & enquiry forms</li>
+            <li>Google Maps + Reviews embed</li>
+            <li>Full SEO foundation setup</li>
+            <li>Social media integration</li>
+            <li>Free hosting on Vercel</li>
+            <li>Priority support</li>
+          </ul>
+          <a href="https://www.facebook.com/profile.php?id=61589390994384" target="_blank" class="pkg-btn">Message for a Quote</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AUTOMATION PACKS -->
+  <div class="section">
+    <div class="section-label"><div class="bar"></div><span>Automation Packs</span></div>
+    <h2 class="section-title">Stop Losing Leads.<br>Automate the Admin.</h2>
+    <p class="section-desc">Low monthly fee. Cancel anytime. These turn a basic website into an actual lead machine.</p>
+
+    <div class="auto-grid">
+      <div class="auto-card">
+        <span class="auto-icon">📥</span>
+        <div class="auto-name">Lead Capture Automation</div>
+        <div class="auto-price">$299 SETUP + $20/MONTH</div>
+        <p class="auto-desc">Never miss an enquiry again. Instant auto-reply, email alerts, CRM integration, and missed-call text back — all automatic.</p>
+        <ul class="auto-includes">
+          <li>Enquiry form with instant auto-reply</li>
+          <li>Email notifications to you</li>
+          <li>CRM or spreadsheet integration</li>
+          <li>Missed-call text back</li>
+        </ul>
+      </div>
+      <div class="auto-card">
+        <span class="auto-icon">🔄</span>
+        <div class="auto-name">Client Follow-Up System</div>
+        <div class="auto-price">$399 SETUP + $30/MONTH</div>
+        <p class="auto-desc">Automated reminders, follow-up emails, and review requests. Stop chasing clients manually.</p>
+        <ul class="auto-includes">
+          <li>Appointment & quote reminders</li>
+          <li>Follow-up email sequences</li>
+          <li>Google review request automation</li>
+          <li>Quote follow-up nudges</li>
+        </ul>
+      </div>
+      <div class="auto-card">
+        <span class="auto-icon">🧠</span>
+        <div class="auto-name">AI Admin Assistant</div>
+        <div class="auto-price">FROM $599 SETUP</div>
+        <p class="auto-desc">AI tools built for your specific business. Answer common questions, draft emails, handle intake — without lifting a finger.</p>
+        <ul class="auto-includes">
+          <li>AI FAQ chatbot for your site</li>
+          <li>AI email drafting templates</li>
+          <li>Automated intake forms</li>
+          <li>Custom to your workflow</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROCESS -->
+  <div class="process-wrap" id="process">
+    <div class="process-inner">
+      <div class="section-label"><div class="bar"></div><span>The Process</span></div>
+      <h2 class="section-title">First Message to Live.<br>No Tech Knowledge Needed.</h2>
+      <div class="steps-grid">
+        <div class="step">
+          <div class="step-dot"></div>
+          <div class="step-num">Step 01</div>
+          <div class="step-title">Message Us</div>
+          <p class="step-desc">Hit us up on Facebook. Tell us about your business and what you need. No jargon, no forms, no tech knowledge required.</p>
+        </div>
+        <div class="step">
+          <div class="step-dot"></div>
+          <div class="step-num">Step 02</div>
+          <div class="step-title">We Build It</div>
+          <p class="step-desc">We design using your brand, colours, and vibe. You get a preview before anything goes live. Changes included.</p>
+        </div>
+        <div class="step">
+          <div class="step-dot"></div>
+          <div class="step-num">Step 03</div>
+          <div class="step-title">You Approve</div>
+          <p class="step-desc">Happy? We launch. Not happy? We tweak. No rushed handoffs. Your site goes live when you say it does.</p>
+        </div>
+        <div class="step">
+          <div class="step-dot"></div>
+          <div class="step-num">Step 04</div>
+          <div class="step-title">Go Live 🚀</div>
+          <p class="step-desc">Domain connected, site live, ready for enquiries from day one. We stay available for questions and changes.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WHY US -->
+  <div class="section">
+    <div class="why-grid">
+      <div>
+        <div class="section-label"><div class="bar"></div><span>Why Broken Mind</span></div>
+        <h2 class="section-title">Real People.<br>No Bullshit.</h2>
+        <div class="why-list">
+          <div class="why-row">
+            <span class="why-icon">⚡</span>
+            <div>
+              <div class="why-title">Fast Turnaround</div>
+              <p class="why-text">Most sites done in 1–2 weeks. Automation packs live within days. We don't drag things out.</p>
+            </div>
+          </div>
+          <div class="why-row">
+            <span class="why-icon">💬</span>
+            <div>
+              <div class="why-title">Easy to Deal With</div>
+              <p class="why-text">No tech jargon. Plain English, quick replies. Message on Facebook and we actually respond.</p>
+            </div>
+          </div>
+          <div class="why-row">
+            <span class="why-icon">💰</span>
+            <div>
+              <div class="why-title">Actually Affordable</div>
+              <p class="why-text">Not a big agency. Quality work without the $5k price tag. Transparent pricing, no surprises.</p>
+            </div>
+          </div>
+          <div class="why-row">
+            <span class="why-icon">📍</span>
+            <div>
+              <div class="why-title">Brisbane Based</div>
+              <p class="why-text">Same timezone, same city. We get Brisbane small businesses and what actually works here.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="section-label"><div class="bar"></div><span>By the Numbers</span></div>
+        <h2 class="section-title">Built for<br>Small Business.</h2>
+        <div class="stats-grid">
+          <div class="stat"><div class="stat-num">7</div><div class="stat-label">Day avg. turnaround</div></div>
+          <div class="stat"><div class="stat-num">$0</div><div class="stat-label">Hosting cost</div></div>
+          <div class="stat"><div class="stat-num">100%</div><div class="stat-label">Mobile optimised</div></div>
+          <div class="stat"><div class="stat-num">BNE</div><div class="stat-label">Brisbane locals</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-wrap">
+    <div class="cta-banner-wrap">
+      <img src="/logo-banner.png" class="cta-banner" alt="Broken Mind Software" />
+    </div>
+    <p>Takes 5 minutes to get a quote. Message us on Facebook and we'll get back to you the same day.</p>
+    <a href="https://www.facebook.com/profile.php?id=61589390994384" target="_blank" class="btn-primary" style="font-size:1rem; padding:18px 48px;">
+      💬 Message Us on Facebook
+    </a>
+  </div>
+
+  <footer>
+    <div class="footer-brand">© 2025 <span>BROKEN MIND</span> SOFTWARE — Brisbane, QLD</div>
+    <div class="footer-tagline">INNOVATE. <em>AUTOMATE.</em> ELEVATE.</div>
+  </footer>
+
+</body>
+</html>

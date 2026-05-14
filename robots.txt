@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://brokenmind.com.au/sitemap.xml

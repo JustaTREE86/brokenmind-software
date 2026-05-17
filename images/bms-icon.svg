@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240">
+  <defs>
+    <radialGradient id="g" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#5ee9ff" stop-opacity="0.18"></stop>
+      <stop offset="60%" stop-color="#1a7fff" stop-opacity="0.06"></stop>
+      <stop offset="100%" stop-color="transparent"></stop>
+    </radialGradient>
+  </defs>
+  <circle cx="120" cy="120" r="100" fill="url(#g)"></circle>
+  <circle cx="120" cy="120" r="108" fill="none" stroke="#1a7fff" stroke-width="0.6" opacity="0.45"></circle>
+  <circle cx="120" cy="120" r="100" fill="none" stroke="#4db0ff" stroke-width="1" opacity="0.65"></circle>
+  <circle cx="120" cy="120" r="94" fill="none" stroke="#5ee9ff" stroke-width="1.4"></circle>
+  <g stroke="#5ee9ff" stroke-width="1.4" stroke-linecap="round">
+    <line x1="120" y1="6" x2="120" y2="16"></line>
+    <line x1="120" y1="224" x2="120" y2="234"></line>
+    <line x1="6" y1="120" x2="16" y2="120"></line>
+    <line x1="224" y1="120" x2="234" y2="120"></line>
+  </g>
+  <g stroke="#4db0ff" stroke-width="0.8" opacity="0.55" stroke-linecap="round">
+    <line x1="50" y1="50" x2="58" y2="58"></line>
+    <line x1="190" y1="50" x2="182" y2="58"></line>
+    <line x1="50" y1="190" x2="58" y2="182"></line>
+    <line x1="190" y1="190" x2="182" y2="182"></line>
+  </g>
+  <g fill="none" stroke="#5ee9ff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M 120 46 C 80 50 56 76 56 114 C 56 148 78 172 110 182 L 120 182"></path>
+    <path d="M 120 66 C 92 70 74 90 74 114 C 74 134 88 152 112 160"></path>
+    <path d="M 120 86 C 102 90 90 104 90 118 C 90 132 100 144 118 148"></path>
+  </g>
+  <g fill="none" stroke="#5ee9ff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M 120 46 C 160 50 184 76 184 114 C 184 148 162 172 130 182 L 120 182"></path>
+    <path d="M 120 66 C 148 70 166 90 166 114 C 166 134 152 152 128 160"></path>
+    <path d="M 120 86 C 138 90 150 104 150 118 C 150 132 140 144 122 148"></path>
+  </g>
+  <line x1="120" y1="46" x2="120" y2="182" stroke="#4db0ff" stroke-width="1" opacity="0.7" stroke-dasharray="2 3"></line>
+  <g stroke="#4db0ff" stroke-width="0.9" opacity="0.6" stroke-linecap="round">
+    <line x1="90" y1="118" x2="150" y2="118"></line>
+    <line x1="74" y1="100" x2="166" y2="100" stroke-dasharray="2 3"></line>
+    <line x1="74" y1="130" x2="166" y2="130" stroke-dasharray="2 3"></line>
+  </g>
+  <g fill="#5ee9ff">
+    <circle cx="120" cy="46" r="3.2"></circle>
+    <circle cx="120" cy="66" r="2.2"></circle>
+    <circle cx="120" cy="86" r="1.8"></circle>
+    <circle cx="120" cy="182" r="3.2"></circle>
+    <circle cx="56" cy="114" r="2.6"></circle>
+    <circle cx="184" cy="114" r="2.6"></circle>
+    <circle cx="74" cy="114" r="1.8"></circle>
+    <circle cx="166" cy="114" r="1.8"></circle>
+    <circle cx="90" cy="118" r="1.5"></circle>
+    <circle cx="150" cy="118" r="1.5"></circle>
+    <circle cx="110" cy="182" r="1.5"></circle>
+    <circle cx="130" cy="182" r="1.5"></circle>
+  </g>
+  <circle cx="120" cy="120" r="9" fill="#03030a" stroke="#5ee9ff" stroke-width="1.4"></circle>
+  <circle cx="120" cy="120" r="4" fill="#5ee9ff"></circle>
+  <circle cx="120" cy="120" r="14" fill="none" stroke="#5ee9ff" stroke-width="0.6" opacity="0.4"></circle>
+</svg>

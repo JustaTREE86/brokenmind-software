@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Broken Mind Software — Websites & Automation for Brisbane Businesses</title>
-  <meta name="description" content="Broken Mind Software helps Brisbane small businesses with affordable websites, lead automation, and AI admin systems. Fast turnaround, transparent pricing, no lock-in contracts." />
+  <meta name="description" content="Broken Mind Software builds innovative websites, lead automation, and AI admin systems for Brisbane businesses. Fast turnaround, transparent pricing, no lock-in contracts." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://brokenmind.com.au/" />
 
@@ -970,6 +970,23 @@
     }
     .auto-includes li::before { content: '◆'; color: var(--cyan); flex-shrink: 0; font-size: 0.55rem; margin-top: 5px; }
 
+    /* ─── COMING SOON ─── */
+    .auto-card--soon { opacity: 0.65; pointer-events: none; position: relative; }
+    .auto-card--soon::after {
+      content: ''; position: absolute; inset: 0;
+      background: repeating-linear-gradient(135deg, transparent, transparent 6px, rgba(0,0,0,0.08) 6px, rgba(0,0,0,0.08) 7px);
+      border-radius: inherit; pointer-events: none;
+    }
+    .soon-badge {
+      display: inline-block; font-size: 0.58rem; font-family: var(--font-mono);
+      letter-spacing: 0.12em; color: var(--cyan); border: 1px solid rgba(94,233,255,0.4);
+      padding: 2px 7px; border-radius: 2px; vertical-align: middle; margin-left: 8px;
+      background: rgba(94,233,255,0.07);
+    }
+    .auto-price--soon { color: var(--muted) !important; border-color: rgba(255,255,255,0.1) !important; }
+    .dot--soon { background: var(--muted) !important; box-shadow: none !important; }
+    .ok--soon { color: var(--muted) !important; border-color: rgba(255,255,255,0.15) !important; }
+
     /* ─── PROCESS ─── */
     .process-wrap {
       background: linear-gradient(180deg, rgba(6,6,15,0.6) 0%, rgba(8,8,20,0.8) 50%, rgba(6,6,15,0.6) 100%);
@@ -1646,7 +1663,7 @@
       <div class="ticker-inner">
         <span class="ticker-item"><span class="dot"></span><span class="tag">SVC-01</span><span class="val">Website Builds</span><span class="ok">OK</span></span>
         <span class="ticker-item"><span class="dot"></span><span class="tag">SVC-02</span><span class="val">Lead Automation</span><span class="ok">OK</span></span>
-        <span class="ticker-item"><span class="dot"></span><span class="tag">SVC-03</span><span class="val">AI Admin Systems</span><span class="ok">OK</span></span>
+        <span class="ticker-item"><span class="dot dot--soon"></span><span class="tag">SVC-03</span><span class="val">AI Admin Systems</span><span class="ok ok--soon">SOON</span></span>
         <span class="ticker-item"><span class="dot"></span><span class="tag">LOC</span><span class="val">Brisbane Based</span><span class="ok">OK</span></span>
         <span class="ticker-item"><span class="dot"></span><span class="tag">ETA</span><span class="val">Fast Turnaround</span><span class="ok">7D AVG</span></span>
         <span class="ticker-item"><span class="dot"></span><span class="tag">UX</span><span class="val">Mobile First</span><span class="ok">100%</span></span>
@@ -1655,7 +1672,7 @@
         <!-- duplicate for seamless loop -->
         <span class="ticker-item"><span class="dot"></span><span class="tag">SVC-01</span><span class="val">Website Builds</span><span class="ok">OK</span></span>
         <span class="ticker-item"><span class="dot"></span><span class="tag">SVC-02</span><span class="val">Lead Automation</span><span class="ok">OK</span></span>
-        <span class="ticker-item"><span class="dot"></span><span class="tag">SVC-03</span><span class="val">AI Admin Systems</span><span class="ok">OK</span></span>
+        <span class="ticker-item"><span class="dot dot--soon"></span><span class="tag">SVC-03</span><span class="val">AI Admin Systems</span><span class="ok ok--soon">SOON</span></span>
         <span class="ticker-item"><span class="dot"></span><span class="tag">LOC</span><span class="val">Brisbane Based</span><span class="ok">OK</span></span>
         <span class="ticker-item"><span class="dot"></span><span class="tag">ETA</span><span class="val">Fast Turnaround</span><span class="ok">7D AVG</span></span>
         <span class="ticker-item"><span class="dot"></span><span class="tag">UX</span><span class="val">Mobile First</span><span class="ok">100%</span></span>
@@ -1783,7 +1800,7 @@
           <div class="pkg-stripe"></div>
           <div class="pkg-tier">⬢ Starter</div>
           <div class="pkg-name">One Pager</div>
-          <div class="pkg-price"><span class="pkg-dollar">$</span><span class="pkg-amount">299</span></div>
+          <div class="pkg-price"><span class="pkg-dollar">$</span><span class="pkg-amount">800</span></div>
           <p class="pkg-note">One-off. You own it forever.</p>
           <div class="pkg-rule"></div>
           <ul class="pkg-features">
@@ -1801,7 +1818,7 @@
           <div class="pkg-stripe"></div>
           <div class="pkg-tier">★ Most Popular</div>
           <div class="pkg-name">Business Site</div>
-          <div class="pkg-price"><span class="pkg-dollar">$</span><span class="pkg-amount">599</span></div>
+          <div class="pkg-price"><span class="pkg-dollar">$</span><span class="pkg-amount">1,500</span></div>
           <p class="pkg-note">One-off. You own it forever.</p>
           <div class="pkg-rule"></div>
           <ul class="pkg-features">
@@ -1821,8 +1838,8 @@
           <div class="pkg-stripe"></div>
           <div class="pkg-tier">▲ Pro</div>
           <div class="pkg-name">Pro Site</div>
-          <div class="pkg-price"><span class="pkg-dollar">$</span><span class="pkg-amount">999</span></div>
-          <p class="pkg-note">One-off + optional $49/mo care plan.</p>
+          <div class="pkg-price"><span class="pkg-dollar">$</span><span class="pkg-amount">2,500</span></div>
+          <p class="pkg-note">One-off + optional $149/mo care plan.</p>
           <div class="pkg-rule"></div>
           <ul class="pkg-features">
             <li>Up to 8 pages</li>
@@ -1856,7 +1873,7 @@
       <div class="auto-card">
         <span class="auto-icon">🚀</span>
         <div class="auto-name">Lead Capture Automation</div>
-        <div class="auto-price">$299 SETUP + $20/MONTH</div>
+        <div class="auto-price">$499 SETUP + $69/MONTH</div>
         <p class="auto-desc">Never miss an enquiry again. Instant auto-reply, email alerts, CRM integration, and missed-call text back — all automatic.</p>
         <ul class="auto-includes">
           <li>Enquiry form with instant auto-reply</li>
@@ -1868,7 +1885,7 @@
       <div class="auto-card">
         <span class="auto-icon">🌌</span>
         <div class="auto-name">Client Follow-Up System</div>
-        <div class="auto-price">$399 SETUP + $30/MONTH</div>
+        <div class="auto-price">$699 SETUP + $99/MONTH</div>
         <p class="auto-desc">Automated reminders, follow-up emails, and review requests. Stop chasing clients manually.</p>
         <ul class="auto-includes">
           <li>Appointment &amp; quote reminders</li>
@@ -1877,10 +1894,10 @@
           <li>Quote follow-up nudges</li>
         </ul>
       </div>
-      <div class="auto-card">
+      <div class="auto-card auto-card--soon">
         <span class="auto-icon">🧠</span>
-        <div class="auto-name">AI Admin Assistant</div>
-        <div class="auto-price">FROM $599 SETUP</div>
+        <div class="auto-name">AI Admin Assistant <span class="soon-badge">COMING SOON</span></div>
+        <div class="auto-price auto-price--soon">LAUNCHING 2025</div>
         <p class="auto-desc">AI tools built for your specific business. Answer common questions, draft emails, handle intake — without lifting a finger.</p>
         <ul class="auto-includes">
           <li>AI FAQ chatbot for your site</li>
@@ -1979,7 +1996,7 @@
             <span class="why-icon">💎</span>
             <div>
               <div class="why-title">Actually Affordable</div>
-              <p class="why-text">Not a big agency. Quality work without the $5k price tag. Transparent pricing, no surprises.</p>
+              <p class="why-text">Innovative builds. No agency overhead. Transparent pricing, no surprises.</p>
             </div>
           </div>
           <div class="why-row">

@@ -1,5 +1,7 @@
 User-agent: *
 Allow: /
+Disallow: /autozone/
+Disallow: /api/
 
 User-agent: facebookexternalhit
 Allow: /

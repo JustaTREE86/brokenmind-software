@@ -1,0 +1,16 @@
+{
+  "name": "brokenmind-software",
+  "private": true,
+  "type": "module",
+  "description": "brokenmind.com.au: static marketing site, plus the Autozone window-card app under /autozone",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "engine": "node tools/build-engine.mjs",
+    "test": "node --test \"tools/test/*.test.mjs\""
+  },
+  "dependencies": {
+    "@sparticuz/chromium": "152.0.0",
+    "@vercel/blob": "2.8.0",
+    "puppeteer-core": "25.10.0"
+  }
+}

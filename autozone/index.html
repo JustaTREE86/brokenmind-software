@@ -1,0 +1,505 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Autozone Window Cards</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23F47B20'/%3E%3Cpath d='M9 8h14l-9 12h9v4H9l9-12H9z' fill='%23fff'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,600;0,800;1,900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --orange:#F47B20; --orange-deep:#D9600A; --ink:#0E0E0E; --panel:#191C20;
+  --bg:#EEF1F5; --card:#fff; --text:#1B1F24; --muted:#667085; --line:#DDE1E7;
+  --good:#1F7A4A; --good-bg:#E6F4EC; --warn:#8A5300; --warn-bg:#FFF3DF; --bad:#B42318; --bad-bg:#FDECEA;
+  --disp:'Archivo','Arial Black',system-ui,sans-serif;
+  --ui:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --r:12px;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--text);font:15px/1.45 var(--ui)}
+[hidden]{display:none !important}
+button{font:inherit;cursor:pointer;border:1px solid var(--line);background:#fff;color:var(--text);border-radius:9px;padding:8px 14px;font-weight:600}
+button:hover{border-color:#b9c0ca}
+button:focus-visible,input:focus-visible,a:focus-visible,summary:focus-visible{outline:3px solid rgba(244,123,32,.45);outline-offset:2px}
+button.primary{background:var(--orange);border-color:var(--orange);color:#fff}
+button.primary:hover{background:var(--orange-deep);border-color:var(--orange-deep)}
+button.ghost{background:transparent;border-color:transparent;color:inherit}
+button[disabled]{opacity:.55;cursor:default}
+a{color:var(--orange-deep)}
+
+/* header */
+.bar{background:var(--ink);color:#fff;display:flex;align-items:center;gap:16px;padding:12px clamp(14px,3vw,28px);position:sticky;top:0;z-index:5;
+  background-image:linear-gradient(135deg,rgba(255,255,255,.03) 25%,transparent 25%,transparent 50%,rgba(255,255,255,.03) 50%,rgba(255,255,255,.03) 75%,transparent 75%);background-size:6px 6px}
+.brand{display:flex;align-items:baseline;gap:12px;margin-right:auto;min-width:0}
+.wordmark{font:italic 900 22px/1 var(--disp);letter-spacing:-.5px;white-space:nowrap}
+.wordmark b{color:var(--orange);font-weight:900}
+.brand .sub{font:600 13px var(--ui);color:#c7ccd4;text-transform:uppercase;letter-spacing:.12em;white-space:nowrap}
+.sync{display:flex;align-items:center;gap:10px;font-size:13px;color:#c7ccd4}
+.bar button{background:#2A2F36;border-color:#3A4049;color:#fff;white-space:nowrap}
+.bar button:hover{background:#343a42}
+.bar button.ghost{background:transparent;border-color:transparent;color:#c7ccd4}
+
+main{max-width:1280px;margin:0 auto;padding:18px clamp(12px,3vw,28px) 48px}
+.alert{border-radius:var(--r);padding:12px 14px;margin-bottom:14px;background:var(--bad-bg);color:var(--bad);border:1px solid #f5c2bd}
+.progress{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;margin-bottom:14px}
+.meter{height:6px;background:#e5e8ee;border-radius:4px;overflow:hidden;margin-top:8px}
+.meter i{display:block;height:100%;width:0;background:var(--orange);transition:width .4s}
+
+.panel{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px;margin-bottom:16px}
+.panel h2{font:800 18px/1.2 var(--disp);margin:0 0 2px;display:flex;align-items:center;gap:8px}
+.panel .lede{color:var(--muted);margin:0 0 12px;font-size:14px}
+.count{font:700 13px var(--ui);background:var(--orange);color:#fff;border-radius:99px;padding:1px 9px}
+.panel.todo{border-color:#F7C9A5;box-shadow:0 1px 0 #F7C9A5}
+.panel.sold{border-color:#f5c2bd}
+.panel.sold .count{background:var(--bad)}
+.allgood{display:flex;align-items:center;gap:10px;color:var(--good);font-weight:600}
+.allgood::before{content:'';width:22px;height:22px;border-radius:50%;background:var(--good) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 12.5l4 4 8-9' stroke='%23fff' stroke-width='2.6' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/16px no-repeat;flex:none}
+
+.rows{list-style:none;margin:0;padding:0}
+.row{display:grid;grid-template-columns:auto 72px 1fr auto;gap:12px;align-items:center;padding:9px 8px;border-radius:10px;cursor:pointer}
+.row+.row{border-top:1px solid #eef0f3}
+.row:hover{background:#f7f8fa}
+.row.sel{background:#FFF4EB;box-shadow:inset 3px 0 0 var(--orange)}
+.row input[type=checkbox]{width:18px;height:18px;accent-color:var(--orange);margin:0}
+.row .nocheck{width:18px}
+.thumb{width:72px;height:54px;border-radius:7px;object-fit:cover;background:#e5e8ee;display:block}
+.row .t{font-weight:700;line-height:1.25}
+.row .m{color:var(--muted);font-size:13px}
+.row .why{font-size:13px;margin-top:2px}
+.pill{font:700 12px var(--ui);border-radius:99px;padding:3px 10px;white-space:nowrap}
+.pill.new{background:var(--warn-bg);color:var(--warn)}
+.pill.relisted,.pill.dup{background:var(--bad-bg);color:var(--bad)}
+.pill.changed{background:var(--warn-bg);color:var(--warn)}
+.pill.ok{background:var(--good-bg);color:var(--good)}
+.actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:14px}
+.confirm{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:14px;padding:12px 14px;border-radius:10px;background:#FFF4EB;border:1px solid #F7C9A5;font-weight:600}
+.sold .row{grid-template-columns:1fr auto;cursor:default}
+.sold .row:hover{background:transparent}
+
+.grid{display:grid;grid-template-columns:minmax(0,1fr) 480px;gap:16px;align-items:start}
+.listhead{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.listhead h2{margin:0 auto 0 0}
+input[type=search],input[type=text],input[type=password]{font:inherit;border:1px solid var(--line);border-radius:9px;padding:8px 11px;background:#fff;color:var(--text);min-width:0}
+.preview{position:sticky;top:76px}
+.frame{background:#d9dde3;border-radius:10px;overflow:hidden;aspect-ratio:297/210}
+.frame iframe{border:0;width:100%;height:100%;display:block}
+.pv h3{font:800 19px/1.2 var(--disp);margin:14px 0 4px}
+.facts{display:flex;flex-wrap:wrap;gap:6px 16px;color:var(--muted);font-size:14px;margin-bottom:8px}
+.facts b{color:var(--text)}
+.changes{margin:8px 0 0;padding-left:18px;font-size:14px}
+.edit{display:flex;gap:8px;margin-top:10px}
+.edit input{flex:1}
+.note{color:var(--muted);font-size:13px}
+
+details.log{margin-top:4px}
+details.log summary{cursor:pointer;font-weight:700;color:var(--muted);padding:6px 0}
+details.log ul{list-style:none;padding:0;margin:6px 0 0;font-size:13px;color:var(--muted)}
+details.log li{padding:4px 0;border-top:1px solid #e5e8ee}
+
+.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:var(--ink);color:#fff;border-radius:12px;padding:11px 14px 11px 18px;display:flex;gap:14px;align-items:center;box-shadow:0 10px 30px rgba(0,0,0,.25);z-index:20;max-width:calc(100vw - 24px)}
+.toast button{background:transparent;border-color:#555;color:#fff;padding:5px 11px}
+
+/* login */
+.login{min-height:100vh;display:grid;place-items:center;padding:20px;background:var(--ink)}
+.login form{background:#fff;border-radius:16px;padding:28px;width:min(380px,100%);box-shadow:0 20px 60px rgba(0,0,0,.4)}
+.login .wordmark{color:var(--ink);font-size:30px}
+.login h1{font:600 14px var(--ui);text-transform:uppercase;letter-spacing:.12em;color:var(--muted);margin:6px 0 22px}
+.login label{display:block;font-weight:600;margin-bottom:6px}
+.login input{width:100%;margin-bottom:14px;padding:11px 12px}
+.login button{width:100%;padding:11px}
+.login .err{color:var(--bad);font-size:14px;margin:-4px 0 12px}
+.login .by{color:var(--muted);font-size:12px;margin:18px 0 0;text-align:center}
+
+#printer{position:fixed;left:-20000px;top:0;width:1123px;height:794px;border:0}
+
+@media (max-width:1020px){
+  .grid{grid-template-columns:1fr}
+  .preview{position:static;order:-1}
+}
+@media (max-width:560px){
+  .brand .sub,.sync #syncText{display:none}
+  .wordmark{font-size:19px}
+  .sync{gap:4px}
+  .bar button{padding:7px 10px;font-size:13px}
+  .row{grid-template-columns:auto 56px 1fr;gap:10px}
+  .thumb{width:56px;height:42px}
+  .row .pill{grid-column:3;justify-self:start}
+}
+</style>
+</head>
+<body>
+
+<div class="login" id="login" hidden>
+  <form id="loginForm" autocomplete="on">
+    <div class="wordmark">AUTO<b>ZONE</b></div>
+    <h1>Window cards</h1>
+    <label for="pw">Staff password</label>
+    <input id="pw" type="password" autocomplete="current-password" required>
+    <p class="err" id="loginErr" hidden></p>
+    <button class="primary" type="submit">Log in</button>
+    <p class="by">Built for Autozone QLD by BrokenMind Software</p>
+  </form>
+</div>
+
+<div id="shell" hidden>
+<header class="bar">
+  <div class="brand"><span class="wordmark">AUTO<b>ZONE</b></span><span class="sub">Window cards</span></div>
+  <div class="sync">
+    <span id="syncText" aria-live="polite"></span>
+    <button id="syncBtn" type="button">Check website</button>
+    <button id="logoutBtn" class="ghost" type="button">Log out</button>
+  </div>
+</header>
+
+<main>
+  <div class="progress" id="progress" hidden>
+    <strong id="pgTitle">Loading…</strong> <span id="pgText" class="note"></span>
+    <div class="meter"><i id="pgBar"></i></div>
+  </div>
+  <div class="alert" id="err" role="alert" hidden></div>
+
+  <section class="panel todo" id="todo" hidden>
+    <h2>Cards to print <span class="count" id="todoCount"></span></h2>
+    <p class="lede">New cars, re-listed cars and changed prices on the website. Tick the ones to print.</p>
+    <ul class="rows" id="todoList"></ul>
+    <div class="actions">
+      <button class="primary" id="printSel" type="button">Print</button>
+      <button id="pdfSel" type="button">Download PDF</button>
+      <span class="note" id="selNote"></span>
+    </div>
+    <div class="confirm" id="afterPrint" hidden>
+      <span id="afterText"></span>
+      <button class="primary" id="markDone" type="button">Yes, mark as done</button>
+      <button class="ghost" id="markLater" type="button">Not yet</button>
+    </div>
+  </section>
+
+  <section class="panel sold" id="soldBox" hidden>
+    <h2>Sold: take these cards out of the window <span class="count" id="soldCount"></span></h2>
+    <p class="lede">These cars are no longer on the website.</p>
+    <ul class="rows" id="soldList"></ul>
+  </section>
+
+  <section class="panel" id="allGood" hidden><div class="allgood">Every card in the windows matches the website.</div></section>
+
+  <div class="grid" id="grid" hidden>
+    <section class="panel">
+      <div class="listhead">
+        <h2>All cars on the website <span class="count" id="allCount"></span></h2>
+        <input type="search" id="search" placeholder="Search" aria-label="Search cars">
+      </div>
+      <ul class="rows" id="list"></ul>
+    </section>
+    <aside class="panel preview" id="pv" aria-live="polite">
+      <div class="frame"><iframe id="engine" src="/autozone/engine.html" title="Card preview"></iframe></div>
+      <div class="pv" id="pvBody"></div>
+    </aside>
+  </div>
+
+  <details class="log" id="logBox"><summary>Recent activity</summary><ul id="log"></ul></details>
+</main>
+</div>
+
+<div class="toast" id="toast" role="status" hidden><span id="toastText"></span><button id="toastUndo" type="button" hidden>Undo</button></div>
+<iframe id="printer" src="/autozone/engine.html" title="Printing" aria-hidden="true" tabindex="-1"></iframe>
+
+<script>
+(function(){
+'use strict';
+var $ = function(id){ return document.getElementById(id); };
+var API = '/api/autozone/';
+var data = null, selected = null, checked = {}, pendingDone = null, query = '', syncing = false;
+
+function esc(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){
+  return { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]; }); }
+function money(n){ return '$' + Number(n || 0).toLocaleString('en-AU'); }
+function km(n){ return n ? Number(n).toLocaleString('en-AU') + ' km' : ''; }
+function when(iso){
+  if (!iso) return '';
+  var d = new Date(iso);
+  return d.toLocaleDateString('en-AU', { day:'numeric', month:'short', timeZone:'Australia/Brisbane' });
+}
+function ago(iso){
+  var s = Math.max(0, (Date.now() - Date.parse(iso)) / 1000);
+  if (s < 60) return 'just now';
+  if (s < 3600) return Math.round(s / 60) + ' min ago';
+  if (s < 86400) return Math.round(s / 3600) + ' hr ago';
+  return when(iso);
+}
+
+async function api(path, opts){
+  var r = await fetch(API + path, opts);
+  if (r.status === 401 && path !== 'login') { showLogin(); throw new Error('Please log in again.'); }
+  var j = await r.json().catch(function(){ return {}; });
+  if (!r.ok) throw new Error(j.error || ('Something went wrong (' + r.status + ')'));
+  return j;
+}
+function post(path, body){
+  return api(path, { method:'POST', headers:{ 'content-type':'application/json' }, body: JSON.stringify(body) });
+}
+function showError(msg){ $('err').textContent = msg; $('err').hidden = !msg; }
+
+var toastTimer;
+function toast(text, undo){
+  $('toastText').textContent = text;
+  $('toastUndo').hidden = !undo;
+  $('toast').hidden = false;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(function(){ $('toast').hidden = true; }, undo ? 9000 : 4000);
+}
+$('toastUndo').onclick = async function(){
+  $('toast').hidden = true;
+  try { await post('update', { action:'undo' }); await load(); toast('Undone.'); } catch(e){ showError(e.message); }
+};
+
+/* ---------- login ---------- */
+function showLogin(){ $('shell').hidden = true; $('login').hidden = false; $('pw').focus(); }
+$('loginForm').onsubmit = async function(e){
+  e.preventDefault();
+  $('loginErr').hidden = true;
+  var btn = this.querySelector('button'); btn.disabled = true;
+  try {
+    await api('login', { method:'POST', headers:{ 'content-type':'application/json' }, body: JSON.stringify({ password: $('pw').value }) });
+    $('pw').value = '';
+    start();
+  } catch(err){ $('loginErr').textContent = err.message; $('loginErr').hidden = false; }
+  btn.disabled = false;
+};
+$('logoutBtn').onclick = async function(){ try { await api('login', { method:'DELETE' }); } catch(e){} showLogin(); };
+
+/* ---------- card engine (the Card Studio's own renderer) ---------- */
+function engineOf(frame){
+  return new Promise(function(resolve){
+    function ready(){ var w = frame.contentWindow; return w && w.AZ ? w : null; }
+    if (ready()) return resolve(ready());
+    frame.addEventListener('load', function(){ resolve(ready()); }, { once:true });
+  });
+}
+var previewEngine = engineOf($('engine'));
+var printEngine = engineOf($('printer'));
+var weeklyFor = function(){ return 0; };
+previewEngine.then(function(w){ if (w) { weeklyFor = w.AZ.weeklyFor; if (data) render(); } });
+
+/* ---------- data ---------- */
+async function load(force){
+  if (syncing) return;
+  syncing = true; $('syncBtn').disabled = true;
+  $('syncText').textContent = 'Checking the website…';
+  if (!data) { $('progress').hidden = false; $('pgTitle').textContent = 'Loading…'; $('pgText').textContent = ''; }
+  try {
+    var j = await api('stock' + (force ? '?refresh=1' : ''));
+    var loops = 0;
+    while (j.syncing && loops++ < 8) {             // first read of the website comes in instalments
+      $('progress').hidden = false;
+      $('pgTitle').textContent = 'Reading the Autozone website…';
+      $('pgText').textContent = j.read + ' of ' + j.listed + ' cars. The very first check takes about a minute.';
+      $('pgBar').style.width = Math.round(100 * j.read / Math.max(1, j.listed)) + '%';
+      j = await api('stock?refresh=1');
+    }
+    $('progress').hidden = true;
+    if (j.syncing) throw new Error('The Autozone website is slow to respond. Try "Check website" again in a minute.');
+    data = j;
+    showError(j.error || '');
+    render();
+  } catch(e){ $('progress').hidden = true; showError(e.message); }
+  syncing = false; $('syncBtn').disabled = false;
+  // showed the last known list straight away; now bring it up to date in the background
+  if (data && data.stale && !force) load(true);
+}
+$('syncBtn').onclick = function(){ load(true); };
+
+function statusPill(c){
+  if (c.duplicateOf) return '<span class="pill dup">Check: duplicate listing</span>';
+  if (c.status === 'relisted') return '<span class="pill relisted">Reprint: QR changed</span>';
+  if (c.status === 'changed') return '<span class="pill changed">Reprint: details changed</span>';
+  if (c.status === 'new') return '<span class="pill new">New: needs a card</span>';
+  return '<span class="pill ok">Card up' + (c.printedAt ? ' · ' + esc(when(c.printedAt)) : '') + '</span>';
+}
+function factLine(c){
+  var w = weeklyFor(c.price);
+  return [money(c.price), km(c.odometer), w ? '$' + w + '/wk on card' : ''].filter(Boolean).join(' · ');
+}
+function rowHtml(c, withBox){
+  var box = withBox
+    ? '<input type="checkbox" data-check="' + esc(c.id) + '"' + (checked[c.id] ? ' checked' : '') + ' aria-label="Print ' + esc(c.title) + '">'
+    : '<span class="nocheck"></span>';
+  var why = withBox && c.changes && c.changes.length ? '<div class="why">' + esc(c.changes[0]) + '</div>' : '';
+  return '<li class="row' + (selected === c.id ? ' sel' : '') + '" data-id="' + esc(c.id) + '">' + box +
+    '<img class="thumb" loading="lazy" alt="" src="' + esc(c.photo || '') + '">' +
+    '<div><div class="t">' + esc(c.title) + '</div><div class="m">' + esc(factLine(c)) + '</div>' + why + '</div>' +
+    statusPill(c) + '</li>';
+}
+
+function todoCars(){ return data ? data.cars.filter(function(c){ return c.status !== 'ok'; }) : []; }
+function byId(id){ return data && data.cars.find(function(c){ return c.id === id; }); }
+
+function render(){
+  if (!data) return;
+  $('syncText').textContent = 'Website checked ' + ago(data.syncedAt);
+  var todo = todoCars();
+  todo.forEach(function(c){ if (!(c.id in checked)) checked[c.id] = !c.duplicateOf; });
+
+  $('todo').hidden = !todo.length;
+  $('todoCount').textContent = todo.length;
+  $('todoList').innerHTML = todo.map(function(c){ return rowHtml(c, true); }).join('');
+  updateSelNote();
+
+  $('soldBox').hidden = !data.sold.length;
+  $('soldCount').textContent = data.sold.length;
+  $('soldList').innerHTML = data.sold.map(function(s){
+    return '<li class="row"><div><div class="t">' + esc(s.title) + '</div><div class="m">' + money(s.price) +
+      (s.printedAt ? ' · card printed ' + esc(when(s.printedAt)) : '') + '</div></div>' +
+      '<button type="button" data-remove="' + esc(s.id) + '">Card removed</button></li>';
+  }).join('');
+
+  $('allGood').hidden = !!(todo.length || data.sold.length);
+
+  var q = query.trim().toLowerCase();
+  var shown = data.cars.filter(function(c){ return !q || (c.title + ' ' + c.price + ' ' + c.vin).toLowerCase().indexOf(q) >= 0; });
+  $('allCount').textContent = data.cars.length;
+  $('list').innerHTML = shown.map(function(c){ return rowHtml(c, false); }).join('') ||
+    '<li class="note" style="padding:10px">No cars match that search.</li>';
+  $('grid').hidden = false;
+
+  if (!selected || !byId(selected)) selected = (todo[0] || data.cars[0] || {}).id || null;
+  renderPreview();
+
+  $('log').innerHTML = (data.log || []).map(function(l){
+    return '<li>' + esc(new Date(l.at).toLocaleString('en-AU', { dateStyle:'medium', timeStyle:'short', timeZone:'Australia/Brisbane' })) + ' · ' + esc(l.text) + '</li>';
+  }).join('') || '<li>Nothing yet.</li>';
+}
+
+async function renderPreview(){
+  var c = byId(selected);
+  document.querySelectorAll('.row[data-id]').forEach(function(r){ r.classList.toggle('sel', r.getAttribute('data-id') === selected); });
+  if (!c) { $('pvBody').innerHTML = ''; return; }
+  var changes = c.changes && c.changes.length
+    ? '<ul class="changes">' + c.changes.map(function(x){ return '<li>' + esc(x) + '</li>'; }).join('') + '</ul>' : '';
+  $('pvBody').innerHTML =
+    '<h3>' + esc(c.title) + '</h3>' +
+    '<div class="facts"><span><b>' + money(c.price) + '</b></span><span>' + esc(km(c.odometer)) + '</span>' +
+      (weeklyFor(c.price) ? '<span><b>$' + weeklyFor(c.price) + '</b>/wk on card</span>' : '') + '</div>' +
+    statusPill(c) + changes +
+    '<div class="actions"><button class="primary" type="button" id="pvPrint">Print this card</button>' +
+      '<button type="button" id="pvPdf">Download PDF</button>' +
+      '<button class="ghost" type="button" id="pvRename">Fix name</button></div>' +
+    '<form class="edit" id="renameForm" hidden><input type="text" id="renameInput" maxlength="80" aria-label="Name on the card">' +
+      '<button class="primary" type="submit">Save</button><button type="button" id="renameReset">Use website name</button></form>' +
+    '<p class="note">' + (c.titleEdited ? 'Name tidied by hand. Website calls it: ' + esc(c.rawTitle) + '. ' : '') +
+      '<a href="' + esc(c.url) + '" target="_blank" rel="noopener">See it on the website</a></p>';
+  $('pvPrint').onclick = function(){ printCars([c.id]); };
+  $('pvPdf').onclick = function(){ downloadPdf([c.id]); };
+  $('pvRename').onclick = function(){ $('renameForm').hidden = false; $('renameInput').value = c.title; $('renameInput').focus(); };
+  $('renameForm').onsubmit = function(e){ e.preventDefault(); rename(c.id, $('renameInput').value); };
+  $('renameReset').onclick = function(){ rename(c.id, ''); };
+  var w = await previewEngine;
+  if (w && byId(selected) === c) w.AZ.render([c]);
+}
+
+async function rename(id, title){
+  try { await post('update', { action:'title', id: id, title: title }); await load(); toast(title ? 'Name saved. The card needs reprinting.' : 'Name reset to the website.'); }
+  catch(e){ showError(e.message); }
+}
+
+/* ---------- selecting ---------- */
+function onRowClick(e){
+  var cb = e.target.closest('[data-check]');
+  if (cb) { checked[cb.getAttribute('data-check')] = cb.checked; updateSelNote(); return; }
+  var row = e.target.closest('.row[data-id]');
+  if (row) { selected = row.getAttribute('data-id'); renderPreview(); if (window.innerWidth <= 1020) $('pv').scrollIntoView({ behavior:'smooth' }); }
+}
+$('todoList').onclick = onRowClick;
+$('list').onclick = onRowClick;
+$('search').oninput = function(){ query = this.value; render(); };
+
+function chosenIds(){ return todoCars().filter(function(c){ return checked[c.id]; }).map(function(c){ return c.id; }); }
+function updateSelNote(){
+  var n = chosenIds().length;
+  $('printSel').textContent = n ? 'Print ' + n + ' card' + (n > 1 ? 's' : '') : 'Print';
+  $('printSel').disabled = $('pdfSel').disabled = !n;
+  $('selNote').textContent = n ? '' : 'Tick at least one car.';
+}
+$('printSel').onclick = function(){ printCars(chosenIds()); };
+$('pdfSel').onclick = function(){ downloadPdf(chosenIds()); };
+
+/* ---------- printing ---------- */
+async function printCars(ids){
+  var cars = ids.map(byId).filter(Boolean);
+  if (!cars.length) return;
+  var w = await printEngine;
+  if (!w) return showError('The card printer did not load. Refresh the page and try again.');
+  w.AZ.render(cars);
+  try { await w.document.fonts.ready; } catch(e){}
+  setTimeout(function(){
+    w.focus(); w.print();
+    askDone(ids, 'Printed');
+  }, 150);
+}
+async function downloadPdf(ids){
+  if (!ids.length) return;
+  toast('Making the PDF… this takes about ten seconds.');
+  try {
+    var r = await fetch(API + 'pdf?ids=' + ids.join(','));
+    if (r.status === 401) return showLogin();
+    if (!r.ok) { var j = await r.json().catch(function(){ return {}; }); throw new Error(j.error || 'Could not make the PDF'); }
+    var blob = await r.blob();
+    var name = (/filename="([^"]+)"/.exec(r.headers.get('content-disposition') || '') || [])[1] || 'Autozone window cards.pdf';
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob); a.download = name;
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function(){ URL.revokeObjectURL(a.href); }, 60000);
+    $('toast').hidden = true;
+    askDone(ids, 'Downloaded');
+  } catch(e){ $('toast').hidden = true; showError(e.message); }
+}
+
+/* Cards count as "in the window" only when staff say so, so a cancelled print or an unused
+   PDF never hides a car that still needs its card. */
+function askDone(ids, how){
+  var todoIds = todoCars().map(function(c){ return c.id; });
+  ids = ids.filter(function(id){ return todoIds.indexOf(id) >= 0; });   // a spare copy of a card that's already up needs no answer
+  if (!ids.length) return;
+  pendingDone = ids;
+  var n = ids.length;
+  $('afterText').textContent = how + ' ' + n + ' card' + (n > 1 ? 's' : '') + '. Are ' + (n > 1 ? 'they' : 'it') + ' up in the window' + (n > 1 ? 's' : '') + '?';
+  $('afterPrint').hidden = false;
+  $('todo').scrollIntoView({ behavior:'smooth', block:'nearest' });
+}
+$('markDone').onclick = async function(){
+  var ids = pendingDone; pendingDone = null; $('afterPrint').hidden = true;
+  if (!ids) return;
+  try {
+    await post('update', { action:'printed', ids: ids });
+    ids.forEach(function(id){ delete checked[id]; });
+    await load();
+    toast(ids.length + ' card' + (ids.length > 1 ? 's' : '') + ' marked as in the window.', true);
+  } catch(e){ showError(e.message); }
+};
+$('markLater').onclick = function(){ pendingDone = null; $('afterPrint').hidden = true; };
+
+$('soldList').onclick = async function(e){
+  var b = e.target.closest('[data-remove]');
+  if (!b) return;
+  b.disabled = true;
+  try { await post('update', { action:'removed', ids:[b.getAttribute('data-remove')] }); await load(); toast('Card taken off the list.', true); }
+  catch(err){ showError(err.message); b.disabled = false; }
+};
+
+/* ---------- start ---------- */
+function start(){
+  $('login').hidden = true; $('shell').hidden = false;
+  load();
+}
+setInterval(function(){ if (data) $('syncText').textContent = 'Website checked ' + ago(data.syncedAt); }, 30000);
+document.addEventListener('visibilitychange', function(){
+  if (!document.hidden && data && Date.now() - Date.parse(data.syncedAt) > 10 * 60 * 1000) load();
+});
+start();
+})();
+</script>
+</body>
+</html>

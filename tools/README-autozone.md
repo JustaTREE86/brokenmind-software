@@ -25,6 +25,12 @@ This `tools/` folder is not deployed (see `.vercelignore`).
 
 Functions run in `syd1`. Hobby plan limits apply (60s per request).
 
+**Login lockout:** 5 wrong passwords from one address within 15 minutes locks that address for 15
+minutes (`api/_lib/lockout.js`). Staff in one office share an address, so a run of typos locks the
+whole office briefly. Records are hashed and kept per environment (`logins-production.json`,
+`logins-preview.json`), so testing a preview never locks the live site. To lift a lock early,
+delete `autozone/logins-production.json` from the Blob store.
+
 ## Where things live
 
 | | |

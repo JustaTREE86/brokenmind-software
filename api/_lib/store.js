@@ -2,6 +2,7 @@
 //
 //   autozone/state.json   which cards are in windows, name fixes, a short activity log
 //   autozone/sync.json    the last read of the Autozone website, reused for a few minutes
+//   autozone/logins-<env>.json  recent wrong passwords per (hashed) address, for the lockout
 //
 // Writes are compare-and-swap on the blob's ETag, so two staff clicking at once can't overwrite
 // each other: the loser re-reads and re-applies.
@@ -14,6 +15,8 @@ import { scrapeStock } from './scrape.js'
 const PREFIX = process.env.AZ_BLOB_PREFIX || 'autozone'
 const STATE = PREFIX + '/state.json'
 const SYNC = PREFIX + '/sync.json'
+// kept per environment, so testing the lockout on a preview can't lock anyone out of the live site
+const LOGINS = PREFIX + '/logins-' + (process.env.VERCEL_ENV || 'local') + '.json'
 const SYNC_FRESH_MS = 10 * 60 * 1000
 const LOG_KEEP = 200
 
@@ -29,8 +32,25 @@ async function readJson(pathname) {
 async function writeJson(pathname, data, etag) {
   const opts = { access: 'private', contentType: 'application/json', addRandomSuffix: false }
   if (etag) opts.ifMatch = etag
-  else opts.allowOverwrite = pathname === SYNC      // state.json is only ever created once
+  else opts.allowOverwrite = pathname === SYNC      // the others are created once, then only swapped
   await put(pathname, JSON.stringify(data), opts)
+}
+
+/** Read, change, write back only if nobody else wrote in between; otherwise go round again. */
+async function casUpdate(pathname, initial, change) {
+  for (let attempt = 0; attempt < 5; attempt++) {
+    const { data, etag } = await readJson(pathname)
+    const doc = data || initial()
+    const result = change(doc)
+    try {
+      await writeJson(pathname, doc, etag)
+      return { doc, result }
+    } catch (e) {
+      const raced = e instanceof BlobPreconditionFailedError || /exist|precondition/i.test(e.message || '')
+      if (!raced) throw e
+    }
+  }
+  throw new Error('Someone else is saving at the same moment. Try again.')
 }
 
 /** First run: every card in the yard as printed on 11 Sep 2026, plus the Card Studio names for those listings. */
@@ -46,22 +66,19 @@ export async function readState() {
 
 /** Apply `change(state)` atomically. `change` mutates and may return a log line. */
 export async function updateState(change) {
-  for (let attempt = 0; attempt < 5; attempt++) {
-    const { data, etag } = await readJson(STATE)
-    const state = data || seedState()
+  const { doc } = await casUpdate(STATE, seedState, state => {
     const note = change(state)
-    if (note) {
-      state.log = [{ at: new Date().toISOString(), ...note }].concat(state.log || []).slice(0, LOG_KEEP)
-    }
-    try {
-      await writeJson(STATE, state, etag)
-      return state
-    } catch (e) {
-      const raced = e instanceof BlobPreconditionFailedError || /exist|precondition/i.test(e.message || '')
-      if (!raced) throw e
-    }
-  }
-  throw new Error('Someone else is saving at the same moment. Try again.')
+    if (note) state.log = [{ at: new Date().toISOString(), ...note }].concat(state.log || []).slice(0, LOG_KEEP)
+  })
+  return doc
+}
+
+/** Wrong-password records, keyed by hashed address. See lockout.js. */
+export async function readLogins() {
+  return (await readJson(LOGINS)).data || {}
+}
+export async function updateLogins(change) {
+  return (await casUpdate(LOGINS, () => ({}), change)).result
 }
 
 /**

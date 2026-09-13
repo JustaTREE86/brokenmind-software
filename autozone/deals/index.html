@@ -1,0 +1,807 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Autozone Finance Deals</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23F47B20'/%3E%3Cpath d='M9 8h14l-9 12h9v4H9l9-12H9z' fill='%23fff'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,600;0,800;1,900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --orange:#F47B20; --orange-deep:#D9600A; --ink:#0E0E0E;
+  --bg:#EEF1F5; --card:#fff; --text:#1B1F24; --muted:#667085; --line:#DDE1E7;
+  --good:#1F7A4A; --good-bg:#E6F4EC; --warn:#8A5300; --warn-bg:#FFF3DF; --bad:#B42318; --bad-bg:#FDECEA;
+  --blue:#1F5BA8; --blue-bg:#E8F0FB;
+  --disp:'Archivo','Arial Black',system-ui,sans-serif;
+  --ui:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --mono:ui-monospace,'Cascadia Mono',Consolas,monospace;
+  --r:12px;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--text);font:15px/1.45 var(--ui)}
+[hidden]{display:none !important}
+button{font:inherit;cursor:pointer;border:1px solid var(--line);background:#fff;color:var(--text);border-radius:9px;padding:8px 14px;font-weight:600}
+button:hover{border-color:#b9c0ca}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,a:focus-visible,summary:focus-visible{outline:3px solid rgba(244,123,32,.45);outline-offset:2px}
+button.primary{background:var(--orange);border-color:var(--orange);color:#fff}
+button.primary:hover{background:var(--orange-deep);border-color:var(--orange-deep)}
+button.ghost{background:transparent;border-color:transparent;color:inherit}
+button.small{padding:5px 10px;font-size:13px;border-radius:8px}
+button[disabled]{opacity:.55;cursor:default}
+a{color:var(--orange-deep)}
+input,select,textarea{font:inherit;border:1px solid var(--line);border-radius:9px;padding:8px 11px;background:#fff;color:var(--text);min-width:0;width:100%}
+textarea{resize:vertical}
+label{display:block;font-weight:600;font-size:13px;margin:0 0 4px}
+.field{margin-bottom:10px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.note{color:var(--muted);font-size:13px}
+
+/* login */
+.login{min-height:100dvh;display:grid;place-items:center;padding:24px;background:var(--ink)}
+.login form{background:#fff;border-radius:16px;padding:26px;width:min(360px,100%);display:grid;gap:10px}
+.login h1{font:800 22px/1.2 var(--disp);margin:0}
+.login .by{color:var(--muted);font-size:12px;margin:6px 0 0;text-align:center}
+.login .err{background:var(--bad-bg);color:var(--bad);border-radius:9px;padding:9px 11px;margin:0;font-size:14px}
+
+/* header */
+.bar{background:var(--ink);color:#fff;display:flex;align-items:center;gap:16px;padding:12px clamp(14px,3vw,28px);position:sticky;top:0;z-index:5;flex-wrap:wrap;
+  background-image:linear-gradient(135deg,rgba(255,255,255,.03) 25%,transparent 25%,transparent 50%,rgba(255,255,255,.03) 50%,rgba(255,255,255,.03) 75%,transparent 75%);background-size:6px 6px}
+.brand{display:flex;align-items:baseline;gap:12px;margin-right:auto;min-width:0}
+.wordmark{font:italic 900 22px/1 var(--disp);letter-spacing:-.5px;white-space:nowrap}
+.wordmark b{color:var(--orange);font-weight:900}
+.brand .sub{font:600 13px var(--ui);color:#c7ccd4;text-transform:uppercase;letter-spacing:.12em;white-space:nowrap}
+.bar .who{display:flex;align-items:center;gap:10px;font-size:13px;color:#c7ccd4;flex-wrap:wrap}
+.bar button{background:#2A2F36;border-color:#3A4049;color:#fff;white-space:nowrap}
+.bar button:hover{background:#343a42}
+.bar button.ghost{background:transparent;border-color:transparent;color:#c7ccd4}
+.bar a{color:#c7ccd4;text-decoration:none;font-weight:600;border:1px solid #3A4049;border-radius:9px;padding:7px 13px;background:#2A2F36}
+.bar a:hover{background:#343a42;color:#fff}
+.role{background:var(--orange);color:#fff;border-radius:99px;padding:2px 10px;font:700 12px var(--ui)}
+.role.ro{background:#2A2F36;border:1px solid #3A4049;color:#c7ccd4}
+
+main{max-width:1320px;margin:0 auto;padding:18px clamp(12px,3vw,28px) 60px}
+.alert{border-radius:var(--r);padding:12px 14px;margin-bottom:14px;background:var(--bad-bg);color:var(--bad);border:1px solid #f5c2bd}
+
+.panel{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px;margin-bottom:16px}
+.panel h2{font:800 18px/1.2 var(--disp);margin:0 0 2px;display:flex;align-items:center;gap:8px}
+.panel .lede{color:var(--muted);margin:0 0 12px;font-size:14px}
+.count{font:700 13px var(--ui);background:var(--orange);color:#fff;border-radius:99px;padding:1px 9px}
+.panel.todo{border-color:#F7C9A5;box-shadow:0 1px 0 #F7C9A5}
+.panel.alarm{border-color:#f5c2bd}
+.panel.alarm .count{background:var(--bad)}
+
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.tabs button{background:#fff}
+.tabs button[aria-pressed=true]{background:var(--ink);border-color:var(--ink);color:#fff}
+
+.grid{display:grid;grid-template-columns:minmax(0,1fr) 440px;gap:16px;align-items:start}
+@media (max-width:1080px){.grid{grid-template-columns:1fr}.detail{position:static !important}}
+
+.group{margin-bottom:18px}
+.group h3{font:800 14px/1.2 var(--ui);text-transform:uppercase;letter-spacing:.09em;color:var(--muted);margin:0 0 8px;display:flex;gap:8px;align-items:center}
+.rows{list-style:none;margin:0;padding:0}
+.row{display:grid;grid-template-columns:76px minmax(0,1fr) auto;gap:12px;align-items:center;padding:10px 8px;border-radius:10px;cursor:pointer}
+.row+.row{border-top:1px solid #eef0f3}
+.row:hover{background:#f7f8fa}
+.row.sel{background:#FFF4EB;box-shadow:inset 3px 0 0 var(--orange)}
+.thumb{width:76px;height:57px;border-radius:7px;object-fit:cover;background:#e5e8ee;display:block}
+.thumb.none{display:grid;place-items:center;color:var(--muted);font-size:11px;text-align:center;line-height:1.1;padding:4px}
+.row .car{font-weight:700;line-height:1.25}
+.row .cust{color:var(--muted);font-size:13px}
+.row .flags{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}
+.right{display:flex;flex-direction:column;align-items:flex-end;gap:5px;text-align:right}
+.ref{font:700 12px var(--mono);color:var(--muted)}
+.pill{font:700 12px var(--ui);border-radius:99px;padding:3px 10px;white-space:nowrap;display:inline-block}
+.pill.new{background:var(--blue-bg);color:var(--blue)}
+.pill.progress{background:#EFF1F5;color:#41495A}
+.pill.attention{background:var(--warn-bg);color:var(--warn)}
+.pill.good{background:var(--good-bg);color:var(--good)}
+.pill.done{background:var(--good);color:#fff}
+.pill.bad{background:var(--bad-bg);color:var(--bad)}
+.chip{font:700 11px var(--ui);border-radius:6px;padding:2px 7px;white-space:nowrap;display:inline-block;text-transform:uppercase;letter-spacing:.04em}
+.chip.inv{background:var(--warn-bg);color:var(--warn)}
+.chip.invdone{background:var(--good-bg);color:var(--good)}
+.chip.sold{background:var(--bad-bg);color:var(--bad)}
+.chip.stale{background:#EFF1F5;color:#41495A}
+.empty{color:var(--muted);padding:10px 2px}
+
+/* the to-do panels */
+.todos{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.todos li{display:grid;grid-template-columns:76px minmax(0,1fr) auto;gap:12px;align-items:center;border:1px solid var(--line);border-radius:10px;padding:10px}
+.todos .t{font-weight:700}
+.todos .m{color:var(--muted);font-size:13px}
+.due{font:800 17px var(--disp)}
+/* On a phone the three columns squeeze the car name into a tower of single words, so the amount
+   and the button drop onto their own line under it. Salespeople read this on the yard. */
+@media (max-width:560px){
+  .todos li{grid-template-columns:76px minmax(0,1fr)}
+  .todos li .right{grid-column:1 / -1;flex-direction:row;justify-content:space-between;align-items:center;width:100%}
+}
+
+/* detail */
+.detail{position:sticky;top:76px;max-height:calc(100dvh - 96px);overflow:auto}
+.detail h2{font:800 20px/1.2 var(--disp);margin:0 0 2px}
+.detail .sub{color:var(--muted);font-size:13px;margin:0 0 12px}
+.carcard{display:grid;grid-template-columns:110px minmax(0,1fr);gap:12px;border:1px solid var(--line);border-radius:10px;padding:10px;margin-bottom:14px;background:#fbfcfd}
+.carcard img{width:110px;height:82px;object-fit:cover;border-radius:7px;background:#e5e8ee}
+.carcard .t{font-weight:700;line-height:1.25}
+.specs{display:flex;flex-wrap:wrap;gap:4px 12px;color:var(--muted);font-size:12px;margin-top:4px}
+.kv{display:grid;grid-template-columns:112px minmax(0,1fr);gap:4px 10px;font-size:14px;margin-bottom:14px}
+.kv dt{color:var(--muted)}
+.kv dd{margin:0;word-break:break-word}
+.sec{border-top:1px solid var(--line);padding-top:12px;margin-top:12px}
+.sec h3{font:800 13px var(--ui);text-transform:uppercase;letter-spacing:.09em;color:var(--muted);margin:0 0 8px}
+.timeline{list-style:none;margin:0;padding:0;max-height:280px;overflow:auto}
+.timeline li{padding:8px 0;border-bottom:1px solid #eef0f3;font-size:14px}
+.timeline li:last-child{border-bottom:0}
+.timeline .meta{color:var(--muted);font-size:12px;margin-top:2px}
+.timeline li.system{color:var(--muted)}
+.actions{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:10px}
+.warnbox{background:var(--bad-bg);border:1px solid #f5c2bd;color:var(--bad);border-radius:9px;padding:9px 11px;font-size:13px;margin-bottom:12px;font-weight:600}
+.okbox{background:var(--good-bg);border:1px solid #bfe0cd;color:var(--good);border-radius:9px;padding:9px 11px;font-size:13px;margin-bottom:12px;font-weight:600}
+
+dialog{border:0;border-radius:14px;padding:0;width:min(720px,94vw);box-shadow:0 20px 60px rgba(0,0,0,.28)}
+dialog::backdrop{background:rgba(10,12,16,.55)}
+.dlg{padding:20px}
+.dlg h2{font:800 20px/1.2 var(--disp);margin:0 0 2px}
+.dlg .lede{color:var(--muted);font-size:14px;margin:0 0 14px}
+.dlg .foot{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;margin-top:16px;padding-top:14px;border-top:1px solid var(--line)}
+.dlg .foot .left{margin-right:auto}
+.money input{text-align:right}
+.total{display:flex;justify-content:space-between;align-items:center;background:#FFF4EB;border:1px solid #F7C9A5;border-radius:10px;padding:10px 14px;font-weight:700;margin-top:6px}
+.total .due{font:800 22px var(--disp)}
+.doc{font:13px/1.55 var(--mono);white-space:pre-wrap;background:#fbfcfd;border:1px solid var(--line);border-radius:10px;padding:14px;max-height:56vh;overflow:auto}
+.err{background:var(--bad-bg);color:var(--bad);border-radius:9px;padding:9px 11px;margin:0 0 10px;font-size:14px}
+
+.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:var(--ink);color:#fff;border-radius:10px;padding:11px 16px;display:flex;gap:12px;align-items:center;box-shadow:0 8px 30px rgba(0,0,0,.25);z-index:50;font-weight:600}
+
+/* printing: only the invoice request goes on the paper */
+#print{display:none}
+@media print{
+  body{background:#fff}
+  body>*{display:none !important}
+  #print{display:block !important;font:12px/1.5 var(--mono);white-space:pre-wrap;padding:0;margin:0}
+}
+</style>
+</head>
+<body>
+
+<div class="login" id="login" hidden>
+  <form id="loginForm" autocomplete="on">
+    <div class="wordmark">AUTO<b>ZONE</b></div>
+    <h1>Finance deals</h1>
+    <p class="note">The same password you use for the window cards.</p>
+    <label for="pw">Password</label>
+    <input id="pw" type="password" autocomplete="current-password" required>
+    <p class="err" id="loginErr" hidden></p>
+    <button class="primary" type="submit">Log in</button>
+    <p class="by">Built for Autozone QLD by BrokenMind Software</p>
+  </form>
+</div>
+
+<div id="shell" hidden>
+<header class="bar">
+  <div class="brand"><span class="wordmark">AUTO<b>ZONE</b></span><span class="sub">Finance deals</span></div>
+  <div class="who">
+    <span class="role" id="roleTag"></span>
+    <span id="syncText" aria-live="polite"></span>
+    <button id="newBtn" class="primary" type="button" hidden>New deal</button>
+    <button id="refreshBtn" type="button">Refresh</button>
+    <a href="/autozone">Window cards</a>
+    <button id="logoutBtn" class="ghost" type="button">Log out</button>
+  </div>
+</header>
+
+<main>
+  <div class="alert" id="err" role="alert" hidden></div>
+
+  <section class="panel todo" id="invoicePanel" hidden>
+    <h2>Autozone to do: send these tax invoices <span class="count" id="invoiceCount"></span></h2>
+    <p class="lede">Finance is approved and Buyer Assist is waiting on your invoice before settlement can be booked.</p>
+    <ul class="todos" id="invoiceList"></ul>
+  </section>
+
+  <section class="panel alarm" id="soldPanel" hidden>
+    <h2>Check these cars <span class="count" id="soldCount"></span></h2>
+    <p class="lede">These cars have come off the website while the finance is still running. If they have sold to someone else, tell Josh so the customer can be moved onto another car.</p>
+    <ul class="todos" id="soldList"></ul>
+  </section>
+
+  <div class="tabs" id="tabs">
+    <button type="button" data-tab="active" aria-pressed="true">Active board</button>
+    <button type="button" data-tab="settled" aria-pressed="false">Settled</button>
+    <button type="button" data-tab="lost" aria-pressed="false">Not proceeding</button>
+    <button type="button" data-tab="archived" aria-pressed="false">Archived</button>
+    <input type="search" id="search" placeholder="Search name, car, rego or reference" aria-label="Search deals" style="max-width:320px;margin-left:auto">
+  </div>
+
+  <div class="grid">
+    <div>
+      <section class="panel">
+        <div id="board"></div>
+      </section>
+    </div>
+    <aside class="panel detail" id="detail" aria-live="polite"><p class="note">Pick a deal to see where it is up to.</p></aside>
+  </div>
+</main>
+</div>
+
+<dialog id="dealDlg"><form method="dialog" class="dlg" id="dealForm">
+  <h2 id="dealDlgTitle">New deal</h2>
+  <p class="lede">The car comes straight off the Autozone website, so the deal always links back to the listing the customer enquired on.</p>
+  <p class="err" id="dealErr" hidden></p>
+  <div class="field">
+    <label for="carPick">Car they enquired on</label>
+    <select id="carPick"></select>
+  </div>
+  <div class="two">
+    <div class="field"><label for="fName">Customer name</label><input id="fName" required></div>
+    <div class="field"><label for="fSales">Autozone salesperson</label><input id="fSales" placeholder="Who referred them"></div>
+  </div>
+  <div class="two">
+    <div class="field"><label for="fMobile">Mobile</label><input id="fMobile" inputmode="tel" placeholder="0400 000 000"></div>
+    <div class="field"><label for="fEmail">Email</label><input id="fEmail" type="email"></div>
+  </div>
+  <div class="field"><label for="fAddress">Address <span class="note">(needed later for the invoice)</span></label><input id="fAddress"></div>
+  <div class="two">
+    <div class="field"><label for="fStatus">Stage</label><select id="fStatus"></select></div>
+    <div class="field"><label for="fLender">Lender</label><input id="fLender" placeholder="Once known"></div>
+  </div>
+  <div class="field" id="firstNoteWrap"><label for="fNote">First note</label><textarea id="fNote" rows="2" placeholder="Anything Josh should know"></textarea></div>
+  <div class="foot">
+    <button type="button" class="ghost" id="dealCancel">Cancel</button>
+    <button type="button" class="primary" id="dealSave">Save deal</button>
+  </div>
+</form></dialog>
+
+<dialog id="invDlg"><div class="dlg">
+  <h2>Invoice request</h2>
+  <p class="lede" id="invLede"></p>
+  <p class="err" id="invErr" hidden></p>
+  <div id="invForm">
+    <div class="two">
+      <div class="field"><label for="iTo">Invoice to</label><input id="iTo"></div>
+      <div class="field"><label for="iLender">Lender</label><input id="iLender"></div>
+    </div>
+    <div class="field"><label for="iAddr">Customer address</label><input id="iAddr"></div>
+    <div class="two">
+      <div class="field"><label for="iDeliver">Deliver to</label><input id="iDeliver" placeholder="As above"></div>
+      <div class="field"><label for="iDate">Delivery date</label><input id="iDate" placeholder="e.g. 20 Sep 2026"></div>
+    </div>
+    <div class="two">
+      <div class="field"><label for="iRego">Rego</label><input id="iRego"></div>
+      <div class="field"><label for="iRegoExp">Rego expiry</label><input id="iRegoExp"></div>
+    </div>
+    <div class="sec"><h3>Purchase details</h3><div class="two money" id="invMoney"></div></div>
+    <div class="total"><span>Balance due</span><span class="due" id="iDue">$0.00</span></div>
+    <div class="field" style="margin-top:12px"><label for="iNote">Anything else for their admin</label><textarea id="iNote" rows="2"></textarea></div>
+    <div class="field"><label for="iPayable">Payable by</label><input id="iPayable" placeholder="Lender direct deposit on settlement"></div>
+  </div>
+  <div id="invDoc" hidden><pre class="doc" id="invText"></pre></div>
+  <div class="foot">
+    <button type="button" class="ghost left" id="invBack" hidden>Edit the figures</button>
+    <button type="button" class="ghost" id="invClose">Close</button>
+    <button type="button" id="invCopy" hidden>Copy</button>
+    <button type="button" id="invPrint" hidden>Print</button>
+    <button type="button" class="primary" id="invEmail" hidden>Email to Autozone</button>
+    <button type="button" class="primary" id="invSave">Save and send request</button>
+  </div>
+</div></dialog>
+
+<div class="toast" id="toast" role="status" hidden><span id="toastText"></span></div>
+<pre id="print"></pre>
+
+<script>
+var API = '/api/autozone/';
+var data = null, tab = 'active', selected = null, term = '', invDeal = null, editing = null, timer = null;
+
+function $(id){ return document.getElementById(id); }
+function esc(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){
+  return { '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]; }); }
+function money(n){ return n == null || n === '' ? '' : '$' + Number(n).toLocaleString('en-AU'); }
+function money2(n){ return '$' + Number(n || 0).toLocaleString('en-AU', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
+function km(n){ return n ? Number(n).toLocaleString('en-AU') + ' km' : ''; }
+function when(iso){
+  if (!iso) return '';
+  var d = new Date(iso);
+  return d.toLocaleString('en-AU', { day: '2-digit', month: 'short', hour: 'numeric', minute: '2-digit', timeZone: 'Australia/Brisbane' });
+}
+function ago(days){
+  if (days == null) return '';
+  if (days <= 0) return 'today';
+  if (days === 1) return 'yesterday';
+  return days + ' days ago';
+}
+
+async function api(path, opts){
+  var r = await fetch(API + path, opts);
+  var body = null;
+  try { body = await r.json(); } catch (e) { body = null; }
+  if (r.status === 401) { showLogin(); throw new Error('Please log in again.'); }
+  if (!r.ok) throw new Error((body && body.error) || 'Something went wrong');
+  return body;
+}
+function post(action, body){
+  return api('deal-update', { method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(Object.assign({ action: action }, body)) });
+}
+function showError(msg){ $('err').textContent = msg || ''; $('err').hidden = !msg; }
+var toastTimer = null;
+function toast(text){
+  $('toastText').textContent = text;
+  $('toast').hidden = false;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(function(){ $('toast').hidden = true; }, 3500);
+}
+
+// ---- session ------------------------------------------------------------
+function showLogin(){ $('shell').hidden = true; $('login').hidden = false; clearInterval(timer); $('pw').focus(); }
+function showShell(){ $('login').hidden = true; $('shell').hidden = false; }
+
+$('loginForm').addEventListener('submit', async function(e){
+  e.preventDefault();
+  $('loginErr').hidden = true;
+  try {
+    await api('login', { method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password: $('pw').value }) });
+    $('pw').value = '';
+    showShell();
+    await load();
+    start();
+  } catch (err) { $('loginErr').textContent = err.message; $('loginErr').hidden = false; }
+});
+$('logoutBtn').addEventListener('click', async function(){
+  try { await fetch(API + 'login', { method: 'DELETE' }); } catch (e) {}
+  showLogin();
+});
+
+// ---- loading ------------------------------------------------------------
+function apply(board){
+  data = board;
+  showError('');
+  $('roleTag').textContent = data.canEdit ? 'Buyer Assist' : 'Autozone · view only';
+  $('roleTag').className = 'role' + (data.canEdit ? '' : ' ro');
+  $('newBtn').hidden = !data.canEdit;
+  $('syncText').textContent = data.stockReady ? 'Website checked ' + when(data.stockAt) : 'Reading the website...';
+  render();
+}
+async function load(){
+  try { apply(await api('deals')); }
+  catch (err) { showError(err.message); }
+}
+
+// ---- the board ----------------------------------------------------------
+function matches(d){
+  if (!term) return true;
+  var hay = [d.ref, d.customer && d.customer.name, d.customer && d.customer.mobile,
+    d.car && d.car.title, d.car && d.car.vin, d.invoice && d.invoice.fields && d.invoice.fields.rego,
+    d.salesperson, d.status].join(' ').toLowerCase();
+  return hay.indexOf(term) >= 0;
+}
+function visible(){
+  return (data.deals || []).filter(function(d){
+    if (!matches(d)) return false;
+    if (tab === 'archived') return d.archived;
+    if (d.archived) return false;
+    if (tab === 'lost') return d.lost;
+    if (tab === 'settled') return d.status === 'Settled';
+    return !d.lost && d.status !== 'Settled';
+  });
+}
+// Website titles usually already start with the year ("2023 Hyundai Kona Premium"), so only add it
+// when it is missing rather than printing it twice.
+function withYear(year, title){
+  if (!title) return year || '';
+  if (!year || title.indexOf(year) === 0) return title;
+  return year + ' ' + title;
+}
+function carTitle(d){
+  if (!d.car) return 'No car linked yet';
+  return withYear(d.car.year, d.car.title) || 'Car on the website';
+}
+function thumb(d){
+  if (d.car && d.car.photo) return '<img class="thumb" src="' + esc(d.car.photo) + '" alt="">';
+  return '<div class="thumb none">No car<br>linked</div>';
+}
+function flags(d){
+  var out = [];
+  if (d.awaitingInvoice) out.push('<span class="chip inv">Invoice requested</span>');
+  if (d.invoice && d.invoice.receivedAt) out.push('<span class="chip invdone">Invoice in</span>');
+  if (d.needsInvoice) out.push('<span class="chip inv">Invoice not requested</span>');
+  if (d.soldElsewhere) out.push('<span class="chip sold">Off the website</span>');
+  if (d.stale && data.canEdit) out.push('<span class="chip stale">No update ' + d.daysSinceUpdate + 'd</span>');
+  return out.join(' ');
+}
+function rowHtml(d){
+  return '<li class="row' + (selected === d.id ? ' sel' : '') + '" data-id="' + esc(d.id) + '" tabindex="0">' +
+    thumb(d) +
+    '<div><div class="car">' + esc(carTitle(d)) + '</div>' +
+      '<div class="cust">' + esc(d.customer.name) + (d.salesperson ? ' · ' + esc(d.salesperson) : '') + '</div>' +
+      '<div class="flags">' + flags(d) + '</div></div>' +
+    '<div class="right"><span class="ref">' + esc(d.ref) + '</span>' +
+      '<span class="pill ' + esc(d.tone) + '">' + esc(d.status) + '</span>' +
+      '<span class="note">' + esc(ago(d.daysInStage)) + '</span></div></li>';
+}
+function render(){
+  renderTodos();
+  var list = visible();
+  var board = $('board');
+  if (!list.length){
+    board.innerHTML = '<p class="empty">' + (term ? 'Nothing matches that search.' :
+      tab === 'active' ? 'No deals on the board yet.' : 'Nothing here.') + '</p>';
+  } else if (tab === 'active') {
+    var html = '';
+    data.rules.phases.forEach(function(p){
+      var rows = list.filter(function(d){ return p.statuses.indexOf(d.status) >= 0; });
+      if (!rows.length) return;
+      html += '<div class="group"><h3>' + esc(p.label) + ' <span class="count">' + rows.length + '</span></h3>' +
+        '<ul class="rows">' + rows.map(rowHtml).join('') + '</ul></div>';
+    });
+    board.innerHTML = html;
+  } else {
+    board.innerHTML = '<ul class="rows">' + list.map(rowHtml).join('') + '</ul>';
+  }
+  renderDetail();
+}
+function renderTodos(){
+  var waiting = (data.deals || []).filter(function(d){ return !d.archived && d.awaitingInvoice; });
+  $('invoicePanel').hidden = !waiting.length;
+  $('invoiceCount').textContent = waiting.length;
+  $('invoiceList').innerHTML = waiting.map(function(d){
+    var due = d.invoice && d.invoice.fields ? balanceOf(d.invoice.fields) : 0;
+    return '<li>' + thumb(d) +
+      '<div><div class="t">' + esc(carTitle(d)) + '</div>' +
+        '<div class="m">' + esc(d.ref) + ' · ' + esc(d.customer.name) +
+        ' · requested ' + esc(ago(daysSince(d.invoice.requestedAt))) + '</div></div>' +
+      '<div class="right"><span class="due">' + money2(due) + '</span>' +
+        '<button class="small" type="button" data-inv="' + esc(d.id) + '">View request</button></div></li>';
+  }).join('');
+
+  var sold = (data.deals || []).filter(function(d){ return !d.archived && d.soldElsewhere; });
+  $('soldPanel').hidden = !sold.length;
+  $('soldCount').textContent = sold.length;
+  $('soldList').innerHTML = sold.map(function(d){
+    return '<li>' + thumb(d) +
+      '<div><div class="t">' + esc(carTitle(d)) + '</div>' +
+        '<div class="m">' + esc(d.ref) + ' · ' + esc(d.customer.name) + ' · ' + esc(d.status) + '</div></div>' +
+      '<div class="right">' + (d.car && d.car.url ? '<a href="' + esc(d.car.url) + '" target="_blank" rel="noopener">Open listing</a>' : '') +
+      '</div></li>';
+  }).join('');
+}
+function daysSince(iso){ return iso ? Math.floor((Date.now() - Date.parse(iso)) / 864e5) : null; }
+function balanceOf(f){
+  var t = 0;
+  data.rules.charges.forEach(function(l){ t += Number(f[l.key] || 0); });
+  data.rules.credits.forEach(function(l){ t -= Number(f[l.key] || 0); });
+  return Math.round(t * 100) / 100;
+}
+function byId(id){ return (data.deals || []).find(function(d){ return d.id === id; }) || null; }
+
+// ---- the deal detail ----------------------------------------------------
+function renderDetail(){
+  var d = selected ? byId(selected) : null;
+  var box = $('detail');
+  if (!d){ box.innerHTML = '<p class="note">Pick a deal to see where it is up to.</p>'; return; }
+  var c = d.customer || {}, car = d.car, inv = d.invoice;
+  var h = '';
+
+  h += '<h2>' + esc(c.name) + '</h2>';
+  h += '<p class="sub">' + esc(d.ref) + ' · created ' + esc(when(d.createdAt)) +
+       (d.salesperson ? ' · referred by ' + esc(d.salesperson) : '') + '</p>';
+
+  if (d.soldElsewhere) h += '<div class="warnbox">This car is no longer listed on the Autozone website, and the deal is still live. Has it been sold to someone else?</div>';
+  if (d.awaitingInvoice) h += '<div class="warnbox">Waiting on Autozone\'s tax invoice.</div>';
+  else if (inv && inv.receivedAt) h += '<div class="okbox">Tax invoice received ' + esc(when(inv.receivedAt)) + '.</div>';
+
+  if (car){
+    h += '<div class="carcard">' +
+      (car.photo ? '<img src="' + esc(car.photo) + '" alt="">' : '<div class="thumb none" style="width:110px;height:82px">No photo</div>') +
+      '<div><div class="t">' + esc(carTitle(d)) + '</div>' +
+      '<div class="specs">' +
+        [car.price ? money(car.price) : '', km(car.odometer), car.colour, car.transmission, car.fuel]
+          .filter(Boolean).map(function(s){ return '<span>' + esc(s) + '</span>'; }).join('') +
+      '</div>' +
+      (car.vin ? '<div class="specs"><span>VIN ' + esc(car.vin) + '</span></div>' : '') +
+      (car.url ? '<div style="margin-top:6px"><a href="' + esc(car.url) + '" target="_blank" rel="noopener">Open this listing on the website</a></div>' : '') +
+      '</div></div>';
+  } else {
+    h += '<div class="carcard"><div class="thumb none" style="width:110px;height:82px">No car</div>' +
+      '<div><div class="t">No car linked</div><div class="note">Link the listing the customer enquired on so the invoice request fills itself in.</div></div></div>';
+  }
+
+  h += '<dl class="kv">';
+  h += '<dt>Stage</dt><dd><span class="pill ' + esc(d.tone) + '">' + esc(d.status) + '</span> <span class="note">' + esc(ago(d.daysInStage)) + '</span></dd>';
+  if (c.mobile) h += '<dt>Mobile</dt><dd><a href="tel:' + esc(c.mobile.replace(/\s/g, '')) + '">' + esc(c.mobile) + '</a></dd>';
+  if (c.email) h += '<dt>Email</dt><dd><a href="mailto:' + esc(c.email) + '">' + esc(c.email) + '</a></dd>';
+  if (c.address) h += '<dt>Address</dt><dd>' + esc(c.address) + '</dd>';
+  if (d.finance && d.finance.lender) h += '<dt>Lender</dt><dd>' + esc(d.finance.lender) + '</dd>';
+  h += '<dt>Last update</dt><dd>' + esc(when(d.updatedAt)) + ' · ' + esc(d.updatedBy || '') + '</dd>';
+  h += '</dl>';
+
+  if (data.canEdit){
+    h += '<div class="sec"><h3>Move it along</h3>' +
+      '<select id="stagePick">' + data.rules.statuses.map(function(s){
+        return '<option' + (s === d.status ? ' selected' : '') + '>' + esc(s) + '</option>'; }).join('') + '</select>' +
+      '<div class="actions">' +
+        '<button class="small" type="button" id="editBtn">Edit details</button>' +
+        '<button class="small" type="button" id="carBtn">' + (car ? 'Change car' : 'Link a car') + '</button>' +
+        '<button class="small ghost" type="button" id="archiveBtn">' + (d.archived ? 'Restore' : 'Archive') + '</button>' +
+      '</div></div>';
+  }
+
+  h += '<div class="sec"><h3>Invoice</h3>';
+  if (inv && inv.requestedAt){
+    h += '<p class="note">Requested ' + esc(when(inv.requestedAt)) + ' by ' + esc(inv.requestedBy || '') +
+         ' · balance due ' + esc(money2(balanceOf(inv.fields))) + '</p>' +
+         '<div class="actions"><button class="small primary" type="button" data-inv="' + esc(d.id) + '">View request</button>' +
+         (data.canEdit ? '<button class="small" type="button" id="invToggle">' +
+           (inv.receivedAt ? 'Mark as not received' : 'Mark invoice received') + '</button>' : '') +
+         '</div>';
+  } else if (d.canInvoice){
+    h += data.canEdit
+      ? '<p class="note">Approved. Create the request and send it to Autozone.</p>' +
+        '<div class="actions"><button class="small primary" type="button" data-inv="' + esc(d.id) + '">Create invoice request</button></div>'
+      : '<p class="note">Approved. Buyer Assist will send the invoice request shortly.</p>';
+  } else {
+    h += '<p class="note">Available once the lender has approved the deal.</p>';
+  }
+  h += '</div>';
+
+  h += '<div class="sec"><h3>History</h3>';
+  if (data.canEdit){
+    h += '<div class="field"><textarea id="noteText" rows="2" placeholder="Add a note for Autozone"></textarea></div>' +
+      '<div class="actions" style="margin-top:0"><button class="small primary" type="button" id="noteBtn">Add note</button></div>';
+  }
+  h += '<ul class="timeline">' + (d.notes || []).map(function(n){
+    return '<li class="' + (n.kind === 'system' ? 'system' : '') + '">' + esc(n.text) +
+      '<div class="meta">' + esc(when(n.at)) + ' · ' + esc(n.by || '') + '</div></li>';
+  }).join('') + '</ul></div>';
+
+  box.innerHTML = h;
+  wireDetail(d);
+}
+
+function wireDetail(d){
+  var stage = $('stagePick');
+  if (stage) stage.addEventListener('change', async function(){
+    try { await post('stage', { id: d.id, status: stage.value }); toast('Stage updated'); await load(); }
+    catch (err) { showError(err.message); }
+  });
+  var noteBtn = $('noteBtn');
+  if (noteBtn) noteBtn.addEventListener('click', async function(){
+    var text = $('noteText').value.trim();
+    if (!text) return;
+    noteBtn.disabled = true;
+    try { await post('note', { id: d.id, text: text }); toast('Note added'); await load(); }
+    catch (err) { showError(err.message); noteBtn.disabled = false; }
+  });
+  var arch = $('archiveBtn');
+  if (arch) arch.addEventListener('click', async function(){
+    try { await post('archive', { id: d.id, archived: !d.archived }); toast(d.archived ? 'Restored' : 'Archived'); await load(); }
+    catch (err) { showError(err.message); }
+  });
+  var edit = $('editBtn');
+  if (edit) edit.addEventListener('click', function(){ openDeal(d); });
+  var carBtn = $('carBtn');
+  if (carBtn) carBtn.addEventListener('click', function(){ openDeal(d, true); });
+  var toggle = $('invToggle');
+  if (toggle) toggle.addEventListener('click', async function(){
+    var received = !(d.invoice && d.invoice.receivedAt);
+    try { await post('invoice-received', { id: d.id, received: received }); toast(received ? 'Invoice marked as received' : 'Marked as outstanding'); await load(); }
+    catch (err) { showError(err.message); }
+  });
+}
+
+// ---- new / edit deal ----------------------------------------------------
+function carOptions(selectedId){
+  var opts = ['<option value="">No car linked yet</option>'];
+  (data.cars || []).forEach(function(c){
+    opts.push('<option value="' + esc(c.id) + '"' + (String(c.id) === String(selectedId) ? ' selected' : '') + '>' +
+      esc(withYear(c.year, c.title)) + (c.price ? ' · ' + money(c.price) : '') + '</option>');
+  });
+  // A deal linked to a car that has since come off the website keeps its own option, so opening the
+  // form never silently unlinks it.
+  if (selectedId && !(data.cars || []).some(function(c){ return String(c.id) === String(selectedId); })){
+    opts.splice(1, 0, '<option value="' + esc(selectedId) + '" selected>Currently linked car (no longer on the website)</option>');
+  }
+  return opts.join('');
+}
+function openDeal(deal, focusCar){
+  editing = deal || null;
+  $('dealDlgTitle').textContent = deal ? 'Edit deal ' + deal.ref : 'New deal';
+  $('dealErr').hidden = true;
+  $('firstNoteWrap').hidden = !!deal;
+  $('fStatus').innerHTML = data.rules.statuses.map(function(s){
+    var on = deal ? s === deal.status : s === 'New Referral';
+    return '<option' + (on ? ' selected' : '') + '>' + esc(s) + '</option>';
+  }).join('');
+  $('carPick').innerHTML = carOptions(deal && deal.car ? deal.car.listingId : '');
+  var c = (deal && deal.customer) || {}, f = (deal && deal.finance) || {};
+  $('fName').value = c.name || '';
+  $('fMobile').value = c.mobile || '';
+  $('fEmail').value = c.email || '';
+  $('fAddress').value = c.address || '';
+  $('fSales').value = (deal && deal.salesperson) || '';
+  $('fLender').value = f.lender || '';
+  $('fNote').value = '';
+  $('dealDlg').showModal();
+  (focusCar ? $('carPick') : $('fName')).focus();
+}
+$('dealCancel').addEventListener('click', function(){ $('dealDlg').close(); });
+$('newBtn').addEventListener('click', function(){ openDeal(null); });
+// Enter in any field means "save", not "close the dialog and throw the typing away", which is what
+// a method="dialog" form does by default.
+$('dealForm').addEventListener('submit', function(e){ e.preventDefault(); saveDeal(); });
+$('dealSave').addEventListener('click', saveDeal);
+async function saveDeal(){
+  var payload = {
+    id: editing ? editing.id : undefined,
+    listingId: $('carPick').value,
+    name: $('fName').value, mobile: $('fMobile').value, email: $('fEmail').value,
+    address: $('fAddress').value, salesperson: $('fSales').value, lender: $('fLender').value,
+    status: $('fStatus').value, note: $('fNote').value,
+  };
+  $('dealSave').disabled = true;
+  try {
+    if (editing){
+      // The car is a separate action so it writes its own history line.
+      var was = (editing.car && editing.car.listingId) || '';
+      await post('edit', payload);
+      if (String(payload.listingId || '') !== String(was)) await post('car', { id: editing.id, listingId: payload.listingId });
+      toast('Deal updated');
+    } else {
+      var made = await post('create', payload);
+      selected = made.deal.id;
+      toast('Deal ' + made.deal.ref + ' created');
+    }
+    $('dealDlg').close();
+    await load();
+  } catch (err){ $('dealErr').textContent = err.message; $('dealErr').hidden = false; }
+  finally { $('dealSave').disabled = false; }
+}
+
+// ---- invoice request ----------------------------------------------------
+function invFields(){
+  var f = {};
+  data.rules.charges.concat(data.rules.credits).forEach(function(l){
+    var el = $('m_' + l.key);
+    f[l.key] = el && el.value !== '' ? el.value : '';
+  });
+  f.invoiceTo = $('iTo').value; f.address = $('iAddr').value; f.deliverTo = $('iDeliver').value;
+  f.deliveryDate = $('iDate').value; f.rego = $('iRego').value; f.regoExpiry = $('iRegoExp').value;
+  f.lender = $('iLender').value; f.payableBy = $('iPayable').value; f.note = $('iNote').value;
+  return f;
+}
+function invTotal(){ $('iDue').textContent = money2(balanceOf(invFields())); }
+
+function openInvoice(d){
+  invDeal = d;
+  var f = (d.invoice && d.invoice.fields) || {};
+  var car = d.car || {}, c = d.customer || {};
+  $('invErr').hidden = true;
+  $('invLede').textContent = d.ref + ' · ' + (carTitle(d)) + ' · ' + c.name;
+
+  $('invMoney').innerHTML = data.rules.charges.concat(data.rules.credits).map(function(l){
+    return '<div class="field"><label for="m_' + l.key + '">' + esc(l.label) + '</label>' +
+      '<input id="m_' + l.key + '" inputmode="decimal" placeholder="0.00"></div>';
+  }).join('');
+
+  $('iTo').value = f.invoiceTo || c.name || '';
+  $('iAddr').value = f.address || c.address || '';
+  $('iDeliver').value = f.deliverTo || '';
+  $('iDate').value = f.deliveryDate || '';
+  $('iRego').value = f.rego || '';
+  $('iRegoExp').value = f.regoExpiry || '';
+  $('iLender').value = f.lender || (d.finance && d.finance.lender) || '';
+  $('iPayable').value = f.payableBy || '';
+  $('iNote').value = f.note || '';
+  data.rules.charges.concat(data.rules.credits).forEach(function(l){
+    var v = f[l.key];
+    if (v == null && l.key === 'price') v = car.price;         // the website's own price, pre-filled
+    $('m_' + l.key).value = v == null ? '' : v;
+    $('m_' + l.key).addEventListener('input', invTotal);
+  });
+  invTotal();
+
+  var sent = !!(d.invoice && d.invoice.requestedAt);
+  showInvoiceMode(sent ? 'doc' : 'form', d);
+  $('invDlg').showModal();
+}
+function showInvoiceMode(mode, d){
+  var doc = mode === 'doc';
+  $('invForm').hidden = doc;
+  $('invDoc').hidden = !doc;
+  $('invText').textContent = doc ? (d.invoiceText || '') : '';
+  $('invSave').hidden = doc;
+  $('invSave').textContent = d.invoice && d.invoice.requestedAt ? 'Save and re-send' : 'Save and send request';
+  $('invCopy').hidden = !doc;
+  $('invPrint').hidden = !doc;
+  $('invEmail').hidden = !doc;
+  $('invBack').hidden = !(doc && data.canEdit);
+}
+$('invClose').addEventListener('click', function(){ $('invDlg').close(); });
+$('invBack').addEventListener('click', function(){ showInvoiceMode('form', invDeal); });
+$('invSave').addEventListener('click', async function(){
+  $('invSave').disabled = true;
+  try {
+    var r = await post('invoice', { id: invDeal.id, fields: invFields() });
+    await load();
+    invDeal = byId(invDeal.id);
+    showInvoiceMode('doc', invDeal);
+    toast('Invoice request saved');
+  } catch (err){ $('invErr').textContent = err.message; $('invErr').hidden = false; }
+  finally { $('invSave').disabled = false; }
+});
+$('invCopy').addEventListener('click', async function(){
+  try { await navigator.clipboard.writeText($('invText').textContent); toast('Copied'); }
+  catch (e) { toast('Select the text and copy it'); }
+});
+$('invPrint').addEventListener('click', function(){
+  $('print').textContent = $('invText').textContent;
+  window.print();
+});
+$('invEmail').addEventListener('click', function(){
+  var body = $('invText').textContent;
+  // Mail clients quietly truncate very long mailto bodies, so cap it and say what was cut. The
+  // request always fits well inside this, but a long note could push it over.
+  var MAXBODY = 1800;
+  if (body.length > MAXBODY) body = body.slice(0, MAXBODY) + '\n\n[Cut short here. Ask Josh for the full request.]';
+  var subject = 'Tax invoice request - ' + invDeal.ref + ' - ' + (invDeal.customer.name || '');
+  window.location.href = 'mailto:' + encodeURIComponent(data.invoiceEmail || '') +
+    '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+});
+
+// ---- wiring -------------------------------------------------------------
+document.addEventListener('click', function(e){
+  var invBtn = e.target.closest('[data-inv]');
+  if (invBtn){
+    var d = byId(invBtn.getAttribute('data-inv'));
+    if (d) { selected = d.id; render(); openInvoice(d); }
+    return;
+  }
+  var row = e.target.closest('.row');
+  if (row && !e.target.closest('a')){ selected = row.getAttribute('data-id'); render(); }
+});
+document.addEventListener('keydown', function(e){
+  if (e.key !== 'Enter') return;
+  var row = e.target.closest && e.target.closest('.row');
+  if (row){ selected = row.getAttribute('data-id'); render(); }
+});
+$('tabs').addEventListener('click', function(e){
+  var b = e.target.closest('button[data-tab]');
+  if (!b) return;
+  tab = b.getAttribute('data-tab');
+  Array.prototype.forEach.call($('tabs').querySelectorAll('button[data-tab]'), function(x){
+    x.setAttribute('aria-pressed', String(x === b));
+  });
+  render();
+});
+$('search').addEventListener('input', function(){ term = this.value.trim().toLowerCase(); render(); });
+$('refreshBtn').addEventListener('click', function(){ load(); });
+
+function start(){
+  showShell();
+  clearInterval(timer);
+  // The dealership leaves this open on a screen all day, so it refreshes itself. Typing a note or
+  // filling in an invoice is never interrupted: a dialog being open holds the refresh off.
+  timer = setInterval(function(){
+    if (document.hidden) return;
+    if ($('dealDlg').open || $('invDlg').open) return;
+    if (document.activeElement && /INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)) return;
+    load();
+  }, 45000);
+}
+
+(async function(){
+  try {
+    apply(await api('deals'));
+    start();
+  } catch (err) { showLogin(); }
+})();
+</script>
+</body>
+</html>

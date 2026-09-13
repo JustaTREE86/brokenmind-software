@@ -1,4 +1,4 @@
-import { configured, passwordOk, sessionCookie, clearCookie } from '../_lib/auth.js'
+import { configured, roleFor, sessionCookie, clearCookie } from '../_lib/auth.js'
 import { send } from '../_lib/http.js'
 import { readLogins, updateLogins } from '../_lib/store.js'
 import { clientKey, lockedFor, afterFail, triesLeft, prune, lockMessage } from '../_lib/lockout.js'
@@ -20,7 +20,10 @@ export default async function handler(req, res) {
   if (locked) return send(res, 429, { error: lockMessage(locked) })
 
   const password = req.body && req.body.password
-  if (!passwordOk(password)) {
+  // Which password was used decides what the session may do for the rest of its 30 days:
+  // Autozone's own password is read-only on the deal board, Josh's is read/write.
+  const role = roleFor(password)
+  if (!role) {
     let rec = null
     try {
       rec = await updateLogins(map => {
@@ -41,6 +44,6 @@ export default async function handler(req, res) {
   if (logins[key]) {
     try { await updateLogins(map => { delete map[key] }) } catch (e) { console.error('lockout unavailable:', e.message) }
   }
-  res.setHeader('Set-Cookie', sessionCookie())
-  send(res, 200, { ok: true })
+  res.setHeader('Set-Cookie', sessionCookie(role))
+  send(res, 200, { ok: true, role })
 }

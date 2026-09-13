@@ -2,6 +2,7 @@
 //
 //   autozone/state.json   which cards are in windows, name fixes, a short activity log
 //   autozone/sync.json    the last read of the Autozone website, reused for a few minutes
+//   autozone/deals.json   the finance deal board: deals, their notes and their invoice requests
 //   autozone/logins-<env>.json  recent wrong passwords per (hashed) address, for the lockout
 //
 // Writes are compare-and-swap on the blob's ETag, so two staff clicking at once can't overwrite
@@ -15,6 +16,7 @@ import { scrapeStock } from './scrape.js'
 const PREFIX = process.env.AZ_BLOB_PREFIX || 'autozone'
 const STATE = PREFIX + '/state.json'
 const SYNC = PREFIX + '/sync.json'
+const DEALS = PREFIX + '/deals.json'
 // kept per environment, so testing the lockout on a preview can't lock anyone out of the live site
 const LOGINS = PREFIX + '/logins-' + (process.env.VERCEL_ENV || 'local') + '.json'
 const SYNC_FRESH_MS = 10 * 60 * 1000
@@ -71,6 +73,24 @@ export async function updateState(change) {
     if (note) state.log = [{ at: new Date().toISOString(), ...note }].concat(state.log || []).slice(0, LOG_KEEP)
   })
   return doc
+}
+
+/** The deal board. Empty on first use: unlike the window cards there is nothing to seed. */
+const emptyDeals = () => ({ v: 1, seq: 0, deals: [] })
+
+export async function readDeals() {
+  return (await readJson(DEALS)).data || emptyDeals()
+}
+
+/**
+ * Apply `change(doc)` to the deal board atomically, returning whatever `change` returns.
+ *
+ * Compare-and-swap matters more here than anywhere else in the app: Josh adding a note on his phone
+ * while the board auto-refreshes on the dealership's screen must never drop one of the two writes.
+ * On a clash the loser re-reads and re-applies, so the note lands on the latest copy.
+ */
+export async function updateDeals(change) {
+  return (await casUpdate(DEALS, emptyDeals, change)).result
 }
 
 /** Wrong-password records, keyed by hashed address. See lockout.js. */

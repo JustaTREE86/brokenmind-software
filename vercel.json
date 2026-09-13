@@ -3,7 +3,9 @@
   "functions": {
     "api/autozone/pdf.js": { "maxDuration": 60, "includeFiles": "{autozone/engine.html,node_modules/@sparticuz/chromium/bin/**}" },
     "api/autozone/stock.js": { "maxDuration": 60 },
-    "api/autozone/update.js": { "maxDuration": 60 }
+    "api/autozone/update.js": { "maxDuration": 60 },
+    "api/autozone/deals.js": { "maxDuration": 60 },
+    "api/autozone/deal-update.js": { "maxDuration": 60 }
   },
   "headers": [
     {

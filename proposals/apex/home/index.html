@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="theme-color" content="#132340">
+<meta property="og:title" content="Apex Finance Co home page concept">
+<meta property="og:description" content="Concept redesign by BrokenMind Software. Working repayment calculator and full compliance footer.">
+<meta property="og:type" content="website">
+<title>Apex Finance Co Home Concept</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:wght@500;600;700&family=Source+Sans+3:wght@300;400;500;600;700&display=swap">
+<style>
+  :root{
+    --navy:#132340;
+    --navy-deep:#0A1425;
+    --navy-mid:#1D3357;
+    --paper:#F5F4F0;
+    --paper-2:#EBEAE4;
+    --ink:#161B22;
+    --ink-soft:#4E5966;
+    --line:#D9D7CF;
+    --line-navy:rgba(255,255,255,0.14);
+    --go:#128A60;
+    --go-bright:#3FD39C;
+    --amber:#C98A16;
+    --white:#FFFFFF;
+    color-scheme:light;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Source Sans 3',"Segoe UI",Helvetica,Arial,sans-serif;
+    font-size:17px;line-height:1.6;font-weight:400;
+  }
+  h1,h2,h3,h4,.logo{font-family:'Bitter',Georgia,serif;font-weight:700;letter-spacing:-0.015em;line-height:1.1;text-wrap:balance}
+  .wrap{max-width:1140px;margin:0 auto;padding-inline:24px}
+  .eyebrow{font-size:11.5px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--go)}
+  .num{font-variant-numeric:tabular-nums}
+  a{color:inherit}
+
+  /* concept banner */
+  .concept{
+    position:sticky;top:0;z-index:60;background:#241A08;color:#F3D9A0;
+    font-size:12px;letter-spacing:0.08em;text-transform:uppercase;font-weight:600;
+    padding:9px 24px;text-align:center;border-bottom:1px solid rgba(243,217,160,0.25);
+  }
+  .concept a{color:#FFF1D0;text-underline-offset:3px;margin-left:6px}
+
+  /* nav */
+  nav{background:var(--navy);color:var(--white);position:relative;z-index:50}
+  .nav-in{display:flex;align-items:center;gap:28px;padding-block:16px;flex-wrap:wrap}
+  .logo{font-size:21px;letter-spacing:0.02em;color:var(--white);display:flex;align-items:baseline;gap:8px}
+  .logo span{color:var(--go-bright);font-size:12px;font-family:'Source Sans 3',sans-serif;font-weight:600;letter-spacing:0.18em;text-transform:uppercase}
+  .nav-links{display:flex;gap:22px;margin-left:auto;flex-wrap:wrap}
+  .nav-links a{font-size:14.5px;font-weight:500;color:rgba(255,255,255,0.82);text-decoration:none;padding-block:4px;border-bottom:1px solid transparent}
+  .nav-links a:hover{color:var(--white);border-bottom-color:var(--go-bright)}
+  .nav-cta{
+    background:var(--go-bright);color:var(--navy-deep);font-weight:700;font-size:14px;
+    padding:10px 20px;text-decoration:none;letter-spacing:0.02em;
+  }
+  .nav-cta:hover{background:#63E0B2}
+  .nav-phone{font-size:14.5px;font-weight:600;color:var(--white);text-decoration:none;white-space:nowrap}
+
+  /* hero */
+  .hero{
+    background:
+      radial-gradient(760px 420px at 12% 0%, rgba(63,211,156,0.13), transparent 60%),
+      linear-gradient(170deg, var(--navy) 0%, var(--navy-deep) 100%);
+    color:var(--white);padding-block:70px 150px;position:relative;overflow:hidden;
+  }
+  .ridge{position:absolute;inset:auto 0 0 0;height:230px;opacity:0.5;pointer-events:none}
+  .hero-grid{display:grid;grid-template-columns:1.15fr 0.85fr;gap:56px;align-items:center;position:relative;z-index:2}
+  .hero h1{font-size:clamp(36px,5.4vw,60px);margin-block:18px 20px;color:var(--white)}
+  .hero h1 em{font-style:normal;color:var(--go-bright)}
+  .hero p.lede{font-size:19px;color:rgba(255,255,255,0.78);max-width:52ch;font-weight:300}
+  .hero-actions{display:flex;gap:14px;margin-top:32px;flex-wrap:wrap}
+  .btn{display:inline-block;padding:15px 28px;font-weight:700;font-size:15px;text-decoration:none;letter-spacing:0.01em}
+  .btn-go{background:var(--go-bright);color:var(--navy-deep)}
+  .btn-go:hover{background:#63E0B2}
+  .btn-ghost{border:1px solid rgba(255,255,255,0.35);color:var(--white)}
+  .btn-ghost:hover{border-color:var(--go-bright);color:var(--go-bright)}
+  .trust{display:flex;gap:26px;margin-top:38px;flex-wrap:wrap;border-top:1px solid var(--line-navy);padding-top:24px}
+  .trust div{display:flex;flex-direction:column;gap:2px}
+  .trust b{font-family:'Bitter',serif;font-size:26px;color:var(--white)}
+  .trust span{font-size:12.5px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.55);font-weight:600}
+
+  /* calculator */
+  .calc{
+    background:var(--white);color:var(--ink);padding:28px;border:1px solid var(--line);
+    box-shadow:0 24px 60px rgba(6,14,28,0.35);
+  }
+  .calc h2{font-size:20px;margin-bottom:4px}
+  .calc .sub{font-size:13.5px;color:var(--ink-soft);margin-bottom:22px}
+  .field{margin-bottom:18px}
+  .field label{display:flex;justify-content:space-between;align-items:baseline;font-size:13px;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:9px}
+  .field label output{font-family:'Bitter',serif;font-size:19px;color:var(--navy);letter-spacing:0;text-transform:none;font-variant-numeric:tabular-nums}
+  input[type=range]{width:100%;accent-color:var(--go);height:22px;cursor:pointer}
+  input[type=range]:focus-visible{outline:2px solid var(--navy);outline-offset:3px}
+  .seg{display:flex;gap:6px;flex-wrap:wrap}
+  .seg button{
+    flex:1;min-width:58px;background:var(--paper-2);border:1px solid var(--line);color:var(--ink-soft);
+    font-family:inherit;font-size:13.5px;font-weight:600;padding:9px 4px;cursor:pointer;
+  }
+  .seg button[aria-pressed=true]{background:var(--navy);border-color:var(--navy);color:var(--white)}
+  .seg button:focus-visible{outline:2px solid var(--go);outline-offset:2px}
+  .result{background:var(--navy);color:var(--white);padding:20px 22px;margin-top:22px;display:flex;justify-content:space-between;align-items:flex-end;gap:16px}
+  .result .r-main{display:flex;flex-direction:column;gap:3px}
+  .result .r-main span{font-size:11.5px;letter-spacing:0.16em;text-transform:uppercase;color:rgba(255,255,255,0.6);font-weight:600}
+  .result .r-main b{font-family:'Bitter',serif;font-size:40px;line-height:1;font-variant-numeric:tabular-nums;color:var(--go-bright)}
+  .result .r-alt{font-size:13px;color:rgba(255,255,255,0.72);text-align:right;line-height:1.7;font-variant-numeric:tabular-nums}
+  .calc .fine{font-size:11.5px;color:var(--ink-soft);margin-top:14px;line-height:1.55}
+  .calc .btn{width:100%;text-align:center;margin-top:16px;background:var(--navy);color:var(--white)}
+  .calc .btn:hover{background:var(--navy-mid)}
+
+  /* generic section */
+  section{padding-block:80px}
+  .sec-head{max-width:64ch;margin-bottom:44px}
+  .sec-head h2{font-size:clamp(28px,4vw,40px);margin-block:14px 14px}
+  .sec-head p{color:var(--ink-soft);font-size:18px}
+
+  /* products */
+  .prod-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(255px,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
+  .prod{background:var(--white);padding:26px 24px;display:flex;flex-direction:column;gap:9px;text-decoration:none}
+  .prod:hover{background:#FCFCFA}
+  .prod .ic{width:30px;height:30px;color:var(--go);margin-bottom:4px}
+  .prod h3{font-size:17.5px;color:var(--navy)}
+  .prod p{font-size:14.5px;color:var(--ink-soft);line-height:1.55}
+  .prod .go{margin-top:auto;padding-top:10px;font-size:13px;font-weight:700;color:var(--go);letter-spacing:0.04em}
+
+  /* split band */
+  .band{background:var(--navy);color:var(--white)}
+  .band .sec-head h2{color:var(--white)}
+  .band .sec-head p{color:rgba(255,255,255,0.72)}
+  .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:28px}
+  .step{border-top:2px solid var(--go-bright);padding-top:18px}
+  .step b{font-size:12px;letter-spacing:0.18em;color:var(--go-bright);font-weight:700;display:block;margin-bottom:10px}
+  .step h3{font-size:18px;color:var(--white);margin-bottom:7px}
+  .step p{font-size:14.5px;color:rgba(255,255,255,0.7);line-height:1.6}
+
+  /* founder */
+  .founder{display:grid;grid-template-columns:0.9fr 1.1fr;gap:56px;align-items:center}
+  .portrait{
+    aspect-ratio:4/5;max-width:100%;background:
+      repeating-linear-gradient(135deg,var(--paper-2),var(--paper-2) 14px,#E3E1D9 14px,#E3E1D9 28px);
+    border:1px solid var(--line);display:flex;align-items:flex-end;padding:20px;
+  }
+  .portrait span{font-size:12px;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-soft);font-weight:700;background:var(--paper);padding:7px 11px;border:1px solid var(--line)}
+  .founder blockquote{font-family:'Bitter',serif;font-size:clamp(22px,2.7vw,30px);line-height:1.35;color:var(--navy);font-weight:600;margin-bottom:22px}
+  .founder p{color:var(--ink-soft);max-width:60ch}
+  .founder p + p{margin-top:14px}
+  .creds{display:flex;gap:20px;flex-wrap:wrap;margin-top:26px;border-top:1px solid var(--line);padding-top:20px}
+  .creds div b{display:block;font-family:'Bitter',serif;font-size:22px;color:var(--navy)}
+  .creds div span{font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-soft);font-weight:600}
+
+  /* panel strip */
+  .panel{border-block:1px solid var(--line);background:var(--paper-2);padding-block:34px}
+  .panel-in{display:flex;align-items:center;gap:28px;flex-wrap:wrap}
+  .panel p{font-size:13px;letter-spacing:0.14em;text-transform:uppercase;font-weight:700;color:var(--ink-soft);flex:none}
+  .chips{display:flex;gap:10px;flex-wrap:wrap}
+  .chip{background:var(--white);border:1px solid var(--line);padding:9px 15px;font-size:13.5px;font-weight:600;color:var(--navy)}
+  .chip.more{background:var(--navy);color:var(--white);border-color:var(--navy)}
+
+  /* reviews slot */
+  .slot{border:1px dashed var(--line);background:var(--white);padding:30px;display:flex;gap:20px;align-items:center;flex-wrap:wrap;justify-content:space-between}
+  .slot h3{font-size:18px;color:var(--navy);margin-bottom:6px}
+  .slot p{font-size:14.5px;color:var(--ink-soft);max-width:62ch}
+  .slot .tagpill{font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--amber);border:1px solid var(--amber);padding:6px 10px;white-space:nowrap}
+
+  /* faq */
+  .faq{border-top:1px solid var(--line)}
+  details{border-bottom:1px solid var(--line);background:transparent}
+  summary{
+    list-style:none;cursor:pointer;padding:20px 40px 20px 0;position:relative;
+    font-family:'Bitter',serif;font-weight:600;font-size:18px;color:var(--navy);
+  }
+  summary::-webkit-details-marker{display:none}
+  summary::after{content:"+";position:absolute;right:6px;top:18px;font-family:'Source Sans 3',sans-serif;font-size:24px;color:var(--go);font-weight:400}
+  details[open] summary::after{content:"\2212"}
+  summary:focus-visible{outline:2px solid var(--go);outline-offset:2px}
+  details p{padding-bottom:22px;color:var(--ink-soft);font-size:15.5px;max-width:72ch}
+
+  /* apply band */
+  .apply{background:linear-gradient(160deg,var(--navy-mid),var(--navy-deep));color:var(--white);padding-block:76px}
+  .apply h2{font-size:clamp(30px,4.4vw,44px);color:var(--white);margin-bottom:16px}
+  .apply p{color:rgba(255,255,255,0.75);font-size:18px;max-width:56ch;margin-bottom:30px}
+  .apply-row{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+  .apply-note{font-size:13px;color:rgba(255,255,255,0.55);margin-top:20px}
+
+  /* footer */
+  footer{background:var(--navy-deep);color:rgba(255,255,255,0.72);padding-block:56px 30px;font-size:14.5px}
+  .f-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1.2fr;gap:36px;padding-bottom:34px;border-bottom:1px solid var(--line-navy)}
+  .f-grid h4{font-size:12px;letter-spacing:0.16em;text-transform:uppercase;color:var(--go-bright);margin-bottom:14px;font-family:'Source Sans 3',sans-serif;font-weight:700}
+  .f-grid ul{list-style:none;display:flex;flex-direction:column;gap:9px}
+  .f-grid a{text-decoration:none}
+  .f-grid a:hover{color:var(--go-bright)}
+  .hours{display:grid;grid-template-columns:auto auto;gap:6px 18px;font-variant-numeric:tabular-nums}
+  .hours span:nth-child(odd){color:rgba(255,255,255,0.5)}
+  .disclosure{padding-top:26px;font-size:12.5px;line-height:1.7;color:rgba(255,255,255,0.5)}
+  .disclosure mark{background:rgba(201,138,22,0.22);color:#F0C96B;padding:1px 6px;font-weight:600}
+  .f-bottom{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:22px;font-size:12.5px;color:rgba(255,255,255,0.4)}
+
+  @media (max-width:900px){
+    .hero-grid,.founder{grid-template-columns:1fr;gap:38px}
+    .hero{padding-block:52px 90px}
+    .f-grid{grid-template-columns:1fr 1fr}
+    .portrait{aspect-ratio:3/2}
+  }
+  @media (max-width:560px){
+    .f-grid{grid-template-columns:1fr}
+    .nav-links{display:none}
+    section{padding-block:56px}
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+
+<div class="concept">Concept preview, built by BrokenMind Software for Apex Finance Co. Not a live site. <a href="https://brokenmind.com.au/proposals/apex">Read the proposal</a></div>
+
+<nav>
+  <div class="wrap nav-in">
+    <div class="logo">APEX <span>Finance Co</span></div>
+    <div class="nav-links">
+      <a href="#products">Consumer</a>
+      <a href="#products">Commercial</a>
+      <a href="#calculator">Calculator</a>
+      <a href="#education">Learn</a>
+      <a href="#faq">FAQs</a>
+    </div>
+    <a class="nav-phone" href="tel:0477970725">0477 970 725</a>
+    <a class="nav-cta" href="#apply">Apply now</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <svg class="ridge" viewBox="0 0 1440 230" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0 230 L330 96 L470 150 L760 34 L980 132 L1160 78 L1440 176 L1440 230 Z" fill="rgba(255,255,255,0.045)"></path>
+    <path d="M0 230 L250 150 L430 186 L720 96 L960 168 L1200 124 L1440 200 L1440 230 Z" fill="rgba(63,211,156,0.07)"></path>
+  </svg>
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow" style="color:var(--go-bright)">Brisbane based, lending Australia wide</div>
+      <h1>Know your repayment <em>before</em> you pick up the phone.</h1>
+      <p class="lede">Car, caravan, marine and equipment finance through a panel of more than 30 lenders. Twenty years of consumer and commercial lending behind every application.</p>
+      <div class="hero-actions">
+        <a class="btn btn-go" href="#apply">Start my application</a>
+        <a class="btn btn-ghost" href="#calculator">Work out repayments</a>
+      </div>
+      <div class="trust">
+        <div><b class="num">30+</b><span>Lender panel</span></div>
+        <div><b class="num">20 yrs</b><span>Lending experience</span></div>
+        <div><b>Same day</b><span>Approvals on many loans</span></div>
+        <div><b>No upfront fee</b><span>Paid at settlement</span></div>
+      </div>
+    </div>
+
+    <form class="calc" id="calculator" onsubmit="return false">
+      <h2>Repayment calculator</h2>
+      <p class="sub">Move the sliders. The number updates as you go.</p>
+
+      <div class="field">
+        <label for="amt">Loan amount <output id="amtOut" for="amt">$45,000</output></label>
+        <input type="range" id="amt" min="5000" max="250000" step="1000" value="45000">
+      </div>
+
+      <div class="field">
+        <label for="term">Term <output id="termOut" for="term">5 years</output></label>
+        <input type="range" id="term" min="12" max="84" step="12" value="60">
+      </div>
+
+      <div class="field">
+        <label for="rate">Indicative rate <output id="rateOut" for="rate">9.95% p.a.</output></label>
+        <input type="range" id="rate" min="6" max="20" step="0.05" value="9.95">
+      </div>
+
+      <div class="field">
+        <label for="balloonGroup">Balloon <output id="balOut">0%</output></label>
+        <div class="seg" id="balloonGroup" role="group" aria-label="Balloon percentage">
+          <button type="button" data-bal="0" aria-pressed="true">0%</button>
+          <button type="button" data-bal="10" aria-pressed="false">10%</button>
+          <button type="button" data-bal="20" aria-pressed="false">20%</button>
+          <button type="button" data-bal="30" aria-pressed="false">30%</button>
+        </div>
+      </div>
+
+      <div class="result">
+        <div class="r-main"><span>Weekly, approx</span><b id="wk" class="num">$213</b></div>
+        <div class="r-alt">
+          <div>Fortnightly <strong id="fn" class="num">$426</strong></div>
+          <div>Monthly <strong id="mo" class="num">$923</strong></div>
+        </div>
+      </div>
+
+      <a class="btn" href="#apply">Apply with these numbers</a>
+      <p class="fine">Illustrative only. Rates shown are a sample range, not an offer of credit. Your actual rate depends on the lender, the asset, and your circumstances. Repayments exclude fees and charges.</p>
+    </form>
+  </div>
+</header>
+
+<div class="panel">
+  <div class="wrap panel-in">
+    <p>Lender panel</p>
+    <div class="chips">
+      <div class="chip">Major banks</div>
+      <div class="chip">Tier 1 asset financiers</div>
+      <div class="chip">Specialist near prime</div>
+      <div class="chip">Commercial and equipment</div>
+      <div class="chip more">30+ lenders</div>
+    </div>
+  </div>
+</div>
+
+<section id="products">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">What we finance</div>
+      <h2>One broker for the whole garage, and the business too.</h2>
+      <p>Every product below gets its own page, written properly, so it can be found in search and sent straight to a client.</p>
+    </div>
+
+    <div class="prod-grid">
+      <a class="prod" href="#apply">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M3 13l2-5.5A2 2 0 017 6h10a2 2 0 011.9 1.5L21 13v5h-3v-2H6v2H3v-5z"/><circle cx="7.5" cy="15.5" r="1.3"/><circle cx="16.5" cy="15.5" r="1.3"/></svg>
+        <h3>Car loans</h3>
+        <p>New, used, dealer or private sale. We compare the panel and structure it so you drive away sooner.</p>
+        <span class="go">Get a rate</span>
+      </a>
+      <a class="prod" href="#apply">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 16V9a2 2 0 012-2h11a4 4 0 014 4v5"/><path d="M2 16h20"/><circle cx="8" cy="18" r="2"/><path d="M6 7V5h5v2"/></svg>
+        <h3>Caravan finance</h3>
+        <p>New or used vans, on road or off road. Flexible terms for weekends away or life on the road full time.</p>
+        <span class="go">Get a rate</span>
+      </a>
+      <a class="prod" href="#apply">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M3 17c1.8 1.4 3.4 1.4 5.2 0 1.8-1.4 3.4-1.4 5.2 0 1.8 1.4 3.4 1.4 5.2 0"/><path d="M5 14l1.5-5h8l2.5 5"/><path d="M10 9V5h3"/></svg>
+        <h3>Marine finance</h3>
+        <p>Jet skis through to cruisers. Terms matched to the asset so the repayment fits the season.</p>
+        <span class="go">Get a rate</span>
+      </a>
+      <a class="prod" href="#apply">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="5.5" cy="16" r="3"/><circle cx="18.5" cy="16" r="3"/><path d="M5.5 16l4-7h4l3 7"/><path d="M11 9l-1-3h3"/></svg>
+        <h3>Motorcycle finance</h3>
+        <p>First bike, weekend ride or an upgrade. Road and off road, approved fast.</p>
+        <span class="go">Get a rate</span>
+      </a>
+      <a class="prod" href="#apply">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M3 20V9l9-5 9 5v11"/><path d="M9 20v-6h6v6"/></svg>
+        <h3>Home improvements</h3>
+        <p>Renovations, outdoor builds and energy upgrades, funded without touching the mortgage.</p>
+        <span class="go">Get a rate</span>
+      </a>
+      <a class="prod" href="#apply">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 7h16v12H4z"/><path d="M4 11h16"/><path d="M9 7V5h6v2"/></svg>
+        <h3>Debt consolidation</h3>
+        <p>Multiple debts rolled into one repayment, with a clear view of what it actually costs you.</p>
+        <span class="go">Get a rate</span>
+      </a>
+      <a class="prod" href="#apply">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M3 18V8h12v10"/><path d="M15 11h3.5L21 14v4h-6"/><circle cx="7" cy="18" r="2"/><circle cx="17.5" cy="18" r="2"/></svg>
+        <h3>Trucks and transport</h3>
+        <p>Prime movers, trailers and rigids. Structured around cash flow, not just the sticker price.</p>
+        <span class="go">Get a rate</span>
+      </a>
+      <a class="prod" href="#apply">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 20V10l6-4 6 4v10"/><path d="M16 20V13h4v7"/><path d="M8 20v-4h4v4"/></svg>
+        <h3>Equipment and commercial</h3>
+        <p>Chattel mortgage, hire purchase, lines of credit. GST and tax structure explained before you sign.</p>
+        <span class="go">Get a rate</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow" style="color:var(--go-bright)">How it works</div>
+      <h2>Four steps, and we do three of them.</h2>
+      <p>No credit enquiry until we know which lender fits. That is how we protect your file while we shop it.</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <b>STEP 01</b>
+        <h3>Tell us the plan</h3>
+        <p>Two minutes online, or a phone call. What you are buying, roughly what you earn, what you already owe.</p>
+      </div>
+      <div class="step">
+        <b>STEP 02</b>
+        <h3>We match the lender</h3>
+        <p>We assess it against the panel first, before any credit check, so your score does not wear the search.</p>
+      </div>
+      <div class="step">
+        <b>STEP 03</b>
+        <h3>Approval</h3>
+        <p>Most files need two payslips and a licence. Many come back the same day, some within hours.</p>
+      </div>
+      <div class="step">
+        <b>STEP 04</b>
+        <h3>Settlement</h3>
+        <p>We deal with the dealer or the private seller, handle the paperwork, and the funds move. You pick it up.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap founder">
+    <div class="portrait"><span>Photo of Joshua goes here</span></div>
+    <div>
+      <div class="eyebrow">The broker</div>
+      <blockquote>"Finance should be simple, transparent and personal. Twenty years in, that has not changed."</blockquote>
+      <p>Joshua Dunmore founded Apex Finance Co after two decades in consumer and commercial lending, on one principle: customer first. Every solution is built around the client's actual goals, not the lender's easiest product.</p>
+      <p>Apex works alongside individuals, mortgage brokers, dealers and referral partners, acting as an extension of their brand. Based at Eight Mile Plains, writing loans Australia wide.</p>
+      <div class="creds">
+        <div><b class="num">20+</b><span>Years lending</span></div>
+        <div><b class="num">30+</b><span>Lenders on panel</span></div>
+        <div><b>Brisbane</b><span>Eight Mile Plains QLD</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="slot">
+      <div>
+        <h3>Your Google reviews load here</h3>
+        <p>Live feed, pulled from the Google Business Profile, with the rating and review count marked up so stars can show in search results. Nothing is written by us and nothing is invented.</p>
+      </div>
+      <div class="tagpill">Content slot</div>
+    </div>
+  </div>
+</section>
+
+<section id="education" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Financial education</div>
+      <h2>The page that brings strangers to the site.</h2>
+      <p>Six articles live at launch, then two a month. Each one answers a question people are already typing into Google, and each one ends at the calculator.</p>
+    </div>
+    <div class="prod-grid">
+      <a class="prod" href="#education">
+        <h3>What a balloon payment really costs</h3>
+        <p>Lower repayment now, a lump sum later. Run both through the numbers before you agree to one.</p>
+        <span class="go">Read</span>
+      </a>
+      <a class="prod" href="#education">
+        <h3>Buying privately, not from a dealer</h3>
+        <p>PPSR checks, payout letters and how the money actually moves on a private sale.</p>
+        <span class="go">Read</span>
+      </a>
+      <a class="prod" href="#education">
+        <h3>Self employed and need a car loan</h3>
+        <p>What low doc really means, which lenders accept it, and what they want to see instead of payslips.</p>
+        <span class="go">Read</span>
+      </a>
+      <a class="prod" href="#education">
+        <h3>Chattel mortgage or hire purchase</h3>
+        <p>The GST and depreciation difference, in plain words, with a worked example.</p>
+        <span class="go">Read</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section id="faq" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Questions</div>
+      <h2>The ten we get asked every week.</h2>
+      <p>Marked up as structured data, so these answers can appear directly in Google search results.</p>
+    </div>
+    <div class="faq">
+      <details open>
+        <summary>What documents are required?</summary>
+        <p>Most lenders only need two recent consecutive payslips and your driver licence to get started. Some loan types need more, and we tell you exactly what before you send anything.</p>
+      </details>
+      <details>
+        <summary>How long does approval take?</summary>
+        <p>Many applications are approved same day, with some lenders coming back within a few hours. More complex files take longer, and we keep you updated at every step.</p>
+      </details>
+      <details>
+        <summary>Will applying affect my credit score?</summary>
+        <p>We review your situation upfront, before any credit check happens. That means we only lodge with a lender that fits, and your file does not wear a string of unnecessary enquiries.</p>
+      </details>
+      <details>
+        <summary>Can you help if I have been declined elsewhere?</summary>
+        <p>Often, yes. The panel includes lenders who look past standard bank criteria. We assess the situation honestly and tell you what the path forward looks like.</p>
+      </details>
+      <details>
+        <summary>Do you charge any fees?</summary>
+        <p>There is a fee, and it is not charged upfront. It is included in the loan and paid at settlement, so you are not out of pocket to apply. We show you the figure before you sign anything.</p>
+      </details>
+      <details>
+        <summary>Can I pay the loan out early?</summary>
+        <p>Many lenders allow early payout with minimal or no break fees. If that flexibility matters to you, say so at the start and we will weight the panel toward it.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section class="apply" id="apply">
+  <div class="wrap">
+    <div class="eyebrow" style="color:var(--go-bright)">Apply</div>
+    <h2>Two minutes now, or the whole thing properly.</h2>
+    <p>Quick quote gives you a number and a callback. The full application collects everything a lender needs, including documents, so nothing gets rebuilt over the phone.</p>
+    <div class="apply-row">
+      <a class="btn btn-go" href="#apply">Full application</a>
+      <a class="btn btn-ghost" href="#apply">Quick quote, 2 minutes</a>
+      <a class="btn btn-ghost" href="tel:0477970725">Call 0477 970 725</a>
+    </div>
+    <p class="apply-note">Submitting does not affect your credit score. We review your situation before any credit check. By submitting you agree to the Privacy Policy and Credit Guide.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="f-grid">
+      <div>
+        <div class="logo" style="font-size:19px;margin-bottom:14px">APEX <span>Finance Co</span></div>
+        <p style="font-size:14px;line-height:1.7">Eight Mile Plains QLD, Australia<br>
+        <a href="tel:0477970725">0477 970 725</a><br>
+        <a href="mailto:info@apexfinanceco.com">info@apexfinanceco.com</a></p>
+      </div>
+      <div>
+        <h4>Consumer</h4>
+        <ul>
+          <li><a href="#products">Car loans</a></li>
+          <li><a href="#products">Caravan finance</a></li>
+          <li><a href="#products">Marine finance</a></li>
+          <li><a href="#products">Motorcycle finance</a></li>
+          <li><a href="#products">Debt consolidation</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Commercial</h4>
+        <ul>
+          <li><a href="#products">Equipment and asset</a></li>
+          <li><a href="#products">Chattel mortgage</a></li>
+          <li><a href="#products">Trucks and transport</a></li>
+          <li><a href="#products">Fleet finance</a></li>
+          <li><a href="#products">Business loans</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Hours</h4>
+        <div class="hours">
+          <span>Mon to Fri</span><span>8:00am to 6:00pm</span>
+          <span>Saturday</span><span>9:00am to 2:00pm</span>
+          <span>Sunday</span><span>Closed</span>
+        </div>
+      </div>
+    </div>
+    <p class="disclosure">
+      Apex Finance Co <mark>ABN to confirm</mark>. Credit representative <mark>number to confirm</mark> of <mark>licensee name</mark>, Australian Credit Licence <mark>number to confirm</mark>. Member of AFCA, membership <mark>number to confirm</mark>.
+      Any advice on this page is general and does not take your objectives, financial situation or needs into account. Loan approval, rates and fees are subject to lender assessment and your circumstances. Repayment figures shown by the calculator are illustrative and are not an offer of credit.
+      Read our <a href="#" style="color:var(--go-bright)">Privacy Policy</a> and <a href="#" style="color:var(--go-bright)">Credit Guide</a>. Complaints: <a href="mailto:info@apexfinanceco.com" style="color:var(--go-bright)">info@apexfinanceco.com</a>.
+    </p>
+    <div class="f-bottom">
+      <span>Copyright 2026 Apex Finance Co. All rights reserved.</span>
+      <span>Concept design by BrokenMind Software</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var amt=document.getElementById('amt'),term=document.getElementById('term'),rate=document.getElementById('rate');
+  var amtOut=document.getElementById('amtOut'),termOut=document.getElementById('termOut'),rateOut=document.getElementById('rateOut'),balOut=document.getElementById('balOut');
+  var wk=document.getElementById('wk'),fn=document.getElementById('fn'),mo=document.getElementById('mo');
+  var balloon=0;
+  var money=function(n){return '$'+Math.round(n).toLocaleString('en-AU');};
+
+  function calc(){
+    var P=+amt.value, n=+term.value, annual=+rate.value/100, r=annual/12;
+    var B=P*(balloon/100);
+    var payment;
+    if(r===0){ payment=(P-B)/n; }
+    else{
+      var f=Math.pow(1+r,n);
+      payment=(P-B/f)*r/(1-1/f);
+    }
+    amtOut.textContent=money(P);
+    termOut.textContent=(n%12===0)?(n/12)+(n===12?' year':' years'):n+' months';
+    rateOut.textContent=(+rate.value).toFixed(2)+'% p.a.';
+    balOut.textContent=balloon+'%';
+    mo.textContent=money(payment);
+    fn.textContent=money(payment*12/26);
+    wk.textContent=money(payment*12/52);
+  }
+
+  [amt,term,rate].forEach(function(el){el.addEventListener('input',calc);});
+
+  document.querySelectorAll('#balloonGroup button').forEach(function(b){
+    b.addEventListener('click',function(){
+      document.querySelectorAll('#balloonGroup button').forEach(function(x){x.setAttribute('aria-pressed','false');});
+      b.setAttribute('aria-pressed','true');
+      balloon=+b.dataset.bal;
+      calc();
+    });
+  });
+
+  calc();
+})();
+</script>
+</body>
+</html>

@@ -20,6 +20,10 @@
       "maxDuration": 60
     }
   },
+  "rewrites": [
+    { "source": "/autozone/bank-statements", "destination": "/autozone/bank" },
+    { "source": "/autozone/statements", "destination": "/autozone/bank" }
+  ],
   "headers": [
     {
       "source": "/autozone/(.*)",

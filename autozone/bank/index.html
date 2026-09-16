@@ -1,0 +1,575 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Send your bank statements &middot; Autozone finance</title>
+<meta name="description" content="Send your bank statements securely in about two minutes. No printing, no scanning, no PDFs.">
+<meta name="theme-color" content="#0E0E0E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23F47B20'/%3E%3Cpath d='M9 8h14l-9 12h9v4H9l9-12H9z' fill='%23fff'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,600;0,800;1,900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --orange:#F47B20; --orange-deep:#D9600A; --ink:#0E0E0E;
+  --bg:#EEF1F5; --card:#fff; --text:#1B1F24; --muted:#667085; --line:#DDE1E7;
+  --good:#1F7A4A; --good-bg:#E6F4EC; --warn:#8A5300; --warn-bg:#FFF3DF; --bad:#B42318; --bad-bg:#FDECEA;
+  --disp:'Archivo','Arial Black',system-ui,sans-serif;
+  --ui:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --r:14px;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--text);font:17px/1.5 var(--ui);-webkit-text-size-adjust:100%}
+[hidden]{display:none !important}
+img,svg{max-width:100%}
+a{color:var(--orange-deep)}
+:focus-visible{outline:3px solid rgba(244,123,32,.5);outline-offset:3px}
+
+/* ---------- header ---------- */
+.bar{background:var(--ink);color:#fff;padding:14px clamp(14px,4vw,28px);
+  background-image:linear-gradient(135deg,rgba(255,255,255,.03) 25%,transparent 25%,transparent 50%,rgba(255,255,255,.03) 50%,rgba(255,255,255,.03) 75%,transparent 75%);background-size:6px 6px}
+.bar .in{max-width:940px;margin:0 auto;display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+.wordmark{font:italic 900 24px/1 var(--disp);letter-spacing:-.5px}
+.wordmark b{color:var(--orange);font-weight:900}
+.bar .sub{font:600 12px var(--ui);color:#c7ccd4;text-transform:uppercase;letter-spacing:.12em}
+
+main{max-width:940px;margin:0 auto;padding:0 clamp(14px,4vw,28px) 40px}
+
+/* ---------- hero ---------- */
+.hero{background:var(--ink);color:#fff;margin:0 calc(clamp(14px,4vw,28px) * -1);padding:26px clamp(14px,4vw,28px) 34px}
+.hero .in{max-width:940px;margin:0 auto}
+.hero h1{font:800 clamp(28px,7vw,42px)/1.08 var(--disp);margin:0 0 10px;letter-spacing:-.5px}
+.hero p{margin:0;color:#d5d9e0;font-size:clamp(17px,4.2vw,20px);max-width:32em}
+.hero .time{display:inline-block;background:var(--orange);color:#111;font:800 13px var(--ui);
+  text-transform:uppercase;letter-spacing:.1em;border-radius:99px;padding:5px 13px;margin-bottom:14px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px;list-style:none;padding:0}
+.chips li{background:#1E2228;border:1px solid #333941;color:#c7ccd4;border-radius:99px;
+  padding:6px 13px;font-size:14px;font-weight:600;display:flex;align-items:center;gap:7px}
+.chips li::before{content:'';width:15px;height:15px;flex:none;background:var(--orange);border-radius:50%;
+  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 12.5l4 4 8-9' stroke='%23000' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/13px no-repeat;
+  mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 12.5l4 4 8-9' stroke='%23000' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/13px no-repeat;
+  background-color:var(--orange);border-radius:0}
+
+/* ---------- sections ---------- */
+section{margin-top:30px}
+h2{font:800 clamp(21px,5vw,26px)/1.2 var(--disp);margin:0 0 4px;letter-spacing:-.3px}
+h2 .n{display:inline-grid;place-items:center;width:32px;height:32px;border-radius:50%;
+  background:var(--orange);color:#fff;font:800 17px/1 var(--ui);margin-right:10px;vertical-align:2px}
+.lede{color:var(--muted);margin:0 0 16px;font-size:16px}
+
+.panel{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:clamp(16px,4vw,22px)}
+
+/* ---------- before you start ---------- */
+.need{list-style:none;margin:0;padding:0;display:grid;gap:14px}
+.need li{display:grid;grid-template-columns:34px 1fr;gap:13px;align-items:start}
+.need .ic{width:34px;height:34px;border-radius:9px;background:#FFF4EB;display:grid;place-items:center;flex:none}
+.need .ic svg{width:19px;height:19px;display:block}
+.need b{display:block;font-weight:700}
+.need span{color:var(--muted);font-size:15px}
+
+/* ---------- link picker ---------- */
+.picks{display:grid;gap:14px;margin-top:4px}
+.pick{border:2px solid var(--line);border-radius:var(--r);background:var(--card);padding:18px;
+  display:grid;gap:12px;position:relative}
+.pick.main{border-color:var(--orange);box-shadow:0 6px 22px rgba(244,123,32,.18)}
+.pick .tag{position:absolute;top:-11px;left:16px;background:var(--orange);color:#fff;
+  font:800 11px var(--ui);text-transform:uppercase;letter-spacing:.1em;border-radius:99px;padding:4px 11px}
+.pick h3{font:800 24px/1.1 var(--disp);margin:0}
+.pick .sub{color:var(--muted);font-size:15px;margin:0}
+.go{display:flex;align-items:center;justify-content:center;gap:10px;text-decoration:none;
+  background:#fff;border:2px solid var(--ink);color:var(--ink);border-radius:11px;
+  padding:15px 18px;font:800 17px var(--ui);min-height:56px;text-align:center}
+.go:hover{background:#f4f5f7}
+.go.primary{background:var(--orange);border-color:var(--orange);color:#fff;font-size:19px;min-height:62px}
+.go.primary:hover{background:var(--orange-deep);border-color:var(--orange-deep)}
+.go::after{content:'';width:19px;height:19px;flex:none;background:currentColor;
+  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5 12h13M12.5 6l6 6-6 6' stroke='%23000' stroke-width='2.4' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/19px no-repeat;
+  mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5 12h13M12.5 6l6 6-6 6' stroke='%23000' stroke-width='2.4' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/19px no-repeat}
+.unsure{margin-top:14px;background:var(--warn-bg);border:1px solid #F2D9AE;color:#5C3A00;
+  border-radius:var(--r);padding:14px 16px;font-size:16px}
+.unsure b{color:#3E2700}
+
+/* ---------- steps ---------- */
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(255px,1fr));gap:16px}
+.step{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px;display:flex;flex-direction:column}
+.step .shot{background:#F3F5F8;border:1px solid #E4E8EE;border-radius:11px;padding:12px;margin-bottom:14px}
+.step .shot svg{display:block;width:100%;height:auto}
+.step .num{display:inline-grid;place-items:center;width:27px;height:27px;border-radius:50%;
+  background:var(--ink);color:#fff;font:800 14px/1 var(--ui);margin-bottom:8px}
+.step h3{font:800 19px/1.2 var(--disp);margin:0 0 5px}
+.step p{margin:0;font-size:16px;color:#3A4049}
+.step .watch{margin-top:auto;padding-top:12px}
+.step .watch p{margin:10px 0 0;background:var(--warn-bg);border-left:4px solid var(--orange);
+  border-radius:0 8px 8px 0;padding:10px 12px;font-size:15px;color:#5C3A00}
+.step .watch p b{color:#3E2700}
+
+/* ---------- fixes ---------- */
+.fix{border:1px solid var(--line);border-radius:11px;background:var(--card);margin-bottom:10px;overflow:hidden}
+.fix summary{cursor:pointer;list-style:none;padding:15px 48px 15px 16px;font-weight:700;position:relative;font-size:16px}
+.fix summary::-webkit-details-marker{display:none}
+.fix summary::after{content:'';position:absolute;right:16px;top:50%;width:14px;height:14px;margin-top:-7px;
+  background:var(--muted);transition:transform .15s;
+  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5 9l7 7 7-7' stroke='%23000' stroke-width='2.6' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/14px no-repeat;
+  mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5 9l7 7 7-7' stroke='%23000' stroke-width='2.6' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/14px no-repeat}
+.fix[open] summary::after{transform:rotate(180deg)}
+.fix[open] summary{border-bottom:1px solid var(--line)}
+.fix .body{padding:14px 16px;font-size:16px;color:#3A4049}
+.fix .body p{margin:0 0 10px}
+.fix .body p:last-child{margin:0}
+
+/* ---------- safety ---------- */
+.safe{background:#12241B;color:#fff;border-radius:var(--r);padding:clamp(18px,4vw,24px)}
+.safe h2{color:#fff}
+.safe .lede{color:#a9c4b5}
+.safe ul{list-style:none;margin:0;padding:0;display:grid;gap:13px}
+.safe li{display:grid;grid-template-columns:22px 1fr;gap:12px;align-items:start;font-size:16px;color:#dbe7e0}
+.safe li::before{content:'';width:22px;height:22px;border-radius:50%;background:#2E8B57;flex:none;margin-top:1px;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 12.5l4 4 8-9' stroke='%23fff' stroke-width='2.8' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-size:16px;background-position:center;background-repeat:no-repeat}
+.safe li b{color:#fff}
+.safe .fine{color:#8fae9d;font-size:14px;margin:18px 0 0;line-height:1.55}
+.safe .fine a{color:#9FE3BE}
+
+/* ---------- help ---------- */
+.help{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin-top:14px}
+.help a{display:flex;align-items:center;gap:12px;text-decoration:none;background:var(--card);
+  border:1px solid var(--line);border-radius:11px;padding:15px 16px;color:var(--text);min-height:60px}
+.help a:hover{border-color:#b9c0ca}
+.help .ic{width:38px;height:38px;border-radius:9px;background:var(--ink);display:grid;place-items:center;flex:none}
+.help .ic svg{width:19px;height:19px;display:block}
+.help b{display:block;font-weight:800;font-size:17px;color:var(--text)}
+.help span{color:var(--muted);font-size:14px}
+
+/* ---------- staff strip ---------- */
+.staff{margin-top:34px;border:1px dashed #c3cad4;border-radius:var(--r);background:#E7EBF1;padding:18px}
+.staff h2{font-size:17px;margin-bottom:2px}
+.staff .lede{font-size:15px;margin-bottom:14px}
+.staff .row{display:flex;flex-wrap:wrap;gap:18px;align-items:center}
+.staff .qr{background:#fff;border-radius:10px;padding:9px;width:124px;flex:none;border:1px solid var(--line)}
+.staff .qr svg{display:block;width:100%;height:auto}
+.staff .btns{display:flex;flex-wrap:wrap;gap:9px;flex:1;min-width:210px}
+.staff button{font:700 15px var(--ui);cursor:pointer;border:1px solid #b9c0ca;background:#fff;
+  color:var(--text);border-radius:9px;padding:11px 15px}
+.staff button:hover{border-color:#8f99a6}
+.staff button.primary{background:var(--ink);border-color:var(--ink);color:#fff}
+.staff .url{font:600 14px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:#3A4049;
+  word-break:break-all;margin:12px 0 0}
+
+footer{max-width:940px;margin:0 auto;padding:26px clamp(14px,4vw,28px) 40px;color:var(--muted);font-size:14px;line-height:1.6}
+footer .who{color:var(--text);font-weight:700}
+
+.toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:var(--ink);color:#fff;
+  border-radius:11px;padding:12px 18px;font-weight:600;box-shadow:0 10px 30px rgba(0,0,0,.28);z-index:20}
+
+/* wider screens: 6 and 12 sit side by side under the 3-month card; cap steps at 3 across */
+@media (min-width:720px){
+  .picks{grid-template-columns:1fr 1fr}
+  .pick.main{grid-column:1/-1}
+}
+@media (min-width:900px){
+  .steps{grid-template-columns:repeat(3,1fr)}
+}
+
+@media print{
+  body{background:#fff;font-size:12pt}
+  .bar,.hero{background:#fff !important;color:#000 !important}
+  .hero p{color:#333}
+  .chips,.staff .btns,.help,.no-print{display:none !important}
+  .safe{background:#fff;color:#000;border:1px solid #999}
+  .safe h2,.safe li,.safe li b,.safe .lede,.safe .fine{color:#000}
+  .fix{break-inside:avoid}
+  .fix .body{display:block !important}
+  .step,.pick,.panel{break-inside:avoid}
+  a[href^="http"]::after{content:" (" attr(href) ")";font-size:9pt;color:#555;word-break:break-all}
+  .go::after{display:none}
+}
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <div class="in">
+    <span class="wordmark">AUTO<b>ZONE</b></span>
+    <span class="sub">Finance by The Buyer Assist Group</span>
+  </div>
+</header>
+
+<main>
+
+<div class="hero">
+  <div class="in">
+    <span class="time">About 2 minutes</span>
+    <h1>Send us your bank statements</h1>
+    <p>This is the last thing we need to get your car finance moving. No printing, no scanning,
+       no hunting for PDFs &mdash; just tap the button below and follow the prompts.</p>
+    <ul class="chips">
+      <li>Read-only &mdash; no money can move</li>
+      <li>We never see your password</li>
+      <li>Bank-level encryption</li>
+      <li>Stays in Australia</li>
+    </ul>
+  </div>
+</div>
+
+<!-- 1. before you start -->
+<section>
+  <h2><span class="n">1</span>Have these handy</h2>
+  <p class="lede">Grab these before you start, or you&rsquo;ll get halfway and have to begin again.</p>
+  <div class="panel">
+    <ul class="need">
+      <li>
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#D9600A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>
+        <div><b>Your internet banking login</b>
+        <span>The username (or customer number) and password you use on your bank&rsquo;s website or app.
+        Not your card PIN, and not your fingerprint or Face&nbsp;ID.</span></div>
+      </li>
+      <li>
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#D9600A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="2.5"/><path d="M11 18.5h2"/></svg></span>
+        <div><b>Your mobile, unlocked and next to you</b>
+        <span>Most banks text you a one-time code partway through. If your phone is flat or in the car, you&rsquo;ll be stuck.</span></div>
+      </li>
+      <li>
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#D9600A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5.5l3.5 2"/></svg></span>
+        <div><b>Two spare minutes</b>
+        <span>Do it in one sitting. If you wander off, the page can time out and you&rsquo;ll start over.</span></div>
+      </li>
+      <li>
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#D9600A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7.5h18v11a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 18.5z"/><path d="M3 10.5h18"/><path d="M7 15h4"/></svg></span>
+        <div><b>The account your pay goes into</b>
+        <span>That&rsquo;s the one that matters. If your wage lands in one bank and your bills come out of another, do both &mdash; run the link once per bank.</span></div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- 2. pick a link -->
+<section>
+  <h2><span class="n">2</span>Tap your link</h2>
+  <p class="lede">Use the one we asked you for. If nobody told you a number, use 3&nbsp;months.</p>
+
+  <div class="picks">
+    <div class="pick main">
+      <span class="tag">Start here &mdash; the usual one</span>
+      <h3>3 months</h3>
+      <p class="sub">What we ask for on almost every deal.</p>
+      <a class="go primary" href="https://www.bankstatements.com.au/r/b/TBAO" target="_blank" rel="noopener">Send 3 months</a>
+    </div>
+
+    <div class="pick">
+      <h3>6 months</h3>
+      <p class="sub">Only if Autozone or Josh specifically asked for 6.</p>
+      <a class="go" href="https://www.bankstatements.com.au/r/b/FRQZ" target="_blank" rel="noopener">Send 6 months</a>
+    </div>
+
+    <div class="pick">
+      <h3>12 months</h3>
+      <p class="sub">Only if Autozone or Josh specifically asked for 12. Common for self-employed.</p>
+      <a class="go" href="https://www.bankstatements.com.au/r/b/TBUA" target="_blank" rel="noopener">Send 12 months</a>
+    </div>
+  </div>
+
+  <p class="unsure"><b>Not sure which one?</b> Don&rsquo;t guess &mdash; sending the wrong period just means doing it
+  twice. Call or text Josh on <a href="tel:0480852530">0480&nbsp;852&nbsp;530</a> and he&rsquo;ll tell you in ten seconds.</p>
+</section>
+
+<!-- 3. what happens next -->
+<section>
+  <h2><span class="n">3</span>What you&rsquo;ll see, screen by screen</h2>
+  <p class="lede">Six screens, that&rsquo;s the lot. Here&rsquo;s each one before you get there, so nothing catches you out.</p>
+
+  <div class="steps">
+
+    <div class="step">
+      <div class="shot">
+        <svg viewBox="0 0 260 150" role="img" aria-label="A screen with a tick box and an orange Start button">
+          <rect width="260" height="150" rx="9" fill="#fff" stroke="#DDE1E7"/>
+          <rect x="18" y="16" width="98" height="9" rx="4.5" fill="#D8DDE4"/>
+          <text x="130" y="52" text-anchor="middle" font-family="system-ui,sans-serif" font-size="12" font-weight="700" fill="#1B1F24">You&#8217;ve been referred by</text>
+          <text x="130" y="69" text-anchor="middle" font-family="system-ui,sans-serif" font-size="12.5" font-weight="800" fill="#1B1F24">The Buyer Assist Group</text>
+          <rect x="30" y="84" width="15" height="15" rx="3.5" fill="#F47B20"/>
+          <path d="M33.5 91.5l3 3 5.5-6" stroke="#fff" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          <rect x="53" y="86" width="176" height="5" rx="2.5" fill="#D8DDE4"/>
+          <rect x="53" y="95" width="132" height="5" rx="2.5" fill="#D8DDE4"/>
+          <rect x="85" y="112" width="90" height="26" rx="13" fill="#F47B20"/>
+          <text x="130" y="129" text-anchor="middle" font-family="system-ui,sans-serif" font-size="13" font-weight="800" fill="#fff">Start</text>
+        </svg>
+      </div>
+      <span class="num">1</span>
+      <h3>Tick the box, press Start</h3>
+      <p>It should say <b>&ldquo;You&rsquo;ve been referred by The Buyer Assist Group&rdquo;</b>. Tick the consent box, then Start.</p>
+      <div class="watch"><p><b>If it doesn&rsquo;t say that name</b>, you&rsquo;re on the wrong link. Come back here and tap the button again.</p></div>
+    </div>
+
+    <div class="step">
+      <div class="shot">
+        <svg viewBox="0 0 260 150" role="img" aria-label="A screen with a search box and four bank tiles">
+          <rect width="260" height="150" rx="9" fill="#fff" stroke="#DDE1E7"/>
+          <rect x="18" y="16" width="224" height="26" rx="13" fill="#F3F5F8" stroke="#DDE1E7"/>
+          <circle cx="36" cy="29" r="5.5" fill="none" stroke="#98A2B3" stroke-width="2"/>
+          <path d="M40 33l4 4" stroke="#98A2B3" stroke-width="2" stroke-linecap="round"/>
+          <text x="52" y="33" font-family="system-ui,sans-serif" font-size="11" fill="#98A2B3">Search for your bank</text>
+          <rect x="18" y="54" width="106" height="40" rx="7" fill="#fff" stroke="#F47B20" stroke-width="2"/>
+          <rect x="30" y="68" width="60" height="7" rx="3.5" fill="#C9CFD8"/>
+          <rect x="136" y="54" width="106" height="40" rx="7" fill="#fff" stroke="#E4E8EE"/>
+          <rect x="148" y="68" width="52" height="7" rx="3.5" fill="#E2E6EC"/>
+          <rect x="18" y="102" width="106" height="40" rx="7" fill="#fff" stroke="#E4E8EE"/>
+          <rect x="30" y="116" width="66" height="7" rx="3.5" fill="#E2E6EC"/>
+          <rect x="136" y="102" width="106" height="40" rx="7" fill="#fff" stroke="#E4E8EE"/>
+          <rect x="148" y="116" width="44" height="7" rx="3.5" fill="#E2E6EC"/>
+        </svg>
+      </div>
+      <span class="num">2</span>
+      <h3>Find your bank</h3>
+      <p>Type the first few letters &mdash; <b>&ldquo;comm&rdquo;</b>, <b>&ldquo;anz&rdquo;</b>, <b>&ldquo;nab&rdquo;</b> &mdash; and tap your bank&rsquo;s tile.</p>
+      <div class="watch"><p><b>Pick the right one.</b> Some banks are listed twice, e.g. personal versus business. Choose the one you log into for your everyday account.</p></div>
+    </div>
+
+    <div class="step">
+      <div class="shot">
+        <svg viewBox="0 0 260 150" role="img" aria-label="A login screen with a username field and a password field">
+          <rect width="260" height="150" rx="9" fill="#fff" stroke="#DDE1E7"/>
+          <rect x="112" y="12" width="36" height="36" rx="9" fill="#F3F5F8"/>
+          <rect x="122" y="28" width="16" height="12" rx="2" fill="none" stroke="#667085" stroke-width="2"/>
+          <path d="M125 28v-3a5 5 0 0 1 10 0v3" fill="none" stroke="#667085" stroke-width="2"/>
+          <text x="18" y="66" font-family="system-ui,sans-serif" font-size="9.5" font-weight="700" fill="#667085">CUSTOMER NUMBER</text>
+          <rect x="18" y="72" width="224" height="24" rx="6" fill="#fff" stroke="#DDE1E7"/>
+          <rect x="28" y="81" width="74" height="6" rx="3" fill="#C9CFD8"/>
+          <text x="18" y="112" font-family="system-ui,sans-serif" font-size="9.5" font-weight="700" fill="#667085">PASSWORD</text>
+          <rect x="18" y="118" width="224" height="24" rx="6" fill="#fff" stroke="#DDE1E7"/>
+          <circle cx="31" cy="130" r="3" fill="#C9CFD8"/><circle cx="41" cy="130" r="3" fill="#C9CFD8"/>
+          <circle cx="51" cy="130" r="3" fill="#C9CFD8"/><circle cx="61" cy="130" r="3" fill="#C9CFD8"/>
+          <circle cx="71" cy="130" r="3" fill="#C9CFD8"/><circle cx="81" cy="130" r="3" fill="#C9CFD8"/>
+        </svg>
+      </div>
+      <span class="num">3</span>
+      <h3>Log in as you normally would</h3>
+      <p>Same username and password you use for internet banking. Nobody at Autozone or Buyer Assist ever sees them.</p>
+      <div class="watch"><p><b>This trips people up:</b> it&rsquo;s your <i>internet banking</i> password &mdash; not your 4-digit card PIN, and not Face&nbsp;ID.</p></div>
+    </div>
+
+    <div class="step">
+      <div class="shot">
+        <svg viewBox="0 0 260 150" role="img" aria-label="A screen asking for a six digit code sent by text message">
+          <rect width="260" height="150" rx="9" fill="#fff" stroke="#DDE1E7"/>
+          <rect x="34" y="14" width="192" height="34" rx="9" fill="#F3F5F8"/>
+          <text x="46" y="30" font-family="system-ui,sans-serif" font-size="9" font-weight="700" fill="#98A2B3">YOUR BANK</text>
+          <text x="46" y="42" font-family="system-ui,sans-serif" font-size="10.5" fill="#667085">Your code is 4 8 2 9 1 5</text>
+          <text x="130" y="70" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" font-weight="700" fill="#1B1F24">Enter the code we texted you</text>
+          <g fill="#fff" stroke="#DDE1E7">
+            <rect x="26" y="84" width="30" height="38" rx="6"/><rect x="62" y="84" width="30" height="38" rx="6"/>
+            <rect x="98" y="84" width="30" height="38" rx="6"/><rect x="134" y="84" width="30" height="38" rx="6"/>
+            <rect x="170" y="84" width="30" height="38" rx="6"/>
+            <rect x="206" y="84" width="30" height="38" rx="6" stroke="#F47B20" stroke-width="2"/>
+          </g>
+          <g font-family="system-ui,sans-serif" font-size="16" font-weight="800" fill="#1B1F24" text-anchor="middle">
+            <text x="41" y="110">4</text><text x="77" y="110">8</text><text x="113" y="110">2</text>
+            <text x="149" y="110">9</text><text x="185" y="110">1</text>
+          </g>
+          <rect x="219" y="93" width="2" height="20" fill="#F47B20"/>
+        </svg>
+      </div>
+      <span class="num">4</span>
+      <h3>Type in the text-message code</h3>
+      <p>Your bank texts you a code, the same as when you pay a new person. Type it in and keep going.</p>
+      <div class="watch"><p><b>No code arrived?</b> Wait a full minute, then use the &ldquo;resend&rdquo; option. Codes expire fast, so use the newest one.</p></div>
+    </div>
+
+    <div class="step">
+      <div class="shot">
+        <svg viewBox="0 0 260 150" role="img" aria-label="A list of bank accounts with tick boxes, the everyday account ticked">
+          <rect width="260" height="150" rx="9" fill="#fff" stroke="#DDE1E7"/>
+          <text x="18" y="24" font-family="system-ui,sans-serif" font-size="11" font-weight="700" fill="#1B1F24">Choose your accounts</text>
+          <rect x="18" y="34" width="224" height="32" rx="7" fill="#FFF4EB" stroke="#F47B20" stroke-width="2"/>
+          <rect x="28" y="43" width="15" height="15" rx="3.5" fill="#F47B20"/>
+          <path d="M31.5 50.5l3 3 5.5-6" stroke="#fff" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          <text x="52" y="49" font-family="system-ui,sans-serif" font-size="10.5" font-weight="800" fill="#1B1F24">Everyday account</text>
+          <text x="52" y="61" font-family="system-ui,sans-serif" font-size="9.5" fill="#8A5300">Your pay lands here</text>
+          <rect x="18" y="72" width="224" height="30" rx="7" fill="#fff" stroke="#E4E8EE"/>
+          <rect x="28" y="81" width="15" height="15" rx="3.5" fill="#fff" stroke="#C9CFD8" stroke-width="1.6"/>
+          <rect x="52" y="84" width="88" height="6" rx="3" fill="#D8DDE4"/>
+          <rect x="18" y="108" width="224" height="30" rx="7" fill="#fff" stroke="#E4E8EE"/>
+          <rect x="28" y="117" width="15" height="15" rx="3.5" fill="#fff" stroke="#C9CFD8" stroke-width="1.6"/>
+          <rect x="52" y="120" width="66" height="6" rx="3" fill="#D8DDE4"/>
+        </svg>
+      </div>
+      <span class="num">5</span>
+      <h3>Tick your accounts</h3>
+      <p>Tick the <b>everyday account your pay goes into</b>. If a savings or offset account is where your bills come out, tick that too. Then press submit.</p>
+      <div class="watch"><p><b>When in doubt, tick them all.</b> Extra accounts never hurt you &mdash; a missing one means we have to ask you again.</p></div>
+    </div>
+
+    <div class="step">
+      <div class="shot">
+        <svg viewBox="0 0 260 150" role="img" aria-label="A confirmation screen with a large green tick">
+          <rect width="260" height="150" rx="9" fill="#fff" stroke="#DDE1E7"/>
+          <circle cx="130" cy="58" r="30" fill="#E6F4EC"/>
+          <circle cx="130" cy="58" r="22" fill="#1F7A4A"/>
+          <path d="M120 58.5l7 7 14-15" stroke="#fff" stroke-width="3.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          <text x="130" y="110" text-anchor="middle" font-family="system-ui,sans-serif" font-size="13" font-weight="800" fill="#1F7A4A">All done</text>
+          <rect x="66" y="122" width="128" height="6" rx="3" fill="#D8DDE4"/>
+        </svg>
+      </div>
+      <span class="num">6</span>
+      <h3>Green tick &mdash; you&rsquo;re finished</h3>
+      <p>That&rsquo;s it. Your statements come straight to us. <b>Nothing to email, nothing to print, nothing to send.</b></p>
+      <div class="watch"><p><b>Didn&rsquo;t reach a green tick?</b> It didn&rsquo;t go through. Start again from the top, or call Josh.</p></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- 4. when it goes wrong -->
+<section>
+  <h2><span class="n">4</span>When it doesn&rsquo;t work</h2>
+  <p class="lede">Nine times out of ten it&rsquo;s one of these. Tap to open.</p>
+
+  <details class="fix"><summary>I don&rsquo;t know my internet banking password</summary>
+    <div class="body"><p>Very common &mdash; if you only ever use fingerprint or Face&nbsp;ID, you&rsquo;ve probably never typed it.</p>
+    <p>Open your banking app and reset it (usually <b>&ldquo;Forgot password&rdquo;</b> on the login screen), or ring your bank. Once you can log into your bank&rsquo;s own website with it, come back and tap the link again.</p></div></details>
+
+  <details class="fix"><summary>It says my login details are wrong</summary>
+    <div class="body"><p>Check three things:</p>
+    <p>1. You&rsquo;re using your <b>customer number or username</b>, not your card number.<br>
+    2. You&rsquo;re using your <b>internet banking password</b>, not your card PIN.<br>
+    3. Caps lock is off and there&rsquo;s no space at the end &mdash; phone keyboards love adding one.</p>
+    <p>Still stuck? Log into your bank&rsquo;s own website first to prove the details work, then come back.</p></div></details>
+
+  <details class="fix"><summary>My bank isn&rsquo;t in the list</summary>
+    <div class="body"><p>Search by the short name (&ldquo;ing&rdquo;, &ldquo;bendigo&rdquo;, &ldquo;greater&rdquo;) rather than the full legal name.</p>
+    <p>If it genuinely isn&rsquo;t there, ring Josh on <a href="tel:0480852530">0480&nbsp;852&nbsp;530</a> and we&rsquo;ll do it the manual way instead.</p></div></details>
+
+  <details class="fix"><summary>I bank with two different banks</summary>
+    <div class="body"><p>Do the whole thing twice &mdash; once per bank. Tap the same link again when you&rsquo;ve finished the first one.</p>
+    <p>The one we really need is wherever <b>your wage gets paid in</b>. If your bills come out of the other one, we need that too.</p></div></details>
+
+  <details class="fix"><summary>It&rsquo;s a joint account with my partner</summary>
+    <div class="body"><p>That&rsquo;s fine and very normal. Send it as you normally log in. You&rsquo;re only sharing statements, not giving anyone access.</p></div></details>
+
+  <details class="fix"><summary>I think I ticked the wrong accounts</summary>
+    <div class="body"><p>No harm done. Just tap the link and run through it again with the right ones &mdash; we use the most recent submission.</p></div></details>
+
+  <details class="fix"><summary>Nothing loads, or the page keeps spinning</summary>
+    <div class="body"><p>Some banks are slow at busy times &mdash; give it a full minute before you give up.</p>
+    <p>If it&rsquo;s still stuck: close the tab, turn your phone&rsquo;s Wi-Fi off and on (or swap to mobile data), and start again. Chrome and Safari work best.</p></div></details>
+
+  <details class="fix"><summary>Can I just email you PDFs instead?</summary>
+    <div class="body"><p>You can, as a last resort &mdash; email them to <a href="mailto:josh@thebuyerassist.com.au">josh@thebuyerassist.com.au</a>.</p>
+    <p>Be warned it&rsquo;s much slower. They have to be the <b>official PDFs downloaded from your bank</b> &mdash; screenshots, photos of a screen and printed pages get knocked back by the lender, and then we&rsquo;re asking you for them all over again. The link above takes two minutes and is done properly the first time.</p></div></details>
+</section>
+
+<!-- 5. safety -->
+<section>
+  <div class="safe">
+    <h2>&ldquo;Is this actually safe?&rdquo;</h2>
+    <p class="lede">Fair question. Here&rsquo;s exactly what happens.</p>
+    <ul>
+      <li><span><b>It&rsquo;s read-only.</b> The service can look at your statements and nothing else. No money can be moved, no payments made, no details changed.</span></li>
+      <li><span><b>Nobody here sees your password.</b> Not Autozone, not Buyer Assist, not Josh. You type it into illion&rsquo;s secure page, never to us.</span></li>
+      <li><span><b>Your login is never stored.</b> It&rsquo;s encrypted with bank-level 256-bit encryption and discarded the moment the connection is made.</span></li>
+      <li><span><b>Your data stays in Australia,</b> on Australian servers, with the security audited every year by outside IT security firms.</span></li>
+      <li><span><b>It costs you nothing.</b> The service is free for you &mdash; the business receiving the statements pays for it.</span></li>
+      <li><span><b>We only get statements.</b> That&rsquo;s all we ask for and all we&rsquo;re sent &mdash; the same pages you&rsquo;d have printed out and handed over.</span></li>
+    </ul>
+    <p class="fine">The service is BankStatements.com.au, run by illion Open Data Solutions Pty Ltd (ABN 89&nbsp;166&nbsp;277&nbsp;845) &mdash; the same system used by most Australian banks, brokers and lenders. It isn&rsquo;t provided by your bank, and it doesn&rsquo;t make any lending decision. Worth knowing: your bank&rsquo;s terms may limit your rights over unauthorised transactions when you share your internet banking details with a third party. You can read illion&rsquo;s <a href="https://www.bankstatements.com.au/about/terms" target="_blank" rel="noopener">terms</a>, <a href="https://www.bankstatements.com.au/about/privacy" target="_blank" rel="noopener">privacy policy</a> and <a href="https://www.bankstatements.com.au/about/security" target="_blank" rel="noopener">security page</a>, or ring illion direct on <a href="tel:132333">13&nbsp;23&nbsp;33</a> (press 2, then 2), 7am&ndash;7pm weekdays AEST.</p>
+  </div>
+</section>
+
+<!-- 6. help -->
+<section>
+  <h2>Still stuck? Just ring.</h2>
+  <p class="lede">Don&rsquo;t sit there fighting it &mdash; we&rsquo;ll walk you through it on the phone in two minutes.</p>
+  <div class="help">
+    <a href="tel:0480852530">
+      <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#F47B20" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 3h3l1.5 4.5-2 1.5a12 12 0 0 0 6 6l1.5-2L21 14.5v3a2 2 0 0 1-2.2 2A16.5 16.5 0 0 1 4 5.2 2 2 0 0 1 6.5 3z"/></svg></span>
+      <span><b>0480 852 530</b><span>Call or text Josh &mdash; The Buyer Assist Group</span></span>
+    </a>
+    <a href="mailto:josh@thebuyerassist.com.au">
+      <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#F47B20" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3.5 6.5L12 13l8.5-6.5"/></svg></span>
+      <span><b>Email Josh</b><span>josh@thebuyerassist.com.au</span></span>
+    </a>
+  </div>
+</section>
+
+<!-- staff strip -->
+<section class="staff no-print">
+  <h2>Autozone staff</h2>
+  <p class="lede">Send this page to the customer instead of pasting raw links &mdash; they get the instructions with it.</p>
+  <div class="row">
+    <div class="qr" id="qr" aria-hidden="true"></div>
+    <div class="btns">
+      <button class="primary" id="copy" type="button">Copy the link</button>
+      <button id="sms" type="button">Text it to a customer</button>
+      <button id="print" type="button">Print a handout</button>
+    </div>
+  </div>
+  <p class="url" id="url"></p>
+</section>
+
+</main>
+
+<footer>
+  <p><span class="who">Finance by The Buyer Assist Group.</span>
+  Bank statements are collected through BankStatements.com.au, a service of illion Open Data Solutions Pty Ltd
+  (ABN 89&nbsp;166&nbsp;277&nbsp;845). Sending your statements doesn&rsquo;t commit you to anything and isn&rsquo;t an
+  approval &mdash; it just lets us assess your application properly. Any advertised finance is subject to lender
+  approval, and fees, charges, terms and conditions apply.</p>
+</footer>
+
+<script src="/autozone/bank/qr.js"></script>
+<script>
+(function(){
+  var PAGE = 'https://www.brokenmind.com.au/autozone/bank';
+
+  var urlEl = document.getElementById('url');
+  if (urlEl) urlEl.textContent = PAGE;
+
+  try {
+    var box = document.getElementById('qr');
+    if (box && typeof QR !== 'undefined') box.innerHTML = QR.toSvg(PAGE, {ecl:'M', quiet:2});
+  } catch (e) { /* QR is a nicety, never a blocker */ }
+
+  function toast(msg){
+    var t = document.createElement('div');
+    t.className = 'toast';
+    t.setAttribute('role','status');
+    t.textContent = msg;
+    document.body.appendChild(t);
+    setTimeout(function(){ t.remove(); }, 2200);
+  }
+
+  var copyBtn = document.getElementById('copy');
+  if (copyBtn) copyBtn.addEventListener('click', function(){
+    function fallback(){
+      var i = document.createElement('input');
+      i.value = PAGE;
+      document.body.appendChild(i);
+      i.select();
+      try { document.execCommand('copy'); toast('Link copied'); }
+      catch (e) { toast('Copy it from the line below'); }
+      i.remove();
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(PAGE).then(function(){ toast('Link copied'); }, fallback);
+    } else { fallback(); }
+  });
+
+  var smsBtn = document.getElementById('sms');
+  if (smsBtn) smsBtn.addEventListener('click', function(){
+    var body = 'Hi, it’s Autozone. Last thing we need for your finance is your bank statements. ' +
+               'This page walks you through it, takes about 2 minutes: ' + PAGE;
+    window.location.href = 'sms:?&body=' + encodeURIComponent(body);
+  });
+
+  var printBtn = document.getElementById('print');
+  if (printBtn) printBtn.addEventListener('click', function(){
+    var all = document.querySelectorAll('details.fix');
+    for (var i = 0; i < all.length; i++) all[i].open = true;
+    window.print();
+  });
+})();
+</script>
+
+</body>
+</html>

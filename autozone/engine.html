@@ -917,7 +917,6 @@ function partWarranty(m){
 function partPrice(m){
   var priceTxt = m.price ? money(m.price) : 'ENQUIRE';
   return '<div class="prices"><div class="pblock">' +
-    '<div class="tag">DRIVE IT AWAY</div>' +
     '<div class="amt ' + (priceTxt.length > 8 ? 's2' : '') + '">' + esc(priceTxt) + '</div>' +
     '<div class="sub">Excludes government charges</div></div></div>';
 }

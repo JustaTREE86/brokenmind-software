@@ -1,5 +1,5 @@
 // Draws one repayment photo: the listing's first picture, a weekly figure, and one line of fine print.
-// The figure is dollars per week only, in the top-right. The fine print sits in the bottom
+// The figure is "From $X/wk" in the top-right. The fine print sits in the bottom
 // corner that stays clearest of the car and the number plate. The full disclaimer stays on the window card.
 // The dealer's own logo is already on the listing photo, so this does not add another.
 
@@ -133,19 +133,31 @@ export async function renderRepaymentPhoto(imageBuffer, { weekly, lines } = {}) 
   ctx.imageSmoothingQuality = 'high'
   ctx.drawImage(img, 0, 0, w, h)
 
-  const label = '$' + amount.toLocaleString('en-AU') + '/wk'
   const amountSize = Math.max(34, Math.round(h * 0.052))
   ctx.font = '700 ' + amountSize + 'px "Noto Sans Bold"'
-  if (ctx.measureText(label).width < 8) throw new Error('Repayment font did not load')
-  drawBadge(ctx, w, label, amountSize)
+  if (ctx.measureText(weeklyBadgeText(amount)).width < 8) throw new Error('Repayment font did not load')
+  drawBadge(ctx, w, amount, amountSize)
   drawCaption(ctx, w, h, caption)
 
   return canvas.toBuffer('image/jpeg', 90)
 }
 
-function drawBadge(ctx, w, label, amountSize) {
+/** Photo badge wording. The window card keeps the figure on its own. */
+export function weeklyBadgeText(amount) {
+  const n = Math.round(Number(amount) || 0)
+  return 'From $' + n.toLocaleString('en-AU') + '/wk'
+}
+
+function drawBadge(ctx, w, amount, amountSize) {
+  const figure = '$' + Math.round(Number(amount) || 0).toLocaleString('en-AU') + '/wk'
+  const fromSize = Math.max(15, Math.round(amountSize * 0.58))
+  ctx.font = '700 ' + amountSize + 'px "Noto Sans Bold"'
+  const figureW = ctx.measureText(figure).width
+  ctx.font = '400 ' + fromSize + 'px "Noto Sans"'
+  const fromW = ctx.measureText('From').width
+  const wordGap = Math.round(amountSize * 0.2)
   const margin = Math.max(14, Math.round(w * 0.028))
-  const textW = ctx.measureText(label).width
+  const textW = fromW + wordGap + figureW
   const padX = Math.round(amountSize * 0.55)
   const padY = Math.round(amountSize * 0.32)
   const barW = Math.max(5, Math.round(amountSize * 0.12))
@@ -172,10 +184,15 @@ function drawBadge(ctx, w, label, amountSize) {
   ctx.fillStyle = ORANGE
   ctx.fill()
 
+  const mid = y + pillH / 2 + Math.round(amountSize * 0.04)
+  const textX = barX + barW + gap
   ctx.textBaseline = 'middle'
+  ctx.fillStyle = 'rgba(255,255,255,0.82)'
+  ctx.font = '400 ' + fromSize + 'px "Noto Sans"'
+  ctx.fillText('From', textX, mid)
   ctx.fillStyle = '#FFFFFF'
   ctx.font = '700 ' + amountSize + 'px "Noto Sans Bold"'
-  ctx.fillText(label, barX + barW + gap, y + pillH / 2 + Math.round(amountSize * 0.04))
+  ctx.fillText(figure, textX + fromW + wordGap, mid)
   return { right: x + pillW, bottom: y + pillH }
 }
 

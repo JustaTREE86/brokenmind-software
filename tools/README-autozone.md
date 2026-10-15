@@ -107,7 +107,7 @@ and commit `autozone/engine.html` with it.
 
 ## Repayment photos
 
-Each car gets one jpeg: a listing photo with no price already painted on it, a small weekly badge,
+Each car gets one jpeg: a listing photo with no price already painted on it, a small "From $X/wk" badge,
 and one line of fine print, in the clearer bottom corner, of the same terms the card uses. The card keeps the full disclaimer. If the first
 photo is a marketing card (a per-week price baked into the picture), the next gallery photo is
 used. If every photo already has a price on it, nothing is stamped and the car is marked

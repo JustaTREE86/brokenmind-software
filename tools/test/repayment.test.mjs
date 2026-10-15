@@ -9,7 +9,7 @@ import {
 } from '../../api/_lib/finance.js'
 import { patchEngineFinance } from '../patch-engine-finance.mjs'
 import {
-  dealerPhotoUrl, hasPriceOverlay, isPriceCardName, nextCleanUrl, photoDecision, renderRepaymentPhoto, repaymentFileName, summarisePhotos
+  dealerPhotoUrl, hasPriceOverlay, isPriceCardName, nextCleanUrl, photoDecision, renderRepaymentPhoto, repaymentFileName, summarisePhotos, weeklyBadgeText
 } from '../../api/_lib/repayment-photo.js'
 import { parseGallery, parseListing } from '../../api/_lib/scrape.js'
 
@@ -45,7 +45,7 @@ test('shared terms are the card engine settings', () => {
   assert.deepEqual(photoCaptionLines(), [
     'Est. only. 20% dep, 9.49% p.a., 84 mths, $900 fees, no balloon. T&Cs apply. Not a quote.'
   ])
-  assert.equal(termsKey(), '20|9.49|84|900|0|1|4')
+  assert.equal(termsKey(), '20|9.49|84|900|0|1|5')
   assert.equal(weeklyFor(0), 0)
   assert.equal(weeklyFor('27,880'), 87)
   assert.equal(weeklyFor(9880), 33)
@@ -219,6 +219,9 @@ test('the badge is dollars per week plus a readable disclaimer, and the photo st
   assert.ok(underBadge[2] > underBadge[0] + 40, 'nothing sits under the weekly badge')
   const corner = ctx.getImageData(820, 40, 1, 1).data
   assert.ok(corner[0] < 80 && corner[1] < 80 && corner[2] < 80, 'the weekly badge sits in the top-right corner')
+  assert.equal(weeklyBadgeText(30), 'From $30/wk')
+  assert.equal(weeklyBadgeText(43), 'From $43/wk')
+  assert.equal(weeklyBadgeText(154), 'From $154/wk')
 })
 
 test('fine print tucks into the bottom corner away from a number plate', async () => {

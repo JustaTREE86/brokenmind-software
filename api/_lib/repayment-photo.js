@@ -1,5 +1,6 @@
-// Draws one repayment photo: the listing's first picture, a weekly figure, and a short disclaimer.
-// The figure is dollars per week only. The full disclaimer stays on the window card.
+// Draws one repayment photo: the listing's first picture, a weekly figure, and one line of fine print.
+// The figure is dollars per week only, in the top-right. The fine print sits in the bottom
+// corner that stays clearest of the car and the number plate. The full disclaimer stays on the window card.
 // The dealer's own logo is already on the listing photo, so this does not add another.
 
 import { createCanvas, loadImage, GlobalFonts } from '@napi-rs/canvas'
@@ -12,7 +13,6 @@ GlobalFonts.registerFromPath(path.join(fontDir, 'NotoSans-Regular.ttf'), 'Noto S
 GlobalFonts.registerFromPath(path.join(fontDir, 'NotoSans-Bold.ttf'), 'Noto Sans Bold')
 
 const MAX_EDGE = 1600
-const INK = '#0E0E0E'
 const ORANGE = '#F47B20'
 
 export function dealerPhotoUrl(url) {
@@ -137,8 +137,8 @@ export async function renderRepaymentPhoto(imageBuffer, { weekly, lines } = {}) 
   const amountSize = Math.max(34, Math.round(h * 0.052))
   ctx.font = '700 ' + amountSize + 'px "Noto Sans Bold"'
   if (ctx.measureText(label).width < 8) throw new Error('Repayment font did not load')
-  const badge = drawBadge(ctx, w, label, amountSize)
-  drawCaption(ctx, w, h, caption, badge)
+  drawBadge(ctx, w, label, amountSize)
+  drawCaption(ctx, w, h, caption)
 
   return canvas.toBuffer('image/jpeg', 90)
 }
@@ -179,49 +179,56 @@ function drawBadge(ctx, w, label, amountSize) {
   return { right: x + pillW, bottom: y + pillH }
 }
 
-function drawCaption(ctx, w, h, lines, badge) {
-  const margin = Math.max(14, Math.round(w * 0.028))
-  // Tucked under the weekly badge, top-right. Number plates sit low and centred,
-  // so a bottom strip was covering them.
-  const maxW = Math.round(w * 0.46)
-  let size = Math.max(17, Math.round(w * 0.021))
-  const minSize = Math.max(15, Math.round(w * 0.017))
+function drawCaption(ctx, w, h, lines) {
+  const text = lines.join(' ')
+  const margin = Math.max(8, Math.round(w * 0.012))
+  let size = Math.max(12, Math.round(h * 0.018))
   const fontFor = px => '700 ' + px + 'px "Noto Sans Bold"'
-  while (size > minSize) {
-    ctx.font = fontFor(size)
-    const widest = Math.max(...lines.map(line => ctx.measureText(line).width))
-    if (widest <= maxW) break
+  ctx.font = fontFor(size)
+  let textW = ctx.measureText(text).width
+  while (textW > w - margin * 4 && size > 11) {
     size -= 1
+    ctx.font = fontFor(size)
+    textW = ctx.measureText(text).width
   }
-  ctx.font = fontFor(size)
-  const lineH = Math.round(size * 1.22)
-  const padX = Math.round(size * 0.62)
-  const padY = Math.round(size * 0.42)
-  const textW = Math.min(maxW, Math.max(...lines.map(line => ctx.measureText(line).width)))
-  const boxW = Math.round(textW + padX * 2)
-  const boxH = Math.round(padY * 2 + lines.length * lineH - Math.round(size * 0.15))
-  const x = Math.max(margin, badge.right - boxW)
-  const y = badge.bottom + Math.round(margin * 0.45)
-  const radius = Math.round(size * 0.55)
-
-  const g = ctx.createLinearGradient(x, y, x, y + boxH)
-  g.addColorStop(0, 'rgba(255,255,255,0.62)')
-  g.addColorStop(1, 'rgba(255,255,255,0.84)')
+  const padX = Math.max(4, Math.round(size * 0.45))
+  const stripH = Math.max(size + 2, Math.round(size * 1.15))
+  const stripW = Math.round(Math.min(w - margin * 2, textW + padX * 2))
+  const side = clearerCorner(ctx, w, h, stripW)
+  const x = side === 'right' ? w - margin - stripW : margin
+  const y = h - stripH
+  ctx.fillStyle = 'rgba(0, 0, 0, 0.4)'
+  ctx.fillRect(x, y, stripW, stripH)
   ctx.save()
-  ctx.shadowColor = 'rgba(0,0,0,0.22)'
-  ctx.shadowBlur = Math.round(size * 0.7)
-  ctx.shadowOffsetY = Math.round(size * 0.12)
-  roundedRect(ctx, x, y, boxW, boxH, radius)
-  ctx.fillStyle = g
-  ctx.fill()
-  ctx.restore()
-
-  ctx.textBaseline = 'top'
-  ctx.fillStyle = INK
+  ctx.shadowColor = 'rgba(0, 0, 0, 0.9)'
+  ctx.shadowBlur = 1
+  ctx.fillStyle = '#FFFFFF'
+  ctx.textBaseline = 'middle'
   ctx.font = fontFor(size)
-  let ty = y + padY + Math.round(size * 0.12)
-  for (const line of lines) {
-    ctx.fillText(line, x + padX, ty)
-    ty += lineH
+  ctx.fillText(text, x + padX, y + stripH / 2 + 0.5)
+  ctx.restore()
+}
+
+function clearerCorner(ctx, w, h, stripW) {
+  const sampleH = Math.max(8, Math.round(h * 0.16))
+  const y = h - sampleH
+  const span = Math.min(stripW, Math.round(w * 0.42))
+  const left = plateLikelihood(ctx, 0, y, span, sampleH)
+  const right = plateLikelihood(ctx, w - span, y, span, sampleH)
+  return right + 0.03 < left ? 'right' : 'left'
+}
+
+function plateLikelihood(ctx, x, y, w, h) {
+  const data = ctx.getImageData(Math.round(x), Math.round(y), Math.round(w), Math.round(h)).data
+  let light = 0
+  let n = 0
+  for (let i = 0; i < data.length; i += 16) {
+    const r = data[i]
+    const g = data[i + 1]
+    const b = data[i + 2]
+    n++
+    const spread = Math.max(r, g, b) - Math.min(r, g, b)
+    if (r > 150 && g > 150 && b > 135 && spread < 45) light++
   }
+  return n ? light / n : 0
 }

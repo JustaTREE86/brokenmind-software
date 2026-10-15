@@ -57,14 +57,15 @@ export function repaymentDisclaimer(terms = FINANCE) {
  * Short form of the same terms, for the photo only. The card keeps the full sentence.
  * Bump PHOTO_STYLE when the picture layout changes so stored jpegs are made again.
  */
-export const PHOTO_STYLE = 3
+export const PHOTO_STYLE = 4
 
 export function photoCaptionLines(terms = FINANCE) {
   const balloon = num(terms.balloon)
   const balloonText = balloon ? money(balloon) + ' balloon' : 'no balloon'
   return [
-    'Estimate only. ' + num(terms.dep) + '% dep, ' + num(terms.rate) + '% p.a.',
-    Math.round(num(terms.term)) + ' mths, ' + money(terms.fee) + ' fees, ' + balloonText + '. Not a quote.'
+    'Est. only. ' + num(terms.dep) + '% dep, ' + num(terms.rate) + '% p.a., ' +
+      Math.round(num(terms.term)) + ' mths, ' + money(terms.fee) + ' fees, ' + balloonText +
+      '. T&Cs apply. Not a quote.'
   ]
 }
 

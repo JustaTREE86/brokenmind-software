@@ -57,7 +57,7 @@ export function repaymentDisclaimer(terms = FINANCE) {
  * Short form of the same terms, for the photo only. The card keeps the full sentence.
  * Bump PHOTO_STYLE when the picture layout changes so stored jpegs are made again.
  */
-export const PHOTO_STYLE = 2
+export const PHOTO_STYLE = 3
 
 export function photoCaptionLines(terms = FINANCE) {
   const balloon = num(terms.balloon)

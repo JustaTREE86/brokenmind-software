@@ -73,6 +73,7 @@ main{max-width:1280px;margin:0 auto;padding:18px clamp(12px,3vw,28px) 48px}
 .row .m{color:var(--muted);font-size:13px}
 .row .why{font-size:13px;margin-top:2px}
 button.photo{padding:4px 10px;font-size:13px;margin-top:6px}
+.needs{display:inline-block;margin-top:6px;font:700 12px var(--ui);color:var(--warn)}
 .pill{font:700 12px var(--ui);border-radius:99px;padding:3px 10px;white-space:nowrap}
 .pill.new{background:var(--warn-bg);color:var(--warn)}
 .pill.relisted,.pill.dup{background:var(--bad-bg);color:var(--bad)}
@@ -359,10 +360,15 @@ function rowHtml(c, withBox){
   return '<li class="row' + (selected === c.id ? ' sel' : '') + '" data-id="' + esc(c.id) + '">' + box +
     '<img class="thumb" loading="lazy" alt="" src="' + esc(c.photo || '') + '">' +
     '<div><div class="t">' + esc(c.title) + '</div><div class="m">' + esc(factLine(c)) + '</div>' + why +
-    '<button type="button" class="photo" data-photo="' + esc(c.id) + '">Repayment photo</button></div>' +
+    photoControl(c) + '</div>' +
     statusPill(c) + '</li>';
 }
 
+function needsClean(c){ return data && data.photoById && data.photoById[c.id] === 'needsClean'; }
+function photoControl(c){
+  if (needsClean(c)) return '<div class="needs">Needs clean photo</div>';
+  return '<button type="button" class="photo" data-photo="' + esc(c.id) + '">Repayment photo</button>';
+}
 function todoCars(){ return data ? data.cars.filter(function(c){ return c.status !== 'ok'; }) : []; }
 function byId(id){ return data && data.cars.find(function(c){ return c.id === id; }); }
 
@@ -415,15 +421,16 @@ async function renderPreview(){
     statusPill(c) + changes +
     '<div class="actions"><button class="primary" type="button" id="pvPrint">Print this card</button>' +
       '<button type="button" id="pvPdf">Download PDF</button>' +
-      '<button type="button" id="pvPhoto">Download repayment photo</button>' +
+      (needsClean(c) ? '' : '<button type="button" id="pvPhoto">Download repayment photo</button>') +
       '<button class="ghost" type="button" id="pvRename">Fix name</button></div>' +
     '<form class="edit" id="renameForm" hidden><input type="text" id="renameInput" maxlength="80" aria-label="Name on the card">' +
       '<button class="primary" type="submit">Save</button><button type="button" id="renameReset">Use website name</button></form>' +
+    (needsClean(c) ? '<p class="note">Needs a clean photo. The pictures on this listing already have a price on them, so no repayment photo is made.</p>' : '') +
     '<p class="note">' + (c.titleEdited ? 'Name tidied by hand. Website calls it: ' + esc(c.rawTitle) + '. ' : '') +
       '<a href="' + esc(c.url) + '" target="_blank" rel="noopener">See it on the website</a></p>';
   $('pvPrint').onclick = function(){ printCars([c.id]); };
   $('pvPdf').onclick = function(){ downloadPdf([c.id]); };
-  $('pvPhoto').onclick = function(){ downloadPhoto(c); };
+  if ($('pvPhoto')) $('pvPhoto').onclick = function(){ downloadPhoto(c); };
   $('pvRename').onclick = function(){ $('renameForm').hidden = false; $('renameInput').value = c.title; $('renameInput').focus(); };
   $('renameForm').onsubmit = function(e){ e.preventDefault(); rename(c.id, $('renameInput').value); };
   $('renameReset').onclick = function(){ rename(c.id, ''); };

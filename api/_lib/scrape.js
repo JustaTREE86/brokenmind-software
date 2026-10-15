@@ -42,6 +42,7 @@ export function parseListing(url, h) {
   }
   const short = one(/rel=['"]shortlink['"] href=['"]([^'"]+)['"]/)
   const id = (short.match(/[?&]p=(\d+)/) || [])[1] || ''
+  const gallery = parseGallery(h)
   return {
     id,
     url,
@@ -60,8 +61,37 @@ export function parseListing(url, h) {
     colour: attrs['Colour'] || '',
     vin: attrs['VIN'] || '',
     warranty: /3[\s-]*year\s*warranty/i.test(h) ? '3-Year Warranty' : '',
-    photo: one(/property="og:image"\s*content="([^"]+)"/)
+    photo: one(/property="og:image"\s*content="([^"]+)"/) || gallery[0] || '',
+    gallery,
+    galleryKey: galleryKey(gallery)
   }
+}
+
+/** Full-size listing photos, in gallery order. Resized copies (-300x225) are left out. */
+export function parseGallery(html) {
+  const seen = new Set()
+  const out = []
+  const add = raw => {
+    let u
+    try { u = new URL(decode(raw)) } catch { return }
+    if (u.protocol !== 'https:' || u.hostname !== 'autozoneqldptyltd.com') return
+    if (!/\/wp-content\/uploads\//.test(u.pathname)) return
+    if (/-\d+x\d+\.(jpe?g|png|webp)$/i.test(u.pathname)) return
+    const s = u.toString()
+    if (seen.has(s)) return
+    seen.add(s)
+    out.push(s)
+  }
+  for (const m of String(html || '').matchAll(/data-src="(https:\/\/autozoneqldptyltd\.com\/wp-content\/uploads\/[^"]+)"/g)) add(m[1])
+  if (!out.length) {
+    for (const m of String(html || '').matchAll(/property="og:image"\s+content="([^"]+)"/g)) add(m[1])
+  }
+  return out
+}
+
+/** Short fingerprint of the gallery, so a new upload is stamped and an old one is not. */
+export function galleryKey(urls) {
+  return (urls || []).join('\n')
 }
 
 async function pool(items, size, fn) {

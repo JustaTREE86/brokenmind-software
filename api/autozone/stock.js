@@ -39,7 +39,8 @@ export default staffOnly(async (req, res) => {
     syncing: false, syncedAt: stock.at, fromCache: stock.fromCache, error: stock.error || null,
     stale: Date.now() - Date.parse(stock.at) > 10 * 60 * 1000,
     failed: (stock.failed || []).length, cars, sold,
-    photoReady: photos.ready, photoPending: photos.pending, photoFailed: photos.failed, photoError,
+    photoReady: photos.ready, photoPending: photos.pending, photoFailed: photos.failed,
+    photoNeedsClean: photos.needsClean || 0, photoById: photos.byId || {}, photoError,
     log: (state.log || []).slice(0, 25), canUndo: !!state.undo
   })
 })

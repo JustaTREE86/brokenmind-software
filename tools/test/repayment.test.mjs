@@ -5,7 +5,7 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { createCanvas, loadImage } from '@napi-rs/canvas'
 import {
-  FINANCE, weeklyFor, repaymentDisclaimer, termsKey, num
+  FINANCE, weeklyFor, repaymentDisclaimer, photoCaptionLines, termsKey, num
 } from '../../api/_lib/finance.js'
 import { patchEngineFinance } from '../patch-engine-finance.mjs'
 import {
@@ -42,7 +42,11 @@ test('shared terms are the card engine settings', () => {
     { dep: 20, rate: 9.49, term: 84, fee: 900, balloon: 0, round: 1, showRate: false }
   )
   assert.equal(repaymentDisclaimer(), EXPECTED)
-  assert.equal(termsKey(), '20|9.49|84|900|0|1')
+  assert.deepEqual(photoCaptionLines(), [
+    'Estimate only. 20% dep, 9.49% p.a.',
+    '84 mths, $900 fees, no balloon. Not a quote.'
+  ])
+  assert.equal(termsKey(), '20|9.49|84|900|0|1|2')
   assert.equal(weeklyFor(0), 0)
   assert.equal(weeklyFor('27,880'), 87)
   assert.equal(weeklyFor(9880), 33)
@@ -54,6 +58,10 @@ test('shared terms are the card engine settings', () => {
 test('a balloon or a different fee changes the disclaimer from the same place', () => {
   const text = repaymentDisclaimer({ ...FINANCE, balloon: 2000, fee: 1200, dep: 10, rate: 8.5, term: 60 })
   assert.match(text, /10% deposit, 8\.5% p\.a\. over 60 months with \$1,200 fees financed and a \$2,000 balloon/)
+  const caption = photoCaptionLines({ ...FINANCE, balloon: 2000, fee: 1200, dep: 10, rate: 8.5, term: 60 }).join(' ')
+  assert.match(caption, /10% dep, 8\.5% p\.a\./)
+  assert.match(caption, /60 mths, \$1,200 fees, \$2,000 balloon/)
+  assert.match(caption, /Not a quote/)
   assert.equal(weeklyFor(20000, { ...FINANCE, rate: 0, balloon: 0, fee: 0, dep: 0, term: 52, round: 1 }), 89)
 })
 
@@ -116,8 +124,9 @@ test('the badge is dollars per week plus a readable disclaimer, and the photo st
   sctx.fillStyle = '#1d4ed8'
   sctx.fillRect(0, 0, 900, 600)
   sctx.fillStyle = '#f8fafc'
-  sctx.fillRect(400, 470, 120, 36)
-  const jpeg = await renderRepaymentPhoto(src.toBuffer('image/jpeg', 90), { weekly: 87, disclaimer: EXPECTED })
+  sctx.fillRect(390, 250, 140, 40)
+  const plain = src.toBuffer('image/jpeg', 92)
+  const jpeg = await renderRepaymentPhoto(plain, { weekly: 87 })
   assert.equal(jpeg[0], 0xff)
   assert.equal(jpeg[1], 0xd8)
   writeFileSync('/tmp/az-photo-fixture.jpg', jpeg)
@@ -128,31 +137,40 @@ test('the badge is dollars per week plus a readable disclaimer, and the photo st
   const canvas = createCanvas(img.width, img.height)
   const ctx = canvas.getContext('2d')
   ctx.drawImage(img, 0, 0)
-  const top = ctx.getImageData(20, 20, 1, 1).data
-  assert.ok(top[2] > top[0] + 40, 'the top of the photo is still the car, not the badge')
-  const foot = ctx.getImageData(20, 590, 1, 1).data
-  assert.ok(foot[0] < 40 && foot[1] < 40 && foot[2] < 40, 'disclaimer sits on a dark band')
+  const before = await loadImage(plain)
+  const base = createCanvas(900, 600)
+  const bctx = base.getContext('2d')
+  bctx.drawImage(before, 0, 0)
 
-  const pixels = ctx.getImageData(0, 0, img.width, img.height).data
-  let orange = 0, light = 0
-  for (let i = 0; i < pixels.length; i += 16) {
-    const r = pixels[i], g = pixels[i + 1], b = pixels[i + 2]
-    if (r > 200 && g > 70 && g < 190 && b < 90) orange++
-    if (r > 220 && g > 220 && b > 220) light++
-  }
-  assert.ok(orange > 20, 'orange Autozone rule is drawn')
-  assert.ok(light > 30, 'the weekly figure and disclaimer are light on the band')
-  const band = ctx.getImageData(0, 430, 900, 170).data
-  let bandLight = 0
-  for (let y = 0; y < 170; y += 2) {
-    let row = 0
-    for (let x = 0; x < 900; x += 2) {
+  const top = ctx.getImageData(20, 20, 1, 1).data
+  assert.ok(top[2] > top[0] + 40, 'the top-left of the photo is still the car')
+  const plate = ctx.getImageData(420, 265, 1, 1).data
+  assert.ok(plate[0] > 180 && plate[2] > 180, 'a number plate in the middle stays clear of the badge')
+
+  const pixels = ctx.getImageData(0, 0, 900, 600).data
+  const original = bctx.getImageData(0, 0, 900, 600).data
+  let changed = 0, orange = 0, darkText = 0, solidBlackRow = 0
+  for (let y = 0; y < 600; y++) {
+    let black = 0
+    for (let x = 0; x < 900; x++) {
       const i = (y * 900 + x) * 4
-      if (band[i] > 210 && band[i + 1] > 210 && band[i + 2] > 210) row++
+      const dr = Math.abs(pixels[i] - original[i])
+      const dg = Math.abs(pixels[i + 1] - original[i + 1])
+      const db = Math.abs(pixels[i + 2] - original[i + 2])
+      if (dr + dg + db > 80) changed++
+      const r = pixels[i], g = pixels[i + 1], b = pixels[i + 2]
+      if (r > 200 && g > 70 && g < 190 && b < 90) orange++
+      if (r < 50 && g < 50 && b < 50) darkText++
+      if (r < 24 && g < 24 && b < 24) black++
     }
-    if (row > 8) bandLight++
+    if (black > 800) solidBlackRow++
   }
-  assert.ok(bandLight >= 4, 'disclaimer wraps onto more than one readable line')
+  assert.ok(changed / (900 * 600) < 0.2, 'the overlay covers less than a fifth of the photo')
+  assert.equal(solidBlackRow, 0, 'there is no solid black banner')
+  assert.ok(orange > 40, 'the badge carries an orange accent')
+  assert.ok(darkText > 80, 'the disclaimer is dark text on the bottom strip')
+  const corner = ctx.getImageData(820, 40, 1, 1).data
+  assert.ok(corner[0] < 80 && corner[1] < 80 && corner[2] < 80, 'the weekly badge sits in the top-right corner')
 })
 
 test('a real Autozone listing photo is stamped with that car\'s repayment', { timeout: 60000 }, async () => {

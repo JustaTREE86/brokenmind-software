@@ -107,10 +107,11 @@ and commit `autozone/engine.html` with it.
 
 ## Repayment photos
 
-Each car gets one jpeg: the listing's first photo, the weekly figure, and the same disclaimer
-the card prints. The stock sync makes it when a car is new or the price, photo or terms have
-changed, and stores it in the private Blob next to the card state (`autozone/photos/<id>.jpg`).
-Staff download it from the car's row, or from beside that car's window card. There is no bulk download.
+Each car gets one jpeg: the listing's first photo, a small weekly badge, and a short line of the
+same terms the card uses. The card keeps the full disclaimer. The stock sync makes the jpeg when
+a car is new or the price, photo, terms or photo layout have changed, and stores it in the private
+Blob next to the card state (`autozone/photos/<id>.jpg`). Staff download it from the car's row, or
+from beside that car's window card. There is no bulk download.
 
 ## Sync behaviour
 

@@ -42,7 +42,7 @@ function money(n) {
 
 /**
  * The repayment disclaimer, filled from the terms above.
- * The interest rate is part of this sentence. It is not printed as its own figure on the photo.
+ * Printed in full on every window card. The interest rate is part of this sentence.
  */
 export function repaymentDisclaimer(terms = FINANCE) {
   const balloon = num(terms.balloon)
@@ -53,9 +53,24 @@ export function repaymentDisclaimer(terms = FINANCE) {
     '. Excludes government charges. Subject to lending criteria, fees and charges apply. Not a quote or offer of finance.'
 }
 
-/** Fingerprint stored with each photo, so a terms change regenerates every image. */
+/**
+ * Short form of the same terms, for the photo only. The card keeps the full sentence.
+ * Bump PHOTO_STYLE when the picture layout changes so stored jpegs are made again.
+ */
+export const PHOTO_STYLE = 2
+
+export function photoCaptionLines(terms = FINANCE) {
+  const balloon = num(terms.balloon)
+  const balloonText = balloon ? money(balloon) + ' balloon' : 'no balloon'
+  return [
+    'Estimate only. ' + num(terms.dep) + '% dep, ' + num(terms.rate) + '% p.a.',
+    Math.round(num(terms.term)) + ' mths, ' + money(terms.fee) + ' fees, ' + balloonText + '. Not a quote.'
+  ]
+}
+
+/** Fingerprint stored with each photo, so a terms or layout change regenerates every image. */
 export function termsKey(terms = FINANCE) {
-  return [terms.dep, terms.rate, terms.term, terms.fee, terms.balloon, terms.round].join('|')
+  return [terms.dep, terms.rate, terms.term, terms.fee, terms.balloon, terms.round, PHOTO_STYLE].join('|')
 }
 
 /** Card-engine DEF line. `npm run engine` writes this over the studio's copy. */

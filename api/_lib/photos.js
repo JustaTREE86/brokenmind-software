@@ -1,9 +1,9 @@
 // Builds the repayment photo for each car and keeps it in the private Blob store.
-// A new car, a new price, a new first photo, or a change of finance terms makes a new jpeg.
+// A new car, a new price, a new first photo, or a change of finance terms or photo layout makes a new jpeg.
 // Work is capped by a time budget so one request stays inside the function limit; the page
 // calls back until every car has one.
 
-import { FINANCE, repaymentDisclaimer, termsKey, weeklyFor } from './finance.js'
+import { FINANCE, termsKey, weeklyFor } from './finance.js'
 import { dealerPhotoUrl, photoDecision, renderRepaymentPhoto, summarisePhotos } from './repayment-photo.js'
 import { openCarPhoto, readPhotoIndex, updatePhotoIndex, writeCarPhoto } from './store.js'
 
@@ -33,10 +33,7 @@ async function remember(id, entry) {
 
 async function stamp(car) {
   const weekly = weeklyFor(car.price, FINANCE)
-  const jpeg = await renderRepaymentPhoto(await fetchDealerPhoto(car.photo), {
-    weekly,
-    disclaimer: repaymentDisclaimer(FINANCE)
-  })
+  const jpeg = await renderRepaymentPhoto(await fetchDealerPhoto(car.photo), { weekly })
   await writeCarPhoto(car.id, jpeg)
   await remember(car.id, {
     price: String(car.price), source: car.photo, termsKey: termsKey(FINANCE),

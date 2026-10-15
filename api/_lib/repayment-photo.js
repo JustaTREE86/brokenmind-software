@@ -1,10 +1,11 @@
-// Draws one repayment photo: the listing's first picture, a weekly figure, and the disclaimer.
-// The figure is dollars per week only. The interest rate stays in the disclaimer sentence.
+// Draws one repayment photo: the listing's first picture, a weekly figure, and a short disclaimer.
+// The figure is dollars per week only. The full disclaimer stays on the window card.
+// The dealer's own logo is already on the listing photo, so this does not add another.
 
 import { createCanvas, loadImage, GlobalFonts } from '@napi-rs/canvas'
 import { fileURLToPath } from 'node:url'
 import path from 'node:path'
-import { repaymentDisclaimer } from './finance.js'
+import { photoCaptionLines } from './finance.js'
 
 const fontDir = path.join(path.dirname(fileURLToPath(import.meta.url)), 'fonts')
 GlobalFonts.registerFromPath(path.join(fontDir, 'NotoSans-Regular.ttf'), 'Noto Sans')
@@ -57,30 +58,26 @@ export function summarisePhotos(cars, index, key) {
   return { ready, pending, failed, byId }
 }
 
-function wrap(ctx, text, maxWidth) {
-  const words = String(text).split(/\s+/)
-  const lines = []
-  let line = ''
-  for (const word of words) {
-    const next = line ? line + ' ' + word : word
-    if (ctx.measureText(next).width > maxWidth && line) {
-      lines.push(line)
-      line = word
-    } else line = next
-  }
-  if (line) lines.push(line)
-  return lines
+function roundedRect(ctx, x, y, w, h, r) {
+  const radius = Math.max(0, Math.min(r, w / 2, h / 2))
+  ctx.beginPath()
+  ctx.moveTo(x + radius, y)
+  ctx.arcTo(x + w, y, x + w, y + h, radius)
+  ctx.arcTo(x + w, y + h, x, y + h, radius)
+  ctx.arcTo(x, y + h, x, y, radius)
+  ctx.arcTo(x, y, x + w, y, radius)
+  ctx.closePath()
 }
 
 /**
  * @param {Buffer} imageBuffer the listing's first photo
- * @param {{ weekly: number, disclaimer?: string }} opts
+ * @param {{ weekly: number, lines?: string[] }} opts
  * @returns {Promise<Buffer>} jpeg
  */
-export async function renderRepaymentPhoto(imageBuffer, { weekly, disclaimer } = {}) {
+export async function renderRepaymentPhoto(imageBuffer, { weekly, lines } = {}) {
   const amount = Math.round(Number(weekly) || 0)
   if (!amount) throw new Error('No weekly repayment to print')
-  const text = disclaimer || repaymentDisclaimer()
+  const caption = (lines && lines.length ? lines : photoCaptionLines()).map(s => String(s))
   const img = await loadImage(imageBuffer)
   const scale = Math.min(1, MAX_EDGE / Math.max(img.width, img.height))
   const w = Math.max(1, Math.round(img.width * scale))
@@ -91,44 +88,102 @@ export async function renderRepaymentPhoto(imageBuffer, { weekly, disclaimer } =
   ctx.imageSmoothingQuality = 'high'
   ctx.drawImage(img, 0, 0, w, h)
 
-  const pad = Math.max(16, Math.round(w * 0.028))
-  let discSize = Math.max(20, Math.round(w * 0.024))
-  const amountSize = Math.max(36, Math.round(h * 0.068))
   const label = '$' + amount.toLocaleString('en-AU') + '/wk'
+  const amountSize = Math.max(34, Math.round(h * 0.052))
   ctx.font = '700 ' + amountSize + 'px "Noto Sans Bold"'
   if (ctx.measureText(label).width < 8) throw new Error('Repayment font did not load')
-
-  let lines = []
-  let lineH = 0
-  let bandH = 0
-  for (let attempt = 0; attempt < 6; attempt++) {
-    ctx.font = '700 ' + discSize + 'px "Noto Sans Bold"'
-    lines = wrap(ctx, text, w - pad * 2)
-    lineH = Math.round(discSize * 1.38)
-    bandH = pad + Math.round(amountSize * 1.05) + Math.round(discSize * 0.55) + lines.length * lineH + pad
-    if (bandH <= h * 0.34 || discSize <= 16) break
-    discSize -= 2
-  }
-
-  const top = h - bandH
-  ctx.fillStyle = INK
-  ctx.fillRect(0, top, w, bandH)
-  ctx.fillStyle = ORANGE
-  ctx.fillRect(0, top, w, Math.max(6, Math.round(h * 0.008)))
-
-  ctx.textBaseline = 'top'
-  ctx.fillStyle = '#FFFFFF'
-  ctx.font = '700 ' + amountSize + 'px "Noto Sans Bold"'
-  const amountY = top + Math.max(10, Math.round(pad * 0.7))
-  ctx.fillText(label, pad, amountY)
-
-  ctx.font = '700 ' + discSize + 'px "Noto Sans Bold"'
-  ctx.fillStyle = '#FFFFFF'
-  let y = amountY + Math.round(amountSize * 1.02) + Math.round(discSize * 0.35)
-  for (const line of lines) {
-    ctx.fillText(line, pad, y)
-    y += lineH
-  }
+  const badge = drawBadge(ctx, w, label, amountSize)
+  drawCaption(ctx, w, h, caption, badge)
 
   return canvas.toBuffer('image/jpeg', 90)
+}
+
+function drawBadge(ctx, w, label, amountSize) {
+  const margin = Math.max(14, Math.round(w * 0.028))
+  const textW = ctx.measureText(label).width
+  const padX = Math.round(amountSize * 0.55)
+  const padY = Math.round(amountSize * 0.32)
+  const barW = Math.max(5, Math.round(amountSize * 0.12))
+  const gap = Math.round(amountSize * 0.28)
+  const pillW = Math.round(padX + barW + gap + textW + padX)
+  const pillH = Math.round(amountSize + padY * 2)
+  const x = w - margin - pillW
+  const y = margin
+  const radius = Math.round(pillH / 2)
+
+  ctx.save()
+  ctx.shadowColor = 'rgba(0,0,0,0.35)'
+  ctx.shadowBlur = Math.round(pillH * 0.28)
+  ctx.shadowOffsetY = Math.round(pillH * 0.08)
+  roundedRect(ctx, x, y, pillW, pillH, radius)
+  ctx.fillStyle = 'rgba(14,14,14,0.74)'
+  ctx.fill()
+  ctx.restore()
+
+  const barH = Math.round(pillH * 0.42)
+  const barX = x + padX
+  const barY = y + (pillH - barH) / 2
+  roundedRect(ctx, barX, barY, barW, barH, barW / 2)
+  ctx.fillStyle = ORANGE
+  ctx.fill()
+
+  ctx.textBaseline = 'middle'
+  ctx.fillStyle = '#FFFFFF'
+  ctx.font = '700 ' + amountSize + 'px "Noto Sans Bold"'
+  ctx.fillText(label, barX + barW + gap, y + pillH / 2 + Math.round(amountSize * 0.04))
+  return { right: x + pillW, bottom: y + pillH }
+}
+
+function drawCaption(ctx, w, h, lines, badge) {
+  const margin = Math.max(14, Math.round(w * 0.028))
+  // Tucked under the weekly badge, top-right. Number plates sit low and centred,
+  // so a bottom strip was covering them.
+  const maxW = Math.round(w * 0.66)
+  let size = Math.max(22, Math.round(w * 0.032))
+  const minSize = Math.max(18, Math.round(w * 0.026))
+  const fontFor = px => '700 ' + px + 'px "Noto Sans Bold"'
+  while (size > minSize) {
+    ctx.font = fontFor(size)
+    const widest = Math.max(...lines.map(line => ctx.measureText(line).width))
+    if (widest <= maxW) break
+    size -= 1
+  }
+  ctx.font = fontFor(size)
+  const lineH = Math.round(size * 1.3)
+  const padX = Math.round(size * 0.8)
+  const padY = Math.round(size * 0.58)
+  const textW = Math.min(maxW, Math.max(...lines.map(line => ctx.measureText(line).width)))
+  const boxW = Math.round(textW + padX * 2)
+  const boxH = Math.round(padY * 2 + lines.length * lineH - Math.round(size * 0.15))
+  const x = Math.max(margin, badge.right - boxW)
+  const y = badge.bottom + Math.round(margin * 0.45)
+  const radius = Math.round(size * 0.55)
+
+  const g = ctx.createLinearGradient(x, y, x, y + boxH)
+  g.addColorStop(0, 'rgba(255,255,255,0.62)')
+  g.addColorStop(1, 'rgba(255,255,255,0.84)')
+  ctx.save()
+  ctx.shadowColor = 'rgba(0,0,0,0.22)'
+  ctx.shadowBlur = Math.round(size * 0.7)
+  ctx.shadowOffsetY = Math.round(size * 0.12)
+  roundedRect(ctx, x, y, boxW, boxH, radius)
+  ctx.fillStyle = g
+  ctx.fill()
+  ctx.restore()
+
+  ctx.save()
+  roundedRect(ctx, x, y, boxW, boxH, radius)
+  ctx.clip()
+  ctx.fillStyle = ORANGE
+  ctx.fillRect(x, y, boxW, Math.max(3, Math.round(size * 0.14)))
+  ctx.restore()
+
+  ctx.textBaseline = 'top'
+  ctx.fillStyle = INK
+  ctx.font = fontFor(size)
+  let ty = y + padY + Math.round(size * 0.12)
+  for (const line of lines) {
+    ctx.fillText(line, x + padX, ty)
+    ty += lineH
+  }
 }

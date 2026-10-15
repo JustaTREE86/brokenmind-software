@@ -4,7 +4,10 @@
 // calls back until every car has one.
 
 import { FINANCE, termsKey, weeklyFor } from './finance.js'
-import { dealerPhotoUrl, photoDecision, renderRepaymentPhoto, summarisePhotos } from './repayment-photo.js'
+import { galleryKey, parseGallery } from './scrape.js'
+import {
+  dealerPhotoUrl, hasPriceOverlay, isPriceCardName, photoDecision, renderRepaymentPhoto, summarisePhotos
+} from './repayment-photo.js'
 import { openCarPhoto, readPhotoIndex, updatePhotoIndex, writeCarPhoto } from './store.js'
 
 const UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140 Safari/537.36 AutozoneWindowCards/1.0 (+https://brokenmind.com.au)'
@@ -31,14 +34,53 @@ async function remember(id, entry) {
   })
 }
 
+async function listingGallery(car) {
+  if (Array.isArray(car.gallery) && car.gallery.length) return car.gallery
+  if (car.url) {
+    const r = await fetch(car.url, {
+      headers: { 'user-agent': UA, accept: 'text/html' },
+      signal: AbortSignal.timeout(15000),
+      redirect: 'follow'
+    })
+    if (r.ok && new URL(r.url).hostname === 'autozoneqldptyltd.com') {
+      const gallery = parseGallery(await r.text())
+      if (gallery.length) return gallery
+    }
+  }
+  return car.photo ? [car.photo] : []
+}
+
+/** The first gallery photo with no price painted on it, plus the jpeg bytes. */
+export async function chooseCleanPhoto(car) {
+  const gallery = await listingGallery(car)
+  let looked = 0
+  for (const url of gallery) {
+    if (isPriceCardName(url)) continue
+    if (looked++ >= 6) break
+    const buf = await fetchDealerPhoto(url)
+    if (await hasPriceOverlay(buf)) continue
+    return { url, buf, galleryKey: galleryKey(gallery) }
+  }
+  return { url: '', buf: null, galleryKey: galleryKey(gallery) }
+}
+
 async function stamp(car) {
   const weekly = weeklyFor(car.price, FINANCE)
-  const jpeg = await renderRepaymentPhoto(await fetchDealerPhoto(car.photo), { weekly })
+  const chosen = await chooseCleanPhoto(car)
+  const base = {
+    price: String(car.price), featured: car.photo || '', source: chosen.url || '',
+    galleryKey: chosen.galleryKey, termsKey: termsKey(FINANCE), at: new Date().toISOString()
+  }
+  if (!chosen.url) {
+    await remember(car.id, {
+      ...base, ok: false, needsClean: true, attempts: 0,
+      error: 'Needs a clean photo. The listing pictures already have a price on them.'
+    })
+    return
+  }
+  const jpeg = await renderRepaymentPhoto(chosen.buf, { weekly })
   await writeCarPhoto(car.id, jpeg)
-  await remember(car.id, {
-    price: String(car.price), source: car.photo, termsKey: termsKey(FINANCE),
-    ok: true, at: new Date().toISOString(), attempts: 0
-  })
+  await remember(car.id, { ...base, ok: true, needsClean: false, attempts: 0 })
 }
 
 /**

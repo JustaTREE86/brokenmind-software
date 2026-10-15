@@ -22,6 +22,10 @@ export default staffOnly(async (req, res) => {
 
   const index = await readPhotoIndex()
   const decision = photoDecision(car, index.items?.[car.id], termsKey())
+  if (decision === 'needsClean') {
+    const why = index.items?.[car.id]?.error || 'Needs a clean photo. The listing pictures already have a price on them.'
+    return send(res, 409, { error: why })
+  }
   let stored = decision === 'ready' ? await readReadyPhoto(id) : null
   if (!stored) {
     await ensureRepaymentPhotos(cars, { budgetMs: 25000, onlyId: id, force: true })
@@ -29,6 +33,10 @@ export default staffOnly(async (req, res) => {
   }
   const after = await readPhotoIndex()
   const now = photoDecision(car, after.items?.[car.id], termsKey())
+  if (now === 'needsClean') {
+    const why = after.items?.[car.id]?.error || 'Needs a clean photo. The listing pictures already have a price on them.'
+    return send(res, 409, { error: why })
+  }
   if (!stored || now !== 'ready') {
     const why = after.items?.[car.id]?.error || 'The repayment photo could not be made'
     return send(res, 502, { error: why })

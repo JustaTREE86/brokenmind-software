@@ -9,9 +9,9 @@ import {
 } from '../../api/_lib/finance.js'
 import { patchEngineFinance } from '../patch-engine-finance.mjs'
 import {
-  dealerPhotoUrl, photoDecision, renderRepaymentPhoto, repaymentFileName, summarisePhotos
+  dealerPhotoUrl, hasPriceOverlay, isPriceCardName, nextCleanUrl, photoDecision, renderRepaymentPhoto, repaymentFileName, summarisePhotos
 } from '../../api/_lib/repayment-photo.js'
-import { parseListing } from '../../api/_lib/scrape.js'
+import { parseGallery, parseListing } from '../../api/_lib/scrape.js'
 
 const root = path.dirname(path.dirname(path.dirname(fileURLToPath(import.meta.url))))
 const enginePath = path.join(root, 'autozone', 'engine.html')
@@ -46,7 +46,7 @@ test('shared terms are the card engine settings', () => {
     'Estimate only. 20% dep, 9.49% p.a.',
     '84 mths, $900 fees, no balloon. Not a quote.'
   ])
-  assert.equal(termsKey(), '20|9.49|84|900|0|1|2')
+  assert.equal(termsKey(), '20|9.49|84|900|0|1|3')
   assert.equal(weeklyFor(0), 0)
   assert.equal(weeklyFor('27,880'), 87)
   assert.equal(weeklyFor(9880), 33)
@@ -105,6 +105,10 @@ test('photo regeneration follows price, picture and terms', () => {
   assert.equal(photoDecision(car, entry, '20|9.5|84|900|0|1'), 'stale')
   assert.equal(photoDecision(car, { ...entry, ok: false, attempts: 2 }, key), 'stale')
   assert.equal(photoDecision(car, { ...entry, ok: false, attempts: 3 }, key), 'failed')
+  const blocked = { ...entry, ok: false, needsClean: true, featured: car.photo, galleryKey: 'g1', source: '' }
+  assert.equal(photoDecision({ ...car, galleryKey: 'g1' }, blocked, key), 'needsClean')
+  assert.equal(photoDecision(car, blocked, key), 'needsClean')
+  assert.equal(photoDecision({ ...car, galleryKey: 'g2' }, blocked, key), 'stale')
   assert.equal(photoDecision({ id: '6', price: '', photo: '' }, null, key), 'skip')
   const summary = summarisePhotos(
     [car, { id: '6', price: '1', photo: 'https://autozoneqldptyltd.com/x.jpg' }],
@@ -116,6 +120,48 @@ test('photo regeneration follows price, picture and terms', () => {
   assert.equal(dealerPhotoUrl(car.photo), car.photo)
   assert.throws(() => dealerPhotoUrl('https://evil.example/a.jpg'), /Autozone website/)
   assert.equal(repaymentFileName({ year: '2020', make: 'Ford', model: 'Ranger XLS' }), '2020-ford-ranger-xls-repayment.jpg')
+})
+
+test('a photo that already has a price on it is not stamped', async () => {
+  const card = 'https://autozoneqldptyltd.com/wp-content/uploads/2026/09/2012_Ford_Territory_34pw-1.jpg'
+  const clean = 'https://autozoneqldptyltd.com/wp-content/uploads/2026/09/4E9B0016-6E23-4A6C-8E31-BDCEAD82541B_1_105_c.jpeg'
+  const thumb = 'https://autozoneqldptyltd.com/wp-content/uploads/2026/09/4E9B0016-6E23-4A6C-8E31-BDCEAD82541B_1_105_c-300x225.jpeg'
+  assert.equal(isPriceCardName(card), true)
+  assert.equal(isPriceCardName(clean), false)
+  assert.equal(nextCleanUrl([card, clean]), clean)
+  assert.equal(nextCleanUrl([card]), '')
+
+  const html = '<div data-src="' + card + '"></div><div data-src="' + thumb + '"></div><div data-src="' + clean + '"></div>'
+  assert.deepEqual(parseGallery(html), [card, clean])
+
+  const painted = createCanvas(640, 480)
+  const pctx = painted.getContext('2d')
+  pctx.fillStyle = '#87b4e8'
+  pctx.fillRect(0, 0, 640, 480)
+  pctx.fillStyle = '#F47B20'
+  pctx.fillRect(400, 300, 240, 180)
+  assert.equal(await hasPriceOverlay(painted.toBuffer('image/jpeg', 92)), true)
+
+  const plain = createCanvas(640, 480)
+  plain.getContext('2d').fillStyle = '#87b4e8'
+  plain.getContext('2d').fillRect(0, 0, 640, 480)
+  assert.equal(await hasPriceOverlay(plain.toBuffer('image/jpeg', 92)), false)
+})
+
+test('the Territory marketing card is skipped for the next clean photo', { timeout: 60000 }, async () => {
+  const url = 'https://autozoneqldptyltd.com/listing/2012-ford-territory-tx-4x4-%f0%9f%94%a53-year-warranty%f0%9f%94%a5/'
+  const html = await fetch(url, { signal: AbortSignal.timeout(20000) }).then(r => r.text())
+  const car = parseListing(url, html)
+  assert.equal(car.price, '8880')
+  assert.equal(isPriceCardName(car.gallery[0]), true)
+  assert.equal(nextCleanUrl(car.gallery), car.gallery[1])
+  const first = Buffer.from(await fetch(car.gallery[0], { signal: AbortSignal.timeout(20000) }).then(r => r.arrayBuffer()))
+  const second = Buffer.from(await fetch(car.gallery[1], { signal: AbortSignal.timeout(20000) }).then(r => r.arrayBuffer()))
+  assert.equal(await hasPriceOverlay(first), true)
+  assert.equal(await hasPriceOverlay(second), false)
+  const jpeg = await renderRepaymentPhoto(second, { weekly: weeklyFor(car.price) })
+  writeFileSync('/tmp/az-photo-territory.jpg', jpeg)
+  assert.equal(weeklyFor(car.price), 30)
 })
 
 test('the badge is dollars per week plus a readable disclaimer, and the photo stays visible', async () => {

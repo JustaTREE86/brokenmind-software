@@ -33,29 +33,74 @@ export function repaymentFileName(car) {
 
 /**
  * ready: the stored photo still matches this car and the current terms
- * stale: missing, or the price, source photo or terms have moved
+ * needsClean: every gallery photo already has a price painted on it, so nothing is stamped
+ * stale: missing, or the price, featured photo, gallery or terms have moved
  * failed: the last few attempts failed and nothing has changed since
  * skip: there is nothing to stamp
  */
 export function photoDecision(car, entry, key) {
   if (!car?.photo || !car?.price) return 'skip'
-  const same = entry && entry.termsKey === key && String(entry.price) === String(car.price) && entry.source === car.photo
-  if (same && entry.ok) return 'ready'
-  if (same && !entry.ok && (entry.attempts || 0) >= 3) return 'failed'
+  const samePrice = entry && entry.termsKey === key && String(entry.price) === String(car.price)
+  const sameGallery = !car.galleryKey || !entry?.galleryKey || entry.galleryKey === car.galleryKey
+  const sameFeatured = entry && (entry.featured === car.photo || (!entry.featured && entry.source === car.photo))
+  const same = samePrice && sameFeatured && sameGallery
+  if (same && entry.needsClean) return 'needsClean'
+  if (same && entry.ok && entry.source) return 'ready'
+  if (same && !entry.ok && !entry.needsClean && (entry.attempts || 0) >= 3) return 'failed'
   return 'stale'
+}
+
+/**
+ * The dealer's marketing card is a file named like `34pw` (per week) and a solid
+ * orange repayment block in the bottom-right. Measured across the whole yard:
+ * those cards are about a third orange in that corner, and a plain photo is under 2%.
+ */
+export function isPriceCardName(url) {
+  let name = ''
+  try { name = decodeURIComponent(new URL(String(url)).pathname.split('/').pop() || '') }
+  catch { name = String(url || '').split('/').pop() || '' }
+  return /(?:^|[^a-z0-9])\d+\s*pw(?:[^a-z0-9]|$)/i.test(name)
+}
+
+export async function hasPriceOverlay(imageBuffer) {
+  const img = await loadImage(imageBuffer)
+  const canvas = createCanvas(img.width, img.height)
+  const ctx = canvas.getContext('2d')
+  ctx.drawImage(img, 0, 0)
+  const w = img.width, h = img.height
+  const x0 = Math.round(w * 0.62), y0 = Math.round(h * 0.62)
+  const data = ctx.getImageData(x0, y0, w - x0, h - y0).data
+  let n = 0, hit = 0
+  for (let i = 0; i < data.length; i += 16) {
+    const r = data[i], g = data[i + 1], b = data[i + 2]
+    n++
+    if (r > 180 && g > 60 && g < 180 && b < 90 && r > g + 40) hit++
+  }
+  return n > 0 && hit / n > 0.12
+}
+
+/** First gallery url that is not a marketing card. `painted` is a set of urls already checked. */
+export function nextCleanUrl(urls, painted) {
+  for (const url of urls || []) {
+    if (!url || isPriceCardName(url)) continue
+    if (painted && painted.has(url)) continue
+    return url
+  }
+  return ''
 }
 
 export function summarisePhotos(cars, index, key) {
   const byId = {}
-  let ready = 0, pending = 0, failed = 0
+  let ready = 0, pending = 0, failed = 0, needsClean = 0
   for (const car of cars) {
     const d = photoDecision(car, index?.items?.[car.id], key)
     byId[car.id] = d
     if (d === 'ready') ready++
+    else if (d === 'needsClean') needsClean++
     else if (d === 'failed') failed++
     else if (d === 'stale') pending++
   }
-  return { ready, pending, failed, byId }
+  return { ready, pending, failed, needsClean, byId }
 }
 
 function roundedRect(ctx, x, y, w, h, r) {
@@ -138,9 +183,9 @@ function drawCaption(ctx, w, h, lines, badge) {
   const margin = Math.max(14, Math.round(w * 0.028))
   // Tucked under the weekly badge, top-right. Number plates sit low and centred,
   // so a bottom strip was covering them.
-  const maxW = Math.round(w * 0.66)
-  let size = Math.max(22, Math.round(w * 0.032))
-  const minSize = Math.max(18, Math.round(w * 0.026))
+  const maxW = Math.round(w * 0.46)
+  let size = Math.max(17, Math.round(w * 0.021))
+  const minSize = Math.max(15, Math.round(w * 0.017))
   const fontFor = px => '700 ' + px + 'px "Noto Sans Bold"'
   while (size > minSize) {
     ctx.font = fontFor(size)
@@ -149,9 +194,9 @@ function drawCaption(ctx, w, h, lines, badge) {
     size -= 1
   }
   ctx.font = fontFor(size)
-  const lineH = Math.round(size * 1.3)
-  const padX = Math.round(size * 0.8)
-  const padY = Math.round(size * 0.58)
+  const lineH = Math.round(size * 1.22)
+  const padX = Math.round(size * 0.62)
+  const padY = Math.round(size * 0.42)
   const textW = Math.min(maxW, Math.max(...lines.map(line => ctx.measureText(line).width)))
   const boxW = Math.round(textW + padX * 2)
   const boxH = Math.round(padY * 2 + lines.length * lineH - Math.round(size * 0.15))
@@ -169,13 +214,6 @@ function drawCaption(ctx, w, h, lines, badge) {
   roundedRect(ctx, x, y, boxW, boxH, radius)
   ctx.fillStyle = g
   ctx.fill()
-  ctx.restore()
-
-  ctx.save()
-  roundedRect(ctx, x, y, boxW, boxH, radius)
-  ctx.clip()
-  ctx.fillStyle = ORANGE
-  ctx.fillRect(x, y, boxW, Math.max(3, Math.round(size * 0.14)))
   ctx.restore()
 
   ctx.textBaseline = 'top'

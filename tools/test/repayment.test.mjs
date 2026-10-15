@@ -43,10 +43,9 @@ test('shared terms are the card engine settings', () => {
   )
   assert.equal(repaymentDisclaimer(), EXPECTED)
   assert.deepEqual(photoCaptionLines(), [
-    'Estimate only. 20% dep, 9.49% p.a.',
-    '84 mths, $900 fees, no balloon. Not a quote.'
+    'Est. only. 20% dep, 9.49% p.a., 84 mths, $900 fees, no balloon. T&Cs apply. Not a quote.'
   ])
-  assert.equal(termsKey(), '20|9.49|84|900|0|1|3')
+  assert.equal(termsKey(), '20|9.49|84|900|0|1|4')
   assert.equal(weeklyFor(0), 0)
   assert.equal(weeklyFor('27,880'), 87)
   assert.equal(weeklyFor(9880), 33)
@@ -61,6 +60,7 @@ test('a balloon or a different fee changes the disclaimer from the same place', 
   const caption = photoCaptionLines({ ...FINANCE, balloon: 2000, fee: 1200, dep: 10, rate: 8.5, term: 60 }).join(' ')
   assert.match(caption, /10% dep, 8\.5% p\.a\./)
   assert.match(caption, /60 mths, \$1,200 fees, \$2,000 balloon/)
+  assert.match(caption, /T&Cs apply/)
   assert.match(caption, /Not a quote/)
   assert.equal(weeklyFor(20000, { ...FINANCE, rate: 0, balloon: 0, fee: 0, dep: 0, term: 52, round: 1 }), 89)
 })
@@ -195,7 +195,7 @@ test('the badge is dollars per week plus a readable disclaimer, and the photo st
 
   const pixels = ctx.getImageData(0, 0, 900, 600).data
   const original = bctx.getImageData(0, 0, 900, 600).data
-  let changed = 0, orange = 0, darkText = 0, solidBlackRow = 0
+  let changed = 0, orange = 0, lightText = 0, solidBlackRow = 0
   for (let y = 0; y < 600; y++) {
     let black = 0
     for (let x = 0; x < 900; x++) {
@@ -206,7 +206,7 @@ test('the badge is dollars per week plus a readable disclaimer, and the photo st
       if (dr + dg + db > 80) changed++
       const r = pixels[i], g = pixels[i + 1], b = pixels[i + 2]
       if (r > 200 && g > 70 && g < 190 && b < 90) orange++
-      if (r < 50 && g < 50 && b < 50) darkText++
+      if (y > 575 && r > 210 && g > 210 && b > 210) lightText++
       if (r < 24 && g < 24 && b < 24) black++
     }
     if (black > 800) solidBlackRow++
@@ -214,9 +214,44 @@ test('the badge is dollars per week plus a readable disclaimer, and the photo st
   assert.ok(changed / (900 * 600) < 0.2, 'the overlay covers less than a fifth of the photo')
   assert.equal(solidBlackRow, 0, 'there is no solid black banner')
   assert.ok(orange > 40, 'the badge carries an orange accent')
-  assert.ok(darkText > 80, 'the disclaimer is dark text on the bottom strip')
+  assert.ok(lightText > 20, 'the disclaimer is small white fine print along the bottom')
+  const underBadge = ctx.getImageData(820, 130, 1, 1).data
+  assert.ok(underBadge[2] > underBadge[0] + 40, 'nothing sits under the weekly badge')
   const corner = ctx.getImageData(820, 40, 1, 1).data
   assert.ok(corner[0] < 80 && corner[1] < 80 && corner[2] < 80, 'the weekly badge sits in the top-right corner')
+})
+
+test('fine print tucks into the bottom corner away from a number plate', async () => {
+  function backing(ctx, x, y, w, h) {
+    const data = ctx.getImageData(x, y, w, h).data
+    let n = 0
+    for (let i = 0; i < data.length; i += 4) {
+      if (data[i] < 70 && data[i + 2] < 190) n++
+    }
+    return n
+  }
+  async function stamp(plateOnRight) {
+    const src = createCanvas(1000, 700)
+    const sctx = src.getContext('2d')
+    sctx.fillStyle = '#3b82f6'
+    sctx.fillRect(0, 0, 1000, 700)
+    sctx.fillStyle = '#f4f4f4'
+    sctx.fillRect(plateOnRight ? 760 : 40, 600, 200, 70)
+    const jpeg = await renderRepaymentPhoto(src.toBuffer('image/jpeg', 92), { weekly: 30 })
+    const img = await loadImage(jpeg)
+    const canvas = createCanvas(img.width, img.height)
+    const ctx = canvas.getContext('2d')
+    ctx.drawImage(img, 0, 0)
+    return ctx
+  }
+  const awayFromRight = await stamp(true)
+  assert.ok(backing(awayFromRight, 12, 686, 160, 12) > 400, 'a plate on the right sends the fine print to the bottom-left')
+  const rightPlate = awayFromRight.getImageData(860, 630, 1, 1).data
+  assert.ok(rightPlate[0] > 180 && rightPlate[1] > 180, 'the right-hand plate stays uncovered')
+  const awayFromLeft = await stamp(false)
+  assert.ok(backing(awayFromLeft, 820, 686, 160, 12) > 400, 'a plate on the left sends the fine print to the bottom-right')
+  const leftPlate = awayFromLeft.getImageData(80, 630, 1, 1).data
+  assert.ok(leftPlate[0] > 180 && leftPlate[1] > 180, 'the left-hand plate stays uncovered')
 })
 
 test('a real Autozone listing photo is stamped with that car\'s repayment', { timeout: 60000 }, async () => {

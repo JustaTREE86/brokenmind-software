@@ -3,6 +3,8 @@
 //   autozone/state.json   which cards are in windows, name fixes, a short activity log
 //   autozone/sync.json    the last read of the Autozone website, reused for a few minutes
 //   autozone/deals.json   the finance deal board: deals, their notes and their invoice requests
+//   autozone/photos.json  which repayment photo matches which price, picture and finance terms
+//   autozone/photos/<id>.jpg  the stamped first photo for that listing
 //   autozone/logins-<env>.json  recent wrong passwords per (hashed) address, for the lockout
 //
 // Writes are compare-and-swap on the blob's ETag, so two staff clicking at once can't overwrite
@@ -17,6 +19,7 @@ const PREFIX = process.env.AZ_BLOB_PREFIX || 'autozone'
 const STATE = PREFIX + '/state.json'
 const SYNC = PREFIX + '/sync.json'
 const DEALS = PREFIX + '/deals.json'
+const PHOTO_INDEX = PREFIX + '/photos.json'
 // kept per environment, so testing the lockout on a preview can't lock anyone out of the live site
 const LOGINS = PREFIX + '/logins-' + (process.env.VERCEL_ENV || 'local') + '.json'
 const SYNC_FRESH_MS = 10 * 60 * 1000
@@ -128,4 +131,34 @@ export async function readCompleteStock() {
   const stock = await readStock({ anyAge: true })
   if (stock.pending > 0) throw new Error('Still reading the Autozone website. Try again in a moment.')
   return stock
+}
+
+/** Which repayment photos are current. One entry per listing id. */
+export async function readPhotoIndex() {
+  return (await readJson(PHOTO_INDEX)).data || { v: 1, items: {} }
+}
+
+/** Apply `change(index)` atomically. `change` mutates the index. */
+export async function updatePhotoIndex(change) {
+  return (await casUpdate(PHOTO_INDEX, () => ({ v: 1, items: {} }), change)).doc
+}
+
+export function carPhotoPath(id) {
+  return PREFIX + '/photos/' + id + '.jpg'
+}
+
+export async function writeCarPhoto(id, buffer) {
+  await put(carPhotoPath(id), buffer, {
+    access: 'private',
+    contentType: 'image/jpeg',
+    addRandomSuffix: false,
+    allowOverwrite: true
+  })
+}
+
+/** The stored jpeg, or null when this car has never had one. */
+export async function openCarPhoto(id) {
+  const r = await get(carPhotoPath(id), { access: 'private' })
+  if (!r || r.statusCode !== 200 || !r.stream) return null
+  return r
 }

@@ -80,13 +80,14 @@ delete `autozone/logins-production.json` from the Blob store.
 | `api/autozone/deal-update.js` | every write, chosen by `action`. Buyer Assist only |
 | `api/_lib/deals.js` | the stage list, validation, the invoice request and its maths |
 | `autozone/engine.html` | the card renderer: the Card Studio itself, stock emptied, plus a small bootstrap. **Generated, do not edit.** |
-| `api/autozone/*` | `stock` (website sync + statuses), `update` (printed / removed / rename / undo), `pdf`, `login` |
+| `api/autozone/*` | `stock` (website sync, statuses, repayment photos), `update` (printed / removed / rename / undo), `pdf`, `photo`, `login` |
+| `api/_lib/finance.js` | deposit, rate, term, fees, balloon, the weekly figure and the disclaimer |
 | `api/_lib/scrape.js` | reads the Autozone sitemap and listing pages |
 | `api/_lib/cards.js` | the status rules (new, relisted, changed, sold, duplicate) |
 | `api/_lib/store.js` | Blob storage: `autozone/state.json` (cards in windows), `autozone/sync.json` (last website read) and `autozone/deals.json` (the board) |
 | `api/_lib/seed.json` | starting state: the 33 cards printed 11 Sep 2026, from the Card Studio |
 
-## Changing the card design, finance basis or licence line
+## Changing the card design or the licence line
 
 Edit the Card Studio (`01-Buyer Assist Group/autozone-per-week/Autozone-Card-Studio.html`), then:
 
@@ -96,6 +97,20 @@ npm test
 ```
 
 and commit `autozone/engine.html`. Staff cannot change any of it from the app.
+
+## Changing the repayment terms
+
+Deposit, rate, term, fees and balloon live in `api/_lib/finance.js`. That file is what the
+repayment photos use, and `npm run engine` copies it into the card (over the studio's numbers)
+so the window card and the photo cannot disagree. Change the numbers there, run `npm run engine`,
+and commit `autozone/engine.html` with it.
+
+## Repayment photos
+
+Each car gets one jpeg: the listing's first photo, the weekly figure, and the same disclaimer
+the card prints. The stock sync makes it when a car is new or the price, photo or terms have
+changed, and stores it in the private Blob next to the card state (`autozone/photos/<id>.jpg`).
+Staff download it from the car's row, or from beside that car's window card. There is no bulk download.
 
 ## Sync behaviour
 

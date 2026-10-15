@@ -757,20 +757,12 @@ function weeklyFor(price){
 }
 
 function disclaimer(price, weekly, warranty){
-  var p = num(price), dep = p*(num(S.dep)/100), fin = p - dep + num(S.fee);
-  var bits = [];
-  bits.push('*Estimated repayment of ' + money(weekly) + ' per week is based on a ' + money(dep) +
-    ' deposit (' + num(S.dep) + '% of the ' + money(p) + ' purchase price), ' + money(fin) +
-    ' financed over ' + Math.round(num(S.term)) + ' months' +
-    (S.showRate ? ' at ' + num(S.rate) + '% p.a.' : '') +
-    (num(S.balloon) ? ' with a ' + money(num(S.balloon)) + ' balloon' : ' with no balloon') +
-    ', and includes ' + money(num(S.fee)) + ' of fees financed.');
-  bits.push('This is an estimate only, is not an offer of finance and is not a comparison rate.');
-  bits.push('Your actual rate and repayment depend on the lender, the loan term and your individual circumstances. Finance to approved purchasers only (TAP). Fees, charges, terms and conditions apply.');
-  bits.push('Vehicle price excludes government charges.');
-  if (warranty) bits.push(warranty + ' refers to a mechanical breakdown warranty arranged through AWN. It is not insurance. Cover, eligibility, terms, conditions and exclusions apply — ask for the Product Disclosure Statement before you buy. It is in addition to your rights under the Australian Consumer Law and to any dealer statutory warranty that applies.');
-  if (S.acl) bits.push(S.acl + '.');
-  return bits.join(' ');
+  var fee = Math.round(num(S.fee));
+  var balloon = num(S.balloon);
+  var text = 'Weekly repayment is an estimate only, based on ' + num(S.dep) + '% deposit, ' + num(S.rate) + '% p.a. over ' + Math.round(num(S.term)) + ' months with $' + fee.toLocaleString('en-AU') + ' fees financed and ' + (balloon ? ('a ' + money(balloon) + ' balloon') : 'no balloon') + '. Excludes government charges. Subject to lending criteria, fees and charges apply. Not a quote or offer of finance.';
+  if (warranty) text += ' ' + warranty + ' refers to a mechanical breakdown warranty arranged through AWN. It is not insurance. Cover, eligibility, terms, conditions and exclusions apply — ask for the Product Disclosure Statement before you buy. It is in addition to your rights under the Australian Consumer Law and to any dealer statutory warranty that applies.';
+  if (S.acl) text += ' ' + S.acl + '.';
+  return text;
 }
 
 /* ---------------- icons ---------------- */

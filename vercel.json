@@ -8,7 +8,12 @@
       "includeFiles": "{autozone/engine.html,node_modules/@sparticuz/chromium/bin/**}"
     },
     "api/autozone/stock.js": {
-      "maxDuration": 60
+      "maxDuration": 60,
+      "includeFiles": "api/_lib/fonts/**"
+    },
+    "api/autozone/photo.js": {
+      "maxDuration": 60,
+      "includeFiles": "api/_lib/fonts/**"
     },
     "api/autozone/update.js": {
       "maxDuration": 60

@@ -72,6 +72,7 @@ main{max-width:1280px;margin:0 auto;padding:18px clamp(12px,3vw,28px) 48px}
 .row .t{font-weight:700;line-height:1.25}
 .row .m{color:var(--muted);font-size:13px}
 .row .why{font-size:13px;margin-top:2px}
+button.photo{padding:4px 10px;font-size:13px;margin-top:6px}
 .pill{font:700 12px var(--ui);border-radius:99px;padding:3px 10px;white-space:nowrap}
 .pill.new{background:var(--warn-bg);color:var(--warn)}
 .pill.relisted,.pill.dup{background:var(--bad-bg);color:var(--bad)}
@@ -290,6 +291,7 @@ previewEngine.then(function(w){ if (w) { weeklyFor = w.AZ.weeklyFor; if (data) r
 /* ---------- data ---------- */
 async function load(force){
   if (syncing) return;
+  photoRun++;
   syncing = true; $('syncBtn').disabled = true;
   $('syncText').textContent = 'Checking the website…';
   if (!data) { $('progress').hidden = false; $('pgTitle').textContent = 'Loading…'; $('pgText').textContent = ''; }
@@ -306,14 +308,37 @@ async function load(force){
     $('progress').hidden = true;
     if (j.syncing) throw new Error('The Autozone website is slow to respond. Try "Check website" again in a minute.');
     data = j;
-    showError(j.error || '');
+    showError(j.error || j.photoError || '');
     render();
   } catch(e){ $('progress').hidden = true; showError(e.message); }
   syncing = false; $('syncBtn').disabled = false;
   // showed the last known list straight away; now bring it up to date in the background
-  if (data && data.stale && !force) load(true);
+  if (data && data.stale && !force) { load(true); return; }
+  if (data && data.photoPending) preparePhotos();
 }
-$('syncBtn').onclick = function(){ load(true); };
+var photoRun = 0;
+async function preparePhotos(){
+  var run = ++photoRun;
+  var loops = 0;
+  while (data && data.photoPending && loops++ < 12 && run === photoRun) {
+    $('progress').hidden = false;
+    $('pgTitle').textContent = 'Preparing repayment photos…';
+    var done = data.photoReady || 0, left = data.photoPending || 0;
+    $('pgText').textContent = done + ' ready, ' + left + ' still to make. This happens on its own.';
+    $('pgBar').style.width = Math.round(100 * done / Math.max(1, done + left)) + '%';
+    var j = await api('stock?photos=1');
+    if (run !== photoRun) return;
+    if (j.syncing) break;
+    data = j;
+    showError(j.error || j.photoError || '');
+    render();
+  }
+  if (run !== photoRun) return;
+  $('progress').hidden = true;
+  if (data && !data.photoPending && data.photoFailed)
+    showError(data.photoFailed + ' repayment photo' + (data.photoFailed > 1 ? 's' : '') + ' could not be made. Use Download repayment photo on that car to try again.');
+}
+$('syncBtn').onclick = function(){ photoRun++; load(true); };
 
 function statusPill(c){
   if (c.duplicateOf) return '<span class="pill dup">Check: duplicate listing</span>';
@@ -333,7 +358,8 @@ function rowHtml(c, withBox){
   var why = withBox && c.changes && c.changes.length ? '<div class="why">' + esc(c.changes[0]) + '</div>' : '';
   return '<li class="row' + (selected === c.id ? ' sel' : '') + '" data-id="' + esc(c.id) + '">' + box +
     '<img class="thumb" loading="lazy" alt="" src="' + esc(c.photo || '') + '">' +
-    '<div><div class="t">' + esc(c.title) + '</div><div class="m">' + esc(factLine(c)) + '</div>' + why + '</div>' +
+    '<div><div class="t">' + esc(c.title) + '</div><div class="m">' + esc(factLine(c)) + '</div>' + why +
+    '<button type="button" class="photo" data-photo="' + esc(c.id) + '">Repayment photo</button></div>' +
     statusPill(c) + '</li>';
 }
 
@@ -389,6 +415,7 @@ async function renderPreview(){
     statusPill(c) + changes +
     '<div class="actions"><button class="primary" type="button" id="pvPrint">Print this card</button>' +
       '<button type="button" id="pvPdf">Download PDF</button>' +
+      '<button type="button" id="pvPhoto">Download repayment photo</button>' +
       '<button class="ghost" type="button" id="pvRename">Fix name</button></div>' +
     '<form class="edit" id="renameForm" hidden><input type="text" id="renameInput" maxlength="80" aria-label="Name on the card">' +
       '<button class="primary" type="submit">Save</button><button type="button" id="renameReset">Use website name</button></form>' +
@@ -396,6 +423,7 @@ async function renderPreview(){
       '<a href="' + esc(c.url) + '" target="_blank" rel="noopener">See it on the website</a></p>';
   $('pvPrint').onclick = function(){ printCars([c.id]); };
   $('pvPdf').onclick = function(){ downloadPdf([c.id]); };
+  $('pvPhoto').onclick = function(){ downloadPhoto(c); };
   $('pvRename').onclick = function(){ $('renameForm').hidden = false; $('renameInput').value = c.title; $('renameInput').focus(); };
   $('renameForm').onsubmit = function(e){ e.preventDefault(); rename(c.id, $('renameInput').value); };
   $('renameReset').onclick = function(){ rename(c.id, ''); };
@@ -410,6 +438,13 @@ async function rename(id, title){
 
 /* ---------- selecting ---------- */
 function onRowClick(e){
+  var photo = e.target.closest('[data-photo]');
+  if (photo) {
+    selected = photo.getAttribute('data-photo');
+    renderPreview();
+    downloadPhoto(byId(selected));
+    return;
+  }
   var cb = e.target.closest('[data-check]');
   if (cb) { checked[cb.getAttribute('data-check')] = cb.checked; updateSelNote(); return; }
   var row = e.target.closest('.row[data-id]');
@@ -442,6 +477,23 @@ async function printCars(ids){
     askDone(ids, 'Printed');
   }, 150);
 }
+async function downloadPhoto(c){
+  if (!c) return;
+  toast('Preparing the repayment photo…');
+  try {
+    var r = await fetch(API + 'photo?id=' + encodeURIComponent(c.id));
+    if (r.status === 401) return showLogin();
+    if (!r.ok) { var j = await r.json().catch(function(){ return {}; }); throw new Error(j.error || 'Could not make the repayment photo'); }
+    var blob = await r.blob();
+    var name = (/filename="([^"]+)"/.exec(r.headers.get('content-disposition') || '') || [])[1] || 'repayment.jpg';
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob); a.download = name;
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function(){ URL.revokeObjectURL(a.href); }, 60000);
+    $('toast').hidden = true;
+  } catch(e){ $('toast').hidden = true; showError(e.message); }
+}
+
 async function downloadPdf(ids){
   if (!ids.length) return;
   toast('Making the PDF… this takes about ten seconds.');

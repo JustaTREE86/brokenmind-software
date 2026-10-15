@@ -1,22 +1,34 @@
 // Builds autozone/engine.html from the Autozone Card Studio.
 //
-// The studio (01-Buyer Assist Group/autozone-per-week/Autozone-Card-Studio.html) is the single
-// source of truth for the window-card design, the finance basis and the licence line. This copies
-// it verbatim, empties its built-in stock list (stock comes from the live website now), and adds a
-// small bootstrap so the app can render and print cards through it. Re-run after changing the studio:
+// The studio (01-Buyer Assist Group/autozone-per-week/Autozone-Card-Studio.html) is the source
+// for the window-card design and the licence line. Repayment terms and the disclaimer wording
+// are stamped on afterwards from api/_lib/finance.js, which the repayment photos import too.
+// This copies the studio, empties its built-in stock list (stock comes from the live website now),
+// and adds a small bootstrap so the app can render and print cards through it.
 //
 //   npm run engine            (or: node tools/build-engine.mjs "path/to/Autozone-Card-Studio.html")
+//
+// With no studio file on this machine, the same command re-applies the shared finance terms
+// onto the engine that is already in the repo.
 
-import { readFileSync, writeFileSync } from 'node:fs'
+import { existsSync, readFileSync, writeFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import path from 'node:path'
+import { patchEngineFinance } from './patch-engine-finance.mjs'
 
 const root = path.dirname(path.dirname(fileURLToPath(import.meta.url)))
 const studio = process.argv[2] ||
   path.join(root, '..', '..', '01-Buyer Assist Group', 'autozone-per-week', 'Autozone-Card-Studio.html')
 
-let html = readFileSync(studio, 'utf8')
+const out = path.join(root, 'autozone', 'engine.html')
+const haveStudio = existsSync(studio)
+if (!haveStudio && !existsSync(out)) {
+  throw new Error('Card Studio not found at ' + studio + ' and autozone/engine.html is missing')
+}
 
+let html = readFileSync(haveStudio ? studio : out, 'utf8')
+
+if (haveStudio) {
 const stock = /var STOCK = \[\r?\n[\s\S]*?\r?\n\];/
 if (!stock.test(html)) throw new Error('Could not find the STOCK list in ' + studio)
 html = html.replace(stock, 'var STOCK = [];')
@@ -84,7 +96,11 @@ html.az-engine .az-arrow{display:inline-block;width:.95em;height:.62em;vertical-
 `
 // the studio has no closing body tag (the browser supplies one), so append when it is missing
 html = /<\/body>/i.test(html) ? html.replace(/<\/body>(?![\s\S]*<\/body>)/i, boot + '</body>') : html + boot
+}
 
-const out = path.join(root, 'autozone', 'engine.html')
+// Finance terms and the disclaimer wording come from api/_lib/finance.js, not from the studio,
+// so the card and the repayment photo stay on the same figures.
+html = patchEngineFinance(html)
+
 writeFileSync(out, html)
-console.log('engine.html written from ' + path.basename(studio) + ' (' + Math.round(html.length / 1024) + ' KB)')
+console.log('engine.html written' + (haveStudio ? ' from ' + path.basename(studio) : ' (finance terms re-applied)') + ' (' + Math.round(html.length / 1024) + ' KB)')

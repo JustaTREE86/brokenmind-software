@@ -118,10 +118,11 @@ window card. There is no bulk download.
 
 ## Sync behaviour
 
-The Autozone site is slow (about 1.5s a page), so a sync re-reads only listings whose sitemap
-`lastmod` changed, plus up to four of the oldest reads. The first ever sync takes about a minute over
-two requests; after that a check is one to three seconds. Until every listing has been read, the app
-shows no statuses at all, so an unread car can never look sold.
+The dealer can edit prices without changing the sitemap's `lastmod`, so every sync re-reads every
+listing. A check can take about a minute over multiple requests. A persisted `refreshStartedAt`
+lets the next request continue where the previous one stopped, even when old prices are cached.
+Until the check finishes, the app does not replace the displayed stock. Failed listings retain
+their previous details and produce a visible warning. The open page checks again every ten minutes.
 
 ## Local testing
 

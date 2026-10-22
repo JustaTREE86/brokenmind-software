@@ -113,8 +113,11 @@ export async function readStock({ force = false, anyAge = false } = {}) {
   const fresh = cached && Date.now() - Date.parse(cached.at) < SYNC_FRESH_MS
   if (cached && (fresh || anyAge) && !force && !cached.pending) return { ...cached, fromCache: true }
   try {
-    const { cars, failed, listed, fetched, pending } = await scrapeStock(cached?.cars || [])
-    const snap = { at: new Date().toISOString(), cars, failed, listed, fetched, pending }
+    const refreshStartedAt = cached?.pending > 0 && cached.refreshStartedAt
+      ? cached.refreshStartedAt : new Date().toISOString()
+    const { cars, failed, listed, fetched, pending } = await scrapeStock(cached?.cars || [], { refreshStartedAt })
+    const error = failed.length ? `${failed.length} listing(s) could not be checked. Previous prices are kept where available. Try Check website again.` : null
+    const snap = { at: new Date().toISOString(), refreshStartedAt, cars, failed, listed, fetched, pending, error }
     await writeJson(SYNC, snap)
     return { ...snap, fromCache: false }
   } catch (e) {

@@ -115,28 +115,25 @@ export function parseSitemap(xml) {
   return out
 }
 
-const AGE_REFRESH_MS = 24 * 3600 * 1000   // re-read an unchanged listing at least daily
-const AGE_REFRESH_PER_SYNC = 4            // ...a few at a time, so no single sync is slow
-
 /**
- * The website is slow (about 1.5s a page, slower when asked for several at once), so a sync only
- * re-reads listings the sitemap says have changed since last time, plus a few of the oldest reads.
+ * The sitemap's lastmod can stay unchanged after a price edit, so every sync reads every listing.
  * Anything not re-read keeps its previous details, and a listing that fails to load is reported in
  * `failed` rather than dropped, so a flaky request can never make a car look sold. `budgetMs` stops
  * a first-ever sync running past the function time limit; the rest is picked up by the next sync.
  */
-export async function scrapeStock(prev = [], { budgetMs = 40000 } = {}) {
+export async function scrapeStock(prev = [], { budgetMs = 40000, refreshStartedAt = new Date().toISOString() } = {}) {
   const started = Date.now()
   const entries = parseSitemap(await fetchText(SITEMAP))
   if (!entries.length) throw new Error('The Autozone sitemap listed no cars')
 
   const old = new Map(prev.map(c => [c.url, c]))
-  const stale = e => { const o = old.get(e.url); return !o || o.lastmod !== e.lastmod }
-  const aged = entries.filter(e => !stale(e))
-    .sort((a, b) => Date.parse(old.get(a.url).fetchedAt || 0) - Date.parse(old.get(b.url).fetchedAt || 0))
-    .filter(e => Date.now() - Date.parse(old.get(e.url).fetchedAt || 0) > AGE_REFRESH_MS)
-    .slice(0, AGE_REFRESH_PER_SYNC)
-  const toFetch = entries.filter(stale).concat(aged)
+  // The dealer changes prices without updating sitemap lastmod. Check every listing once
+  // per refresh, resuming the same refresh across requests when the time budget runs out.
+  const toFetch = entries.filter(e => {
+    const previous = old.get(e.url)
+    return !previous || previous.lastmod !== e.lastmod ||
+      !(Date.parse(previous.fetchedAt) >= Date.parse(refreshStartedAt))
+  })
 
   const failed = [], fresh = new Map()
   await pool(toFetch, 4, async e => {
@@ -150,5 +147,8 @@ export async function scrapeStock(prev = [], { budgetMs = 40000 } = {}) {
 
   // Listings that weren't re-read (unchanged, failed or out of time) keep what we knew.
   const cars = entries.map(e => fresh.get(e.url) || old.get(e.url)).filter(Boolean)
-  return { cars, failed, listed: entries.length, fetched: fresh.size, pending: entries.length - cars.length }
+  const failedUrls = new Set(failed.map(e => e.url))
+  const pending = toFetch.filter(e => !fresh.has(e.url) &&
+    !(failedUrls.has(e.url) && old.has(e.url))).length
+  return { cars, failed, listed: entries.length, fetched: fresh.size, pending }
 }

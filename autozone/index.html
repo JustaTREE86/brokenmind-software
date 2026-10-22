@@ -299,10 +299,10 @@ async function load(force){
   try {
     var j = await api('stock' + (force ? '?refresh=1' : ''));
     var loops = 0;
-    while (j.syncing && loops++ < 8) {             // first read of the website comes in instalments
+      while (j.syncing && loops++ < 8) {             // website checks can span several requests
       $('progress').hidden = false;
       $('pgTitle').textContent = 'Reading the Autozone website…';
-      $('pgText').textContent = j.read + ' of ' + j.listed + ' cars. The very first check takes about a minute.';
+        $('pgText').textContent = j.read + ' of ' + j.listed + ' cars checked. This can take about a minute.';
       $('pgBar').style.width = Math.round(100 * j.read / Math.max(1, j.listed)) + '%';
       j = await api('stock?refresh=1');
     }
@@ -557,6 +557,7 @@ function start(){
   load();
 }
 setInterval(function(){ if (data) $('syncText').textContent = 'Website checked ' + ago(data.syncedAt); }, 30000);
+setInterval(function(){ if (!document.hidden && data) load(); }, 10 * 60 * 1000);
 document.addEventListener('visibilitychange', function(){
   if (!document.hidden && data && Date.now() - Date.parse(data.syncedAt) > 10 * 60 * 1000) load();
 });

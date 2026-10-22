@@ -82,7 +82,7 @@ delete `autozone/logins-production.json` from the Blob store.
 | `autozone/engine.html` | the card renderer: the Card Studio itself, stock emptied, plus a small bootstrap. **Generated, do not edit.** |
 | `api/autozone/*` | `stock` (website sync, statuses, repayment photos), `update` (printed / removed / rename / undo), `pdf`, `photo`, `login` |
 | `api/_lib/finance.js` | deposit, rate, term, fees, balloon, the weekly figure and the disclaimer |
-| `api/_lib/scrape.js` | reads the Autozone sitemap and listing pages |
+| `api/_lib/scrape.js` | reads the public Autozone inventory feed and listing pages |
 | `api/_lib/cards.js` | the status rules (new, relisted, changed, sold, duplicate) |
 | `api/_lib/store.js` | Blob storage: `autozone/state.json` (cards in windows), `autozone/sync.json` (last website read) and `autozone/deals.json` (the board) |
 | `api/_lib/seed.json` | starting state: the 33 cards printed 11 Sep 2026, from the Card Studio |
@@ -118,7 +118,9 @@ window card. There is no bulk download.
 
 ## Sync behaviour
 
-The dealer can edit prices without changing the sitemap's `lastmod`, so every sync re-reads every
+The sitemap can omit new stock and keep old modification dates after price edits. Discovery uses
+the dealer's public Vehica inventory feed, validating the returned count before reconciling sold
+cars. Incomplete or invalid feeds retain the previous stock with an error. Every sync re-reads every
 listing. A check can take about a minute over multiple requests. A persisted `refreshStartedAt`
 lets the next request continue where the previous one stopped, even when old prices are cached.
 Until the check finishes, the app does not replace the displayed stock. Failed listings retain

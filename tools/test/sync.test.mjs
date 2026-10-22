@@ -1,6 +1,6 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
-import { scrapeStock } from '../../api/_lib/scrape.js'
+import { scrapeStock, parseInventory } from '../../api/_lib/scrape.js'
 
 const url = id => `https://autozoneqldptyltd.com/listing/car-${id}/`
 const lastmod = '2026-10-08T05:37:49+00:00'
@@ -13,8 +13,9 @@ const listing = id => `<link rel="shortlink" href="https://autozoneqldptyltd.com
 function website(t, ids, onListing = () => {}) {
   const requested = []
   t.mock.method(globalThis, 'fetch', async u => {
-    if (u.endsWith('sitemap.xml')) return new Response('<urlset>' + ids.map(id =>
-      `<url><loc>${url(id)}</loc><lastmod>${lastmod}</lastmod></url>`).join('') + '</urlset>')
+    if (u.endsWith('/wp-json/vehica/v1/cars')) return Response.json({
+      resultsCount: ids.length, results: ids.map(id => ({ url: url(id) }))
+    })
     requested.push(u)
     onListing(u)
     const id = ids.find(id => url(id) === u)
@@ -29,6 +30,23 @@ test('refresh picks up price changes even with unchanged sitemap and recently ca
   assert.equal(requested.length, 2)
   assert.deepEqual(result.cars.map(c => c.price), ['26880', '26880'])
   assert.equal(result.pending, 0)
+})
+
+test('inventory discovers new cars absent from the sitemap and cached stock', async t => {
+  website(t, [1, 2, 30878, 30829])
+  const result = await scrapeStock([previous(1), previous(2)], { refreshStartedAt: started })
+  assert.equal(result.listed, 4)
+  assert.equal(result.pending, 0)
+  assert.deepEqual(result.cars.map(c => c.id), ['1', '2', '30878', '30829'])
+})
+
+test('incomplete, duplicate, empty and off-site inventory feeds are rejected before sold reconciliation', () => {
+  for (const data of [
+    { resultsCount: 2, results: [{ url: url(1) }] },
+    { resultsCount: 2, results: [{ url: url(1) }, { url: url(1) }] },
+    { resultsCount: 0, results: [] },
+    { resultsCount: 1, results: [{ url: 'https://example.com/listing/car/' }] }
+  ]) assert.throws(() => parseInventory(JSON.stringify(data)))
 })
 
 test('a timed-out batch stays pending despite cached prices and resumes without repeating completed cars', async t => {

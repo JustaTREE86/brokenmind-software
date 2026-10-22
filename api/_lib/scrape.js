@@ -1,11 +1,11 @@
 // Reads the current stock straight off autozoneqldptyltd.com.
 //
-// Autozone runs WordPress with the Vehica theme. Every car is a `vehica_car` post: the sitemap
-// lists them all, and each listing page carries the price, the spec table, a `?p=ID` short link
+// Autozone runs WordPress with the Vehica theme. Its public inventory feed discovers cars;
+// the sitemap can omit new stock. Each listing page carries the price, the spec table, a `?p=ID` short link
 // (what the window-card QR points at) and the main photo. Nothing here needs a login or an API.
 
 const SITE = 'https://autozoneqldptyltd.com'
-const SITEMAP = SITE + '/vehica_car-sitemap.xml'
+const INVENTORY = SITE + '/wp-json/vehica/v1/cars'
 const UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140 Safari/537.36 AutozoneWindowCards/1.0 (+https://brokenmind.com.au)'
 
 const NAMED = { amp: '&', lt: '<', gt: '>', quot: '"', apos: "'", nbsp: ' ', ndash: '-', mdash: '-',
@@ -22,7 +22,7 @@ const clean = s => decode(s).replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim(
 async function fetchText(url, timeoutMs = 15000) {
   for (let attempt = 0; attempt < 2; attempt++) {
     try {
-      const r = await fetch(url, { headers: { 'user-agent': UA, accept: 'text/html,application/xml' },
+      const r = await fetch(url, { headers: { 'user-agent': UA, accept: 'text/html,application/xml,application/json' },
         signal: AbortSignal.timeout(timeoutMs), redirect: 'follow' })
       if (!r.ok) throw new Error('HTTP ' + r.status)
       return await r.text()
@@ -115,6 +115,23 @@ export function parseSitemap(xml) {
   return out
 }
 
+/** Require a complete inventory before reconciling sold cars. Partial feeds must never remove stock. */
+export function parseInventory(body) {
+  const data = JSON.parse(body)
+  if (!Number.isInteger(data.resultsCount) || data.resultsCount <= 0 || !Array.isArray(data.results))
+    throw new Error('The Autozone inventory feed did not return a complete stock list')
+  const entries = new Map()
+  for (const car of data.results) {
+    const url = new URL(car.url)
+    if (url.origin !== SITE || !url.pathname.startsWith('/listing/') || url.search || url.hash)
+      throw new Error('The Autozone inventory feed returned an invalid listing URL')
+    entries.set(url.href, { url: url.href, lastmod: '' })
+  }
+  if (entries.size !== data.resultsCount)
+    throw new Error('The Autozone inventory feed returned only part of the stock list')
+  return [...entries.values()]
+}
+
 /**
  * The sitemap's lastmod can stay unchanged after a price edit, so every sync reads every listing.
  * Anything not re-read keeps its previous details, and a listing that fails to load is reported in
@@ -123,8 +140,7 @@ export function parseSitemap(xml) {
  */
 export async function scrapeStock(prev = [], { budgetMs = 40000, refreshStartedAt = new Date().toISOString() } = {}) {
   const started = Date.now()
-  const entries = parseSitemap(await fetchText(SITEMAP))
-  if (!entries.length) throw new Error('The Autozone sitemap listed no cars')
+  const entries = parseInventory(await fetchText(INVENTORY))
 
   const old = new Map(prev.map(c => [c.url, c]))
   // The dealer changes prices without updating sitemap lastmod. Check every listing once

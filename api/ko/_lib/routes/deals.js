@@ -20,9 +20,9 @@
 //  - Writes go through requireStaff, so a dealer session is read-only on the
 //    server unless its roster row has canWrite (Jacob). Hiding the buttons in
 //    the UI is only cosmetic.
-const { requireSession, requireStaff } = require('./_lib/session');
-const { validateDealInput, validateInvoiceRequest, validateBroker, clean, SETTLED_STATUS } = require('./_lib/deals');
-const { lookupVehicle } = require('./_lib/ko-vehicle');
+const { requireSession, requireStaff } = require('../session');
+const { validateDealInput, validateInvoiceRequest, validateBroker, clean, SETTLED_STATUS } = require('../deals');
+const { lookupVehicle } = require('../ko-vehicle');
 const {
   getDealerBySlug,
   listDealsForDealer,
@@ -30,7 +30,7 @@ const {
   insertDeal,
   updateDealForDealer,
   insertNote,
-} = require('./_lib/supabase');
+} = require('../supabase');
 
 async function handleGet(req, res, session, dealer) {
   const archived = String((req.query && req.query.archived) || 'false') === 'true';

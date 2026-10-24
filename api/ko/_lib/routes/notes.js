@@ -5,9 +5,9 @@
 // note can never be silently overwritten — each update is a new row and the
 // full history is kept. created_at is set by the database and created_by comes
 // from the signed session, so neither can be spoofed by the caller.
-const { requireStaff } = require('./_lib/session');
-const { validateNote, clean } = require('./_lib/deals');
-const { getDealerBySlug, getDealForDealer, insertNote, updateDealForDealer } = require('./_lib/supabase');
+const { requireStaff } = require('../session');
+const { validateNote, clean } = require('../deals');
+const { getDealerBySlug, getDealForDealer, insertNote, updateDealForDealer } = require('../supabase');
 
 module.exports = async function handler(req, res) {
   res.setHeader('Cache-Control', 'private, no-store');

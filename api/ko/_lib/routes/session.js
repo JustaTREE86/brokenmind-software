@@ -7,10 +7,10 @@
 //
 // It also serves DEAL_STATUSES so the browser never keeps its own copy of the
 // stage list that could drift from the server and the database CHECK.
-const { readSession, canWrite } = require('./_lib/session');
-const { DEAL_STATUSES, DEAL_BROKERS, DEFAULT_BROKER } = require('./_lib/deals');
-const { getDealerBySlug } = require('./_lib/supabase');
-const { salespeopleFor } = require('./_lib/dealer-config');
+const { readSession, canWrite } = require('../session');
+const { DEAL_STATUSES, DEAL_BROKERS, DEFAULT_BROKER } = require('../deals');
+const { getDealerBySlug } = require('../supabase');
+const { salespeopleFor } = require('../dealer-config');
 
 module.exports = async function handler(req, res) {
   if (req.method !== 'GET') {

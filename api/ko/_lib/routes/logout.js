@@ -2,7 +2,7 @@
 //
 // POST rather than GET so a stray <img> or link prefetch can't sign someone
 // out, and so it can't be triggered cross-site.
-const { clearSessionCookie } = require('./_lib/session');
+const { clearSessionCookie } = require('../session');
 
 module.exports = async function handler(req, res) {
   if (req.method !== 'POST') {

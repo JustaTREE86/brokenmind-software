@@ -1,7 +1,7 @@
 // KO Cars finance application endpoint. Email notifications are switched off,
 // and nothing is stored, so this only validates the submission. The page then
 // hands the applicant a copy to send themselves or to read out over the phone.
-const { isValidAUPhone, isValidEmail } = require('./_lib/util');
+const { isValidAUPhone, isValidEmail } = require('../util');
 
 module.exports = async function handler(req, res) {
   res.setHeader('Cache-Control', 'private, no-store');

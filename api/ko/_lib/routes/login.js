@@ -10,10 +10,10 @@
 // Passwords exist only as env vars on the server. They are never sent to the
 // browser and never stored in the database — the browser only ever posts one
 // here and receives an HttpOnly cookie back.
-const { setSessionCookie, timingSafeEqualStr, ROLE_STAFF, ROLE_DEALER } = require('./_lib/session');
-const { clean } = require('./_lib/deals');
-const { getDealerBySlug } = require('./_lib/supabase');
-const { loginsFor, isKnownDealer } = require('./_lib/dealer-config');
+const { setSessionCookie, timingSafeEqualStr, ROLE_STAFF, ROLE_DEALER } = require('../session');
+const { clean } = require('../deals');
+const { getDealerBySlug } = require('../supabase');
+const { loginsFor, isKnownDealer } = require('../dealer-config');
 
 // Small in-memory throttle to blunt password guessing. Serverless instances
 // are ephemeral and there can be several at once, so this is a speed bump,

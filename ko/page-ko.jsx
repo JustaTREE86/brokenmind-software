@@ -28,10 +28,10 @@ const {
 } = React;
 
 const KO_ENDPOINT = '/api/ko/application';
-const KO_DOCS_EMAIL = ''; // no inbox wired up yet, call only
+const KO_DOCS_EMAIL = 'CONTACT_EMAIL_TBD'; // placeholder until Josh picks one
 // Josh's direct mobile, not the BAG switchboard: a KO Cars customer stuck
 // halfway through this form should reach Josh, not a general line.
-const KO_PHONE = '0480 852 530';
+const KO_PHONE = 'CONTACT_PHONE_TBD'; // placeholder until Josh picks one
 
 // What the customer emails through after submitting. Kept here rather than in
 // components.jsx because it is this dealership's list, not a site-wide one.
@@ -371,6 +371,7 @@ function KoApplyPage() {
           name: applicantName,
           email: f.a1Email,
           phone: f.a1Mobile,
+          vYear: f.vYear, vMake: f.vMake, vModel: f.vModel, vVariant: f.vVariant, vStock: f.vStock,
           vehicle: [f.vYear, f.vMake, f.vModel, f.vVariant].filter(Boolean).join(' '),
           vehicleAcknowledged: f.vAck ? 'Yes' : 'No',
           consentToPrivacyPolicy: f.consent ? 'Yes' : 'No',

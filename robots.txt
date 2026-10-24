@@ -3,6 +3,7 @@ Allow: /
 Disallow: /autozone/
 Disallow: /api/
 Disallow: /proposals/
+Disallow: /ko
 
 User-agent: facebookexternalhit
 Allow: /

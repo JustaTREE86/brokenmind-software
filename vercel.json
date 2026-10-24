@@ -26,10 +26,51 @@
     }
   },
   "rewrites": [
-    { "source": "/autozone/bank-statements", "destination": "/autozone/bank" },
-    { "source": "/autozone/statements", "destination": "/autozone/bank" }
+    {
+      "source": "/autozone/bank-statements",
+      "destination": "/autozone/bank"
+    },
+    {
+      "source": "/autozone/statements",
+      "destination": "/autozone/bank"
+    }
   ],
   "headers": [
+    {
+      "source": "/ko",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow, noarchive, nosnippet"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "no-cache"
+        }
+      ]
+    },
+    {
+      "source": "/ko/(.*)",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow, noarchive, nosnippet"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "no-cache"
+        }
+      ]
+    },
+    {
+      "source": "/api/ko/(.*)",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
+    },
     {
       "source": "/autozone/(.*)",
       "headers": [

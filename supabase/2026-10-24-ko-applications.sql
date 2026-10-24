@@ -1,4 +1,4 @@
--- PROPOSED, NOT RUN. Needs Josh's approval before running on buyerassist-web.
+-- Applied to buyerassist-web 2026-10-24 (approved by Josh).
 -- Stores the full /ko/apply submission linked to the deal it created.
 create table if not exists public.ko_applications (
   id uuid primary key default gen_random_uuid(),

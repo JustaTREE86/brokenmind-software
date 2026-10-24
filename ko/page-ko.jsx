@@ -28,10 +28,10 @@ const {
 } = React;
 
 const KO_ENDPOINT = '/api/ko/application';
-const KO_DOCS_EMAIL = 'CONTACT_EMAIL_TBD'; // placeholder until Josh picks one
+const KO_DOCS_EMAIL = 'josh@brokenmind.com.au';
 // Josh's direct mobile, not the BAG switchboard: a KO Cars customer stuck
 // halfway through this form should reach Josh, not a general line.
-const KO_PHONE = 'CONTACT_PHONE_TBD'; // placeholder until Josh picks one
+const KO_PHONE = '0448 783 017';
 
 // What the customer emails through after submitting. Kept here rather than in
 // components.jsx because it is this dealership's list, not a site-wide one.

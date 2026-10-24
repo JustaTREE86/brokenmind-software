@@ -1,12 +1,11 @@
 // KO Cars finance application endpoint (/ko/apply). No email at all.
 // Each submission is saved as a "New Referral" deal on the KO Cars board
-// (public.deals) with an opening note carrying the reference. Only contact
-// and vehicle details are stored: the full application (DOB, licence,
-// income, etc.) is NOT stored until a dedicated table is approved
-// (see supabase/2026-10-24-ko-applications.sql, not yet run).
+// (public.deals) with an opening note carrying the reference. The full form
+// (all sections, contains PII) is stored server-side in public.ko_applications
+// (RLS on, no policies: service role only), linked to the deal.
 const { isValidAUPhone, isValidEmail } = require('../util');
 const { clean, MAX } = require('../deals');
-const { getDealerBySlug, insertDeal, insertNote } = require('../supabase');
+const { getDealerBySlug, insertDeal, insertNote, sbRequest } = require('../supabase');
 
 const AUTHOR = 'Online application';
 
@@ -45,8 +44,27 @@ module.exports = async function handler(req, res) {
       updated_by: AUTHOR,
     });
     if (!deal) throw new Error('insert returned no row');
-    await insertNote(deal.id,
-      `Online application ${reference} received via /ko/apply. Full details were not stored; call the customer to complete.`,
+    let stored = false;
+    try {
+      const payload = {
+        name: clean(b.name, 200), email: clean(b.email, 200), phone: clean(b.phone, 40),
+        vehicle: clean(b.vehicle, 300), vehicleAcknowledged: b.vehicleAcknowledged === 'Yes',
+        sections: b.sections && typeof b.sections === 'object' ? b.sections : null,
+      };
+      if (JSON.stringify(payload).length > 200000) throw new Error('payload too large');
+      await sbRequest('ko_applications', {
+        method: 'POST',
+        prefer: 'return=minimal',
+        body: { deal_id: deal.id, dealer_id: dealer.id, reference, payload,
+          consent_privacy: true, source_url: clean(b.sourceUrl, 500) || null },
+      });
+      stored = true;
+    } catch (e) {
+      console.error('[ko/application] full application not stored', reference, e && e.message);
+    }
+    await insertNote(deal.id, stored
+      ? `Online application ${reference} received via /ko/apply. Full application saved.`
+      : `Online application ${reference} received via /ko/apply. Full details could not be saved; call the customer to complete.`,
       AUTHOR);
     return res.status(200).json({ ok: true, reference });
   } catch (err) {
